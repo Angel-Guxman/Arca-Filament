@@ -1,5 +1,5 @@
 @extends('layouts.customer')
-@section('contenido')
+@section('content')
     <main class="bg-black p-8">
         <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10">Catálogo</h1>
 
