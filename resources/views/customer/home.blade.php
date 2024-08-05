@@ -19,7 +19,7 @@
             </section>
             <div>
                 <img class=" py-10 px-10 border   object-contain brightness-90 custom-size "
-                    src="{{ asset('images/rename.png') }}" alt="" />
+                    src="{{ asset('images/Alessandro.png') }}" alt="" />
             </div>
         </div>
     </section>
