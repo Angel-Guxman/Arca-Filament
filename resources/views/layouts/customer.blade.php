@@ -12,6 +12,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+        <link rel="shortcut icon" href="{{asset('images/arca-a.ico')}}" sizes="16x16">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
 
@@ -22,13 +24,15 @@
         }
 
         .header-home {
+          
             overflow: hidden;
             width: 100%;
         }
 
         .carrusel-header-home {
             width: 200%;
-            animation: carrusel 20s infinite linear;
+            animation: carrusel 20s 1  linear/* ,
+            ensulugar 2s 1 linear forwards 20s */;
         }
 
         .text-carrusel {
@@ -44,46 +48,64 @@
                 transform: translateX(0%)
             }
         }
-
-        body::-webkit-scrollbar {
+         body::-webkit-scrollbar {
             width: 5px;
-            /* Ancho de la barra de desplazamiento */
+        /* horizontal */
             height: 5px;
-            /* Alto de la barra de desplazamiento (para el desplazamiento horizontal) */
-        }
+            
+        }  
 
         /* Estilo del "track" (fondo) de la barra de desplazamiento */
         body::-webkit-scrollbar-track {
-            background: transparent;
-            /* Color de fondo de la pista */
-            border-radius: 10px;
-            /* Radio de esquina del track */
+            background:#fffefe00;
 
         }
 
-        ::-webkit-scrollbar-thumb {
+        body::-webkit-scrollbar-thumb {
+          
             background: #888;
             /* Color del thumb */
-            border-radius: 10px;
+            border-radius: 5px;
             /* Radio de esquina del thumb */
         }
+     /*    .progress{
+            position: fixed;
+            border: solid 1px #888;
+
+            z-index: 1;
+            height: 1rem;
+            background:linear-gradient(rgb(176, 174, 174),rgb(255, 255, 255) 20%);
+            width: 0%;
+            animation: progress auto linear;
+            animation-timeline: scroll(root block);
+        }
+        @keyframes progress {
+            0%{
+                width: 0%;
+            }
+            100%{
+                width:100%;
+            }
+
+        } */
     </style>
+
     <header class="header-home h-16 bg-black text-white">
         <div class="carrusel-header-home flex   items-center h-full">
-            <div class=" text-carrusel">
+            <div class=" text-carrusel text-center">
                 <h2 class=" text-2xl tracking-widest">We don´t made jewelry, we made amulets </h2>
             </div>
-            <div class=" text-carrusel">
+            <div class=" text-carrusel text-center">
                 <h2 class=" text-2xl tracking-widest">We don´t made jewelry, we made amulets </h2>
             </div>
 
         </div>
     </header>
-    <section class=" bg-white  h-[70px]">
+    <section class=" bg-white  h-[60px] ">
         <nav class=" h-full border">
             <ul class=" grid grid-cols-3  items-center px-2  h-full ">
                 <li class="   ">
-                    <button href="" class="md:hidden">
+                    <button href="" class="md:hidden hover:bg-gray-100 p-2 rounded-full">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -125,19 +147,19 @@
             </ul>
         </nav>
     </section>
-    <footer class=" hidden md:block  bg-white border ">
+    <footer class=" hidden md:block       bg-neutral-200 ">
         <nav class=" w-full flex justify-center items-center">
-            <ul class=" w-full flex  justify-evenly p-2 py-3">
-                <li class=" p-1 hover:scale-105 duration-200 ">
-                    <a class="{{ request()->routeIs('home') ? 'border-b-2 border-black' : '' }}"
+            <ul class=" w-full grid grid-cols-3 justify-items-center ">
+                <li class=" py-2 px-3  duration-200   hover:bg-neutral-300/90">
+                    <a class="   {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} "
                         href="{{ route('home') }}">Inicio</a>
                 </li>
-                <li class=" ">
-                    <a class=" {{ request()->routeIs('catalogue') ? 'border-b-2 border-black' : '' }}"
+                <li class=" py-2 px-3    hover:bg-neutral-300/90 duration-200  ">
+                    <a class=" {{ request()->routeIs('catalogue') ? 'border-b-2  border-black' : '' }}"
                         href="{{ route('catalogue') }}">Catálogo</a>
                 </li>
-                <li class=" ">
-                    <a class=" {{ request()->routeis('history') ? 'border-b-2 border-black' : '' }}"
+                <li class=" py-2 px-3  duration-200   hover:bg-neutral-300/90  ">
+                    <a class="{{ request()->routeis('history') ? 'border-b-2  border-black' : '' }}"
                         href=" {{ route('history') }}">La Esencia del Jade</a>
                 </li>
             </ul>
@@ -147,9 +169,9 @@
         @yield('content')
     </main>
 
-    <footer class=" bg-[#191919]  p-4 mt-2  text-white">
+    <footer class=" bg-[#191919]  p-4 mt-4  text-white">
         <div class=" grid grid-cols-3">
-            <div class=" flex flex-col items-center gap-4 ">
+            <div class=" flex flex-col items-center text-center gap-5 ">
                 <a href="" class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Avisos
                     de Privacidad</a>
                 <a
@@ -165,7 +187,7 @@
                 <a href=""
                     class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Contacto</a>
             </div>
-            <div class=" flex flex-col items-center gap-4">
+            <div class=" flex flex-col text-center items-center gap-4">
                 <h2>Redes Sociales</h2>
                 <div class=" flex gap-3 ">
                     <a href="" class=" hover:scale-105 duration-200">
