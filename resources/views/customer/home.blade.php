@@ -150,7 +150,7 @@
     top: 50%;
     color: color-mix(in srgb, #302c2c 85%, transparent);
     border-radius: 50%;
-    padding: 5px;
+  
 }
 
 /* contenedor de las cards */
