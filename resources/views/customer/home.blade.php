@@ -278,6 +278,9 @@
         <div class="product-category-carrusel">
             Bracelets
         </div>
+
+
+
         <div class=" md:px-[15px] px-2  cont-viewport-products-customer">
 
 
@@ -306,13 +309,15 @@
                     </a>
                 @endfor
 
-
             </div>
+
             <span class="icon-next-carrusel-products-customer">
                 <i class='bx bx-chevron-right'></i>
             </span>
 
         </div>
+
+        
     </section>
     <section class="  relative mb-8 mt-14">
         <div class="product-category-carrusel">
