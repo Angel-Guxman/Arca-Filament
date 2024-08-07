@@ -5,6 +5,10 @@
                 width: 90%;
                 height: 80%;
             } */
+        /*    .coming:hover{
+                box-shadow: 0px 0px 10px rgb(249, 249, 249);
+                transition: 200ms;
+             } */
 
         .arca-letter-animation {
             animation: animation-init 0.3s 1 cubic-bezier(.65, .05, .36, 1);
@@ -76,7 +80,7 @@
         /* contenedor de la vista del viewport carrusel */
         .cont-viewport-products-customer {
             background-color: black;
-            width: 100%;
+            width: 90%;
             overflow: hidden;
             overflow-x: scroll;
 
@@ -123,7 +127,7 @@
             justify-content: center;
             align-items: center;
             top: 50%;
-            left: 2%;
+            left: 4%;
             background-color: color-mix(in srgb, #f1f6f7 65%, transparent);
             border-radius: 50%;
             color: color-mix(in srgb, #2c2e30 85%, transparent);
@@ -164,8 +168,10 @@
             display: none;
             justify-content: center;
             align-items: center;
-            right: 2%;
+            right: 4%;
             top: 50%;
+            padding: 5px;
+
             color: color-mix(in srgb, #302c2c 85%, transparent);
             border-radius: 50%;
 
@@ -179,43 +185,37 @@
 
         /* carta del producto */
         .card-carrusel-product {
-            padding: 10px 0 10px 0;
+
             margin-top: 4px;
             margin-bottom: 5px;
-            min-width: 500px;
-            height: 500px;
             background: black;
+
+        }
+
+        .product-name-card {
+            background: rgb(255, 255, 255, 0.2);
+            backdrop-filter: blur(7px);
+        }
+
+        .vendor-image {
+            background: rgb(255, 255, 255, 0.2);
+            backdrop-filter: blur(7px);
         }
 
 
-        .img-products-customer {
-            height: 100%;
-            width: 100%;
-            mask-image: linear-gradient(black 80%, transparent);
-        }
+
 
         /* nombre del producto */
         .product-name-card {
-
+            transition: 200ms;
             white-space: nowrap;
             width: 100%;
             text-overflow: ellipsis;
             overflow: hidden;
-            font-weight: 500;
             color: white;
-            background: black;
-            font-size: 18px;
         }
 
-        /* descripcion del producto */
-        .product-description-card {
-            width: 100%;
-            font-weight: 300;
-            color: white;
-            background: black;
-            height: 100px;
-            overflow-y: scroll;
-        }
+
 
         /* Estilizar la barra de desplazamiento */
         .product-description-card::-webkit-scrollbar {
@@ -231,11 +231,27 @@
             /* Bordes redondeados */
         }
 
-        /* precio del producto */
-        .product-price-card {
-            font-weight: 400;
-            color: white;
-            background: black;
+        .active~.answer {
+            opacity: 1;
+            visibility: visible;
+            height: 100%;
+            padding: 2px;
+            transition: height 300ms linear, opacity 300ms linear, visibility 300ms linear;
+        }
+
+        .active {
+            color: rgb(114, 142, 254);
+            border: rgb(114, 142, 254) 1px solid;
+        }
+
+        .active .btn-open-closed {
+            animation: rota 500ms linear both;
+        }
+
+        @keyframes rota {
+            100% {
+                transform: rotate(180deg);
+            }
         }
     </style>
     <section class=" p-4">
@@ -247,7 +263,7 @@
                     <h1 class=" text-9xl mx-auto arca-letter-animation ">Arca</h1>
                     <h3 class=" text-3xl mx-auto  arca-letter-animation">Accesorios de Jade</h3>
                     <a href=""
-                        class=" button-purchase  text-xl border    md:border-[#2f3336] mx-auto p-2 hover:bg-white hover:text-black duration-200 md:hover:scale-105 relative">
+                        class="  text-xl border    md:border-[#2f3336] mx-auto p-2 hover:bg-white hover:text-black duration-200 md:hover:scale-105 relative">
 
                         Comprar</a>
                 </div>
@@ -258,9 +274,9 @@
             </div>
         </div>
     </section>
-    <section class=" grid grid-cols-1 md:grid-cols-2 gap-3  p-4 mb-5  mt-14">
+    <section class=" grid md:grid-cols-1  gap-5   p-4 mb-14  mt-14">
         <div
-            class=" text-white underline-offset-2 underline animation-description  flex flex-col text-center items-center  justify-center gap-2 mb-3 ">
+            class=" text-white underline-offset-2 underline animation-description  flex flex-col text-center items-center  justify-center gap-2 mb-5 ">
             <h1 class=" text-2xl">Arca</h1>
             <h1 class=" text-2xl">
                 Es una marca de joyeria fina 100% mexicana
@@ -268,20 +284,43 @@
             <h1 class="  text-2xl">
                 caracterizada en el uso de la piedra preciosa jade</h1>
         </div>
-        <div class=" max-h-[400px]  max-w-[400px] mx-auto ">
-            <img class=" image-reveal h-full w-full object-contain" src="{{ asset('images/alessandro-2.png') }}"
-                alt="">
+        <div class=" mx-auto md:w-[600px] w-[300px] duration-200  animation-description     ">
+            <div class=" md:w-[600px] w-[300px] h-[300px] relative  p-2 group  ">
+                <img src="{{ asset('images/vendor/img-tres.jpg') }}"
+                    class="  group-hover:brightness-75 rounded-md  h-full w-full" alt="">
+                <span
+                    class=" absolute z-10  top-1/2 text-center group-hover:opacity-100 opacity-0 duration-200  text-lg font-medium text-white  left-0 right-0 ">Lorem
+                    ipsum dolor, sit amet consectetur adipisicing elit</span>
+            </div>
+            <div class=" grid grid-cols-2  md:h-[400px] ">
+                <div class=" w-full p-2 md:h-[400px] relative group  ">
+
+                    <img src="{{ asset('images/vendor/img-uno.jpg') }}"
+                        class="  group-hover:brightness-75 rounded-md image-reveal h-full w-full " alt="">
+                    <span
+                        class=" absolute z-10 top-1/2 right-0 left-0 text-center group-hover:opacity-100 duration-200 opacity-0 md:text-lg text-xs md:font-medium text-white">Lorem
+                        ipsum dolor, sit amet consectetur adipisicing elit</span>
+
+                </div>
+                <div class=" p-2 md:h-[400px] w-full relative group  ">
+
+                    <img src="{{ asset('images/vendor/img-dos.jpg') }}"
+                        class=" group-hover:brightness-75  rounded-md image-reveal h-full w-full " alt="">
+                    <span
+                        class=" absolute z-10 top-1/2 text-center   right-0 left-0 group-hover:opacity-100 duration-200 opacity-0 md:text-lg text-xs  md:font-medium text-white">Lorem
+                        ipsum dolor, sit amet consectetur adipisicing elit</span>
+
+                </div>
+
+            </div>
         </div>
 
     </section>
-    <section class="  relative mb-8 mt-14">
-        <div class="product-category-carrusel">
+    <section class=" animation-description   relative mb-28 mt-14">
+        <div class="product-category-carrusel  py-4">
             Bracelets
         </div>
-
-
-
-        <div class=" md:px-[15px] px-2  cont-viewport-products-customer">
+        <div class="  mx-auto  cont-viewport-products-customer">
 
 
             <span class="icon-back-carrusel-products-customer ">
@@ -289,41 +328,42 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group card-carrusel-product shadow-md  bg-black  " href=''>
+                    <a class=" relative group   md:min-w-[350px] md:min-h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                        href=''>
 
                         <img src="{{ asset('images/Pulsera.png') }}" alt=""
-                            class="   img-products-customer group-hover:opacity-70 duration-200 object-contain">
+                            class="  hover:scale-[1.004]  img-products-customer group-hover:opacity-95  duration-300 rounded-md h-full w-full">
 
                         <h1
-                            class=" absolute opacity-0 z-10 top-1/4 text-center  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white   ">
+                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
                             Pulsera de Jade Azul
                         </h1>
-                        <p
-                            class=" z-10 absolute opacity-0 top-2/4   group-hover:opacity-100 text-center text-white    p-[2px] text-pretty ">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, cum aliquam facilis officia
-                            dicta error, quia voluptatibus iste aperiam laudantium tempora impedit adipisci esse beatae
-                            repudiandae reiciendis commodi minima dolorem!
-                        </p>
 
 
                     </a>
                 @endfor
 
-            </div>
 
+            </div>
             <span class="icon-next-carrusel-products-customer">
                 <i class='bx bx-chevron-right'></i>
             </span>
 
         </div>
+        <div class="  flex justify-center py-4 ">
+            <a href=""
+                class=" text-lg text-white  mx-auto py-1 hover:text-emerald-100 duration-200   underline underline-offset-4   ">Ver
+                Más</a>
 
-        
+        </div>
+
+
     </section>
-    <section class="  relative mb-8 mt-14">
-        <div class="product-category-carrusel">
+    <section class=" animation-description  relative mb-28 mt-14">
+        <div class="product-category-carrusel py-4">
             Necklaces
         </div>
-        <div class="md:px-[15px] px-2  cont-viewport-products-customer">
+        <div class="  mx-auto  cont-viewport-products-customer">
 
 
             <span class="icon-back-carrusel-products-customer ">
@@ -331,21 +371,16 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group card-carrusel-product shadow-md  bg-black  " href=''>
+                    <a class=" relative group  md:min-w-[350px] md:h-[350px]  h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                        href=''>
 
                         <img src="{{ asset('images/Collares.png') }}" alt=""
-                            class="   img-products-customer group-hover:opacity-70 duration-200 object-contain">
+                            class=" hover:scale-[1.004]  img-products-customer group-hover:opacity-95  duration-200  rounded-md   h-full w-full">
 
                         <h1
-                            class=" absolute opacity-0 z-10 top-1/4 text-center  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white   ">
-                            Pulsera de Jade Rosa
+                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
+                            Pulsera de Jade Azul
                         </h1>
-                        <p
-                            class=" z-10 absolute opacity-0 top-2/4 text-xl font-medium   group-hover:opacity-100 text-center text-white    p-[2px] text-pretty ">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, cum aliquam facilis officia
-                            dicta error, quia voluptatibus iste aperiam laudantium tempora impedit adipisci esse beatae
-                            repudiandae reiciendis commodi minima dolorem!
-                        </p>
 
 
                     </a>
@@ -358,13 +393,18 @@
             </span>
 
         </div>
-    </section>
+        <div class="  flex justify-center py-4 ">
+            <a href=""
+                class=" text-lg text-white  mx-auto py-1   underline underline-offset-4 hover:text-emerald-100 duration-200 ">Ver
+                Más</a>
 
-    <section class="  relative mb-8 mt-14">
-        <div class="product-category-carrusel">
+        </div>
+    </section>
+    <section class=" animation-description  mb-28 mt-14">
+        <div class="product-category-carrusel py-4">
             Earrings
         </div>
-        <div class="md:px-[15px] px-2  cont-viewport-products-customer">
+        <div class="  mx-auto  cont-viewport-products-customer">
 
 
             <span class="icon-back-carrusel-products-customer ">
@@ -372,21 +412,16 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group card-carrusel-product shadow-md  bg-black  " href=''>
+                    <a class=" relative group  md:min-w-[350px] md:h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                        href=''>
 
                         <img src="{{ asset('images/Aretes.png') }}" alt=""
-                            class="   img-products-customer group-hover:opacity-70 duration-200 object-contain">
+                            class=" hover:scale-[1.004]   img-products-customer group-hover:opacity-95  duration-300 rounded-md   h-full w-full">
 
                         <h1
-                            class=" absolute opacity-0 z-10 top-1/4 text-center  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white   ">
-                            Pulsera de Jade Rosa
+                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
+                            Pulsera de Jade Azul
                         </h1>
-                        <p
-                            class=" z-10 absolute opacity-0 top-2/4 text-xl font-medium   group-hover:opacity-100 text-center text-white    p-[2px] text-pretty ">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, cum aliquam facilis officia
-                            dicta error, quia voluptatibus iste aperiam laudantium tempora impedit adipisci esse beatae
-                            repudiandae reiciendis commodi minima dolorem!
-                        </p>
 
 
                     </a>
@@ -399,7 +434,129 @@
             </span>
 
         </div>
+        <div class="  flex justify-center py-4 ">
+            <a href=""
+                class=" text-lg text-white  mx-auto py-1  underline underline-offset-4 hover:text-emerald-100 duration-200">Ver
+                Más</a>
+
+        </div>
     </section>
+    <section class="  my-10 mb-20">
+        <div class="md:w-[500px] w-[300px] mx-auto relative coming ">
+            <img src="{{ asset('images/vendor/image.png') }}" class="  opacity-75 rounded-md  h-full w-full" alt="">
+            <div class=" absolute top-1/3 right-0 left-0 flex flex-col items-center justify-center">
+
+                <span class="  text-white  text-center font-medium text-3xl    p-2 ">Coming soon..</span>
+                <span class="  text-white  text-center font-medium text-3xl    p-2 ">Conjuntos.</span>
+            </div>
+        </div>
+    </section>
+    <section class=" md:w-[600px] w-[350px] mx-auto my-10 mb-32">
+        <h2 class=" mx-auto text-white font-medium text-xl  text-center">¿Cómo cuidar tu Joyería?</h2>
+        <div class=" my-4  ">
+            <div
+                class="toggle flex justify-between  hover:text-emerald-200  text-white border p-2 hover:border-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h2>Jade</h2>
+                </div>
+                <div class=" btn-open-closed">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+
+                </div>
+            </div>
+            <p class="answer text-white opacity-0  invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
+        </div>
+        <div class=" my-4">
+
+            <div
+                class="toggle flex justify-between hover:text-emerald-200  text-white border p-2 hover:border-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h2>Plata</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+
+                </div>
+            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
+        </div>
+        <div class=" my-4">
+            <div
+                class="toggle flex justify-between border  text-white  p-2 hover:text-emerald-200 hover:border-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h2>Piel</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+
+                </div>
+            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
+        </div>
+        <div class=" my-4 ">
+            <div
+                class="toggle flex justify-between  text-white border p-2 hover:border-emerald-200 hover:text-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h2>Latón</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+
+                </div>
+            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
+        </div>
+
+    </section>
+
     <script defer>
         document.addEventListener("DOMContentLoaded", function() {
             const backArrows = document.querySelectorAll(
@@ -439,5 +596,21 @@
                 });
             });
         });
+
+        const toggles = Array.from(document.querySelectorAll('.toggle'));
+        const answers = Array.from(document.querySelectorAll('.answers'));
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                if (toggle.classList.contains('active')) {
+                    toggle.classList.remove('active');
+                } else {
+
+                    toggles.forEach(t => {
+                        t.classList.remove('active');
+                    })
+                    toggle.classList.add('active');
+                }
+            })
+        })
     </script>
 @endsection
