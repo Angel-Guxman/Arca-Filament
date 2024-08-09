@@ -31,7 +31,7 @@
 
         .carrusel-header-home {
             width: 200%;
-            animation: carrusel 20s 1  linear/* ,
+            animation: carrusel 20s infinite  linear/* ,
             ensulugar 2s 1 linear forwards 20s */;
         }
 
@@ -68,20 +68,41 @@
             border-radius: 5px;
             /* Radio de esquina del thumb */
         }
+        .menu-option:hover{
+            box-shadow: 0 0  10px rgb(255,255, 255, 0.4);
+        }
+        .transition-menu{
+            animation: menu-hamburger-animation 250ms ease;
+        }
+        @keyframes menu-hamburger-animation{
+            0%{
+                transform: translateX(-450px);
+            }
+            100%{
+                transform: translateX(0px);
+            }
+        }
+        .catalogue:hover .option-catalogue{
+        visibility: visible;
+        min-height: 130px;
+        width: 250px;
+        opacity: 100%;
+        transition:  width 250ms ease, opacity 250ms ease, visibility 250ms ease;
+        }
     </style>
 
-    <header class="header-home h-16 bg-black text-white">
+    <header class="header-home  py-1 bg-black text-white">
         <div class="carrusel-header-home flex   items-center h-full">
             <div class=" text-carrusel text-center">
-                <h2 class=" text-2xl tracking-widest">We don´t made jewelry, we made amulets </h2>
+                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
             </div>
             <div class=" text-carrusel text-center">
-                <h2 class=" text-2xl tracking-widest">We don´t made jewelry, we made amulets </h2>
+                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
             </div>
 
         </div>
     </header>
-    <section class=" bg-white  h-[60px] ">
+    <section class=" sticky top-0 z-20 bg-white ">
         <nav class=" h-full border">
             <ul class=" grid grid-cols-3  items-center px-2  h-full "> 
                 <li class="   ">
@@ -91,7 +112,7 @@
 
                 </li>
                 <li class=" flex justify-center">
-                    <a class=" text-3xl tracking-widest" href="">ARCA</a>
+                    <a class=" text-2xl tracking-widest" href="">ARCA</a>
                 </li>
                 <li class="      flex justify-end items-center  ">
                     <button id="button-search"
@@ -111,26 +132,39 @@
                 </li>
             </ul>
         </nav>
+        <footer class=" hidden md:block       bg-neutral-100/90 ">
+            <nav class=" border-b-2 w-full flex justify-center items-center">
+                <ul class=" w-full grid grid-cols-3 justify-items-center ">
+                    <a   href="{{ route('home') }}" class=" text-black py-2 px-3  duration-200   hover:bg-gray-200/80  {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} ">
+                      Inicio
+                    </a>
+                    <div class="catalogue relative ">
+                    <a href="{{ route('catalogue') }}"  class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-black' : '' }} ">
+                       
+                         Catálogo
+                         <x-svgs.arrow-down  class="  size-4">
+                         </x-svgs.arrow-down>
+                       
+                    </a>
+                    <ul class=" invisible h-0 w-0 opacity-0 absolute p-2 pt-3    flex flex-col   option-catalogue  bg-neutral-100/80 border ">
+                      
+                            <a href="" class=" py-1 pl-3 bg-neutral-100  mb-1  hover:scale-[.99]   duration-200     text-sm ">Bracelets</a>
+                            <a href="" class="py-1 pl-3  mb-1 bg-neutral-100   hover:scale-[.99]  duration-200   r text-sm  ">Necklaces</a>
+                            <a href="" class="py-1  pl-3  bg-neutral-100    hover:scale-[.99]  duration-200  text-sm  ">Earrings</a>
+                      
+                    </ul>
+                </div>
+                
+                    <a  href=" {{ route('history') }}" class=" py-2 px-3 text-black  duration-200   hover:bg-gray-200/80 {{ request()->routeis('history') ? 'border-b-2  border-black' : '' }}  ">
+                       La Esencia del Jade
+                    </a>
+                </ul>
+              
+            </nav>
+        </footer>
     </section>
-    <footer class=" hidden md:block       bg-neutral-200 ">
-        <nav class=" w-full flex justify-center items-center">
-            <ul class=" w-full grid grid-cols-3 justify-items-center ">
-                <li class=" py-2 px-3  duration-200   hover:bg-neutral-300/90">
-                    <a class="   {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} "
-                        href="{{ route('home') }}">Inicio</a>
-                </li>
-                <li class=" py-2 px-3    hover:bg-neutral-300/90 duration-200  ">
-                    <a class=" {{ request()->routeIs('catalogue') ? 'border-b-2  border-black' : '' }}"
-                        href="{{ route('catalogue') }}">Catálogo</a>
-                </li>
-                <li class=" py-2 px-3  duration-200   hover:bg-neutral-300/90  ">
-                    <a class="{{ request()->routeis('history') ? 'border-b-2  border-black' : '' }}"
-                        href=" {{ route('history') }}">La Esencia del Jade</a>
-                </li>
-            </ul>
-        </nav>
-    </footer>
-    <div class=" menu-hamburger hidden   md:hidden absolute z-20 left-0 right-0 top-0 bottom-0 backdrop-brightness-50">
+ 
+    <div class=" menu-hamburger hidden   md:hidden  fixed z-20 left-0 right-0 top-0 bottom-0 backdrop-brightness-50">
         <div class=" flex justify-start items-end    h-[18%]">
             <button class=" btn-closed bg-neutral-100 ml-2 mb-1 p-2 hover:scale-105 duration-200 h-fit   rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -138,15 +172,14 @@
                   </svg>
                   </button>
         </div>
-        <div class="flex justify-center items-center  h-[33%]">
-            <div class="  border     p-4 px-4  bg-neutral-100/90  shadow-2xl rounded-md z-20">
-                <ul class=" flex flex-col gap-2">
-            <a href="" class="hover:bg-gray-100 hover:border-gray-300 hover:text-slate-700 text-sm border bg-white rounded-md p-2 {{ request()->routeIs('home') ? 'border-gray-400 border-2   ' : '' }} ">
-               
-                
+        <div class="flex justify-start items-center  h-[33%]">
+            <div class="container-menu   w-full max-w-[450px]  mt-5   pb-10    p-4 px-4 bg-black shadow-2xl  z-20">
+                <h1 class=" text-white  text-center py-2">Menú</h1>
+                <ul class=" flex flex-col gap-3">
+            <a href="{{route('home')}}" class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} "> 
                 Inicio</a>  
-                <a href="" class="hover:bg-gray-100 hover:border-gray-300 hover:text-slate-700 border text-sm bg-white rounded-md p-2 {{ request()->routeIs('catalogue') ? 'border-gray-400 border-2' : '' }}">Cátalogo</a>
-                <a href="" class="hover:bg-gray-100 hover:border-gray-300 hover:text-slate-700 text-sm bg-white border rounded-md p-2 {{ request()->routeIs('history') ? 'border-gray-400 border-2' : '' }} ">Esencia del Jade</a>
+                <a href="{{route('catalogue')}}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
+                <a href="{{route('history')}}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
             </ul>
         </div>
     </div>
@@ -213,13 +246,24 @@
           }) */
           const hamburgerBtn=document.querySelector('.hamburger-btn');
           const menuHamburger=document.querySelector('.menu-hamburger');
+          const containerMenu=document.querySelector('.container-menu');
+          const links=Array.from(document.querySelectorAll('.link-menu-hamburger'));
+          links.forEach(l => {
+            l.addEventListener('click',()=>{
+            menuHamburger.classList.add('hidden');
+            containerMenu.classList.remove('transition-menu');
+            document.body.style.overflow = '';
+            })
+          });
         hamburgerBtn.addEventListener('click',()=>{
             menuHamburger.classList.remove('hidden');
             document.body.style.overflow='hidden';
+            containerMenu.classList.add('transition-menu');
         })
         const btnClosed=document.querySelector('.btn-closed');
         btnClosed.addEventListener('click',()=>{
             menuHamburger.classList.add('hidden');
+            containerMenu.classList.remove('transition-menu');
             document.body.style.overflow = '';
 
         })
