@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,5 @@ Route::get('/Catalogue', function () {
 Route::get('/History', function () {
     return view('customer.history');
 })->name('history');
+
+Route::get('/carrito',[CartController::class,'index'])->name('cart');
