@@ -123,7 +123,7 @@
                     <input
                         class=" ring-1 outline-none p-[1px]    ring-gray-300 duration-100   sm:h-4/6 sm:w-44 sm:opacity-100 sm:visible  h-0 w-0 opacity-0 invisible focus:ring-2 rounded-md "
                         type="text" name="search" id="search">
-                    <a href=""
+                    <a href="{{route('cart')}}"
                         class=" ml-3 mr-1 hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
                       <x-svgs.cart-button></x-svgs.cart-button>
 

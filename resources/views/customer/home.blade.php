@@ -474,17 +474,8 @@ backdrop-filter: blur(7px);
 </div>
 
     </section>
-    <section    class=" text-white border">
-     @verbatim
-     {{ variable }}
-     @endverbatim
-    </section>
-    
+  
    
-        <script defer>
-         
-            
-        </script>
   
   
     <script defer>
