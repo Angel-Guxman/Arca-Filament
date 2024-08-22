@@ -12,8 +12,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-        <link rel="shortcut icon" href="{{asset('images/arca-a.ico')}}" sizes="16x16">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="{{ asset('images/arca-a.ico') }}" sizes="16x16">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
 
@@ -24,7 +24,7 @@
         }
 
         .header-home {
-          
+
             overflow: hidden;
             width: 100%;
         }
@@ -48,21 +48,22 @@
                 transform: translateX(0%)
             }
         }
-         body::-webkit-scrollbar {
+
+        body::-webkit-scrollbar {
             width: 5px;
-        /* horizontal */
+            /* horizontal */
             height: 5px;
-            
-        }  
+
+        }
 
         /* Estilo del "track" (fondo) de la barra de desplazamiento */
         body::-webkit-scrollbar-track {
-            background:#fffefe00;
+            background: #fffefe00;
 
         }
 
         body::-webkit-scrollbar-thumb {
-          
+
             background: #888;
             /* Color del thumb */
             border-radius: 5px;
@@ -104,7 +105,7 @@
     </header>
     <section class=" sticky top-0 z-20 bg-white ">
         <nav class=" h-full border">
-            <ul class=" grid grid-cols-3  items-center px-2  h-full "> 
+            <ul class=" grid grid-cols-3  items-center px-2  h-full ">
                 <li class="   ">
                     <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.hamburger-button></x-svgs.hamburger-button>
@@ -118,14 +119,14 @@
                     <button id="button-search"
                         class=" mr-[2px] hover:scale-105 duration-200 flex  p-1 rounded-full justify-center items-center "
                         href="">
-                      <x-svgs.search-button></x-svgs.search-button>
+                        <x-svgs.search-button></x-svgs.search-button>
                     </button>
                     <input
                         class=" ring-1 outline-none p-[1px]    ring-gray-300 duration-100   sm:h-4/6 sm:w-44 sm:opacity-100 sm:visible  h-0 w-0 opacity-0 invisible focus:ring-2 rounded-md "
                         type="text" name="search" id="search">
                     <a href="{{route('cart')}}"
                         class=" ml-3 mr-1 hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
-                      <x-svgs.cart-button></x-svgs.cart-button>
+                        <x-svgs.cart-button></x-svgs.cart-button>
 
 
                     </a>
@@ -167,10 +168,11 @@
     <div class=" menu-hamburger hidden   md:hidden  fixed z-20 left-0 right-0 top-0 bottom-0 backdrop-brightness-50">
         <div class=" flex justify-start items-end    h-[18%]">
             <button class=" btn-closed bg-neutral-100 ml-2 mb-1 p-2 hover:scale-105 duration-200 h-fit   rounded-full ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                  </svg>
-                  </button>
+                </svg>
+            </button>
         </div>
         <div class="flex justify-start items-center  h-[33%]">
             <div class="container-menu   w-full max-w-[450px]  mt-5   pb-10    p-4 px-4 bg-black shadow-2xl  z-20">
@@ -178,8 +180,8 @@
                 <ul class=" flex flex-col gap-3">
             <a href="{{route('home')}}" class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} "> 
                 Inicio</a>  
-                <a href="{{route('catalogue')}}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
-                <a href="{{route('history')}}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
+                <a href="{{route('catalogue') }}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
+                <a href="{{route('history') }}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
             </ul>
         </div>
     </div>
@@ -211,13 +213,13 @@
                 <h2>Redes Sociales</h2>
                 <div class=" flex gap-3 ">
                     <a href="" class=" hover:scale-105 duration-200">
-                      <x-svgs.instagram-icon></x-svgs.instagram-icon>
+                        <x-svgs.instagram-icon></x-svgs.instagram-icon>
                     </a>
                     <a href="" class=" hover:scale-105 duration-200">
                         <x-svgs.facebook-icon></x-svgs.facebook-icon>
                     </a>
                     <a href="" class=" hover:scale-105 duration-200 ">
-                       <x-svgs.messenger-icon></x-svgs.messenger-icon>
+                        <x-svgs.messenger-icon></x-svgs.messenger-icon>
                     </a>
 
                 </div>
@@ -260,32 +262,32 @@
             document.body.style.overflow='hidden';
             containerMenu.classList.add('transition-menu');
         })
-        const btnClosed=document.querySelector('.btn-closed');
-        btnClosed.addEventListener('click',()=>{
+        const btnClosed = document.querySelector('.btn-closed');
+        btnClosed.addEventListener('click', () => {
             menuHamburger.classList.add('hidden');
             containerMenu.classList.remove('transition-menu');
             document.body.style.overflow = '';
 
         })
         // Define una media query
-const mediaQuery = window.matchMedia("(max-width: 768px)");
-    // Añadir un listener para que la función se ejecute al cambiar el tamaño de la ventana
-mediaQuery.addEventListener('change', handleResize);
-function handleResize(event) {
-    if(event.matches){
-        if(!menuHamburger.classList.contains('hidden')){
-            document.body.style.overflow='hidden';
+        const mediaQuery = window.matchMedia("(max-width: 768px)");
+        // Añadir un listener para que la función se ejecute al cambiar el tamaño de la ventana
+        mediaQuery.addEventListener('change', handleResize);
+
+        function handleResize(event) {
+            if (event.matches) {
+                if (!menuHamburger.classList.contains('hidden')) {
+                    document.body.style.overflow = 'hidden';
+                }
+            } else {
+                document.body.style.overflow = '';
+
+            }
         }
-    }else{
-        document.body.style.overflow='';
 
-    }
-}
-
-// Ejecutar la función para establecer el estado inicial
-handleResize(mediaQuery);
-         
-          
+        // Ejecutar la función para establecer el estado inicial
+        handleResize(mediaQuery);
     </script>
 </body>
+
 </html>
