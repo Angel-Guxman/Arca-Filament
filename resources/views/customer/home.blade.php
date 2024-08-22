@@ -5,10 +5,12 @@
                 width: 90%;
                 height: 80%;
             } */
-        /*    .coming:hover{
-                box-shadow: 0px 0px 10px rgb(249, 249, 249);
-                transition: 200ms;
-             } */
+        .bg-coming {
+            /* background: rgb(255, 255, 255,.2); */
+            /* background: rgba(255, 255, 255, 0.3);  */
+            backdrop-filter: blur(4px);
+            filter: contrast(2), brightness(0.8)
+        }
 
         .arca-letter-animation {
             animation: animation-init 0.3s 1 cubic-bezier(.65, .05, .36, 1);
@@ -73,7 +75,7 @@
             font-weight: 600;
             font-size: 40px;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 1px;
 
         }
 
@@ -257,11 +259,12 @@
     <section class=" p-4">
         <div class=" md:mx-10 my-5 md:max-h-[500px]   relative       grid grid-cols-1 md:grid-cols-2 ">
             <section
-                class="   md:max-h-[500px] md:static z-10 left-0 right-0 top-7 bottom-0    md:grid absolute text-white  grid-cols-1 items-center justify-items-center ">
+                class="    md:max-h-[500px] md:static z-10 left-0 right-0 top-7 bottom-0    md:grid absolute text-white  grid-cols-1 items-center justify-items-center ">
                 <div class=" flex flex-col gap-4 ">
 
-                    <h1 class=" text-9xl mx-auto arca-letter-animation ">Arca</h1>
-                    <h3 class=" text-3xl mx-auto  arca-letter-animation">Accesorios de Jade</h3>
+                    <h1 class=" text-8xl mx-auto arca-letter-animation ">Arca</h1>
+                    <h3 class=" text-3xl mx-auto  arca-letter-animation border-b-[1px] border-emerald-300/90">Accesorios de
+                        Jade</h3>
                     <a href=""
                         class="  text-xl border    md:border-[#2f3336] mx-auto p-2 hover:bg-white hover:text-black duration-200 md:hover:scale-105 relative">
 
@@ -269,7 +272,7 @@
                 </div>
             </section>
             <div class=" max-h-[400px]      ">
-                <img class="  md:hover:brightness-105 brightness-75 opacity-95 md:opacity-100  md:brightness-100 md:border-[#2f3336]  md:border md:p-10  max-h-full w-auto mx-auto object-contain   "
+                <img class="  md:hover:brightness-105 brightness-50 opacity-95 md:opacity-100  md:brightness-100 md:border-[#2f3336]  md:border md:p-10  max-h-full w-auto mx-auto object-contain   "
                     src="{{ asset('images/image.png') }}" alt="" />
             </div>
         </div>
@@ -317,9 +320,10 @@
 
     </section>
     <section class=" animation-description   relative mb-28 mt-14">
-        <div class="product-category-carrusel  py-4">
+        <div class="product-category-carrusel ">
             Bracelets
         </div>
+        <h2 class=" text-center text-gray-200 font-light mb-5">"Elegancia y tradición en cada gesto"</h2>
         <div class="  mx-auto  cont-viewport-products-customer">
 
 
@@ -328,18 +332,16 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group   md:min-w-[350px] md:min-h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                    <a class=" relative group  duration-200   overflow-hidden md:min-w-[350px] md:min-h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
                         href=''>
 
                         <img src="{{ asset('images/Pulsera.png') }}" alt=""
-                            class="  hover:scale-[1.004]  img-products-customer group-hover:opacity-95  duration-300 rounded-md h-full w-full">
+                            class="   rounded-t-md   hover:scale-105  img-products-customer group-hover:opacity-95  duration-300  h-full w-full">
 
                         <h1
-                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
+                            class=" absolute  z-10 bottom-0 text-center p-2   text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
                             Pulsera de Jade Azul
                         </h1>
-
-
                     </a>
                 @endfor
 
@@ -360,9 +362,11 @@
 
     </section>
     <section class=" animation-description  relative mb-28 mt-14">
-        <div class="product-category-carrusel py-4">
+        <div class="product-category-carrusel ">
             Necklaces
         </div>
+        <h2 class=" text-center text-gray-200 font-light mb-5">"Estilo y sofisticación en cada vuelta"</h2>
+
         <div class="  mx-auto  cont-viewport-products-customer">
 
 
@@ -371,14 +375,14 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group  md:min-w-[350px] md:h-[350px]  h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                    <a class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px]  h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
                         href=''>
 
                         <img src="{{ asset('images/Collares.png') }}" alt=""
-                            class=" hover:scale-[1.004]  img-products-customer group-hover:opacity-95  duration-200  rounded-md   h-full w-full">
+                            class=" hover:scale-105  img-products-customer group-hover:opacity-95  duration-200  rounded-md   h-full w-full">
 
                         <h1
-                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
+                            class=" absolute  z-10 bottom-0 text-center p-2  text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
                             Pulsera de Jade Azul
                         </h1>
 
@@ -401,9 +405,10 @@
         </div>
     </section>
     <section class=" animation-description  mb-28 mt-14">
-        <div class="product-category-carrusel py-4">
+        <div class="product-category-carrusel ">
             Earrings
         </div>
+        <h2 class=" text-center text-gray-200 font-light mb-5">"Un toque de distinción en cada par"</h2>
         <div class="  mx-auto  cont-viewport-products-customer">
 
 
@@ -412,14 +417,14 @@
             </span>
             <div class=" cont-carrusel-product">
                 @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group  md:min-w-[350px] md:h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                    <a class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
                         href=''>
 
                         <img src="{{ asset('images/Aretes.png') }}" alt=""
-                            class=" hover:scale-[1.004]   img-products-customer group-hover:opacity-95  duration-300 rounded-md   h-full w-full">
+                            class=" hover:scale-105   img-products-customer group-hover:opacity-95  duration-300 rounded-md   h-full w-full">
 
                         <h1
-                            class=" absolute  z-10 bottom-0 text-center p-2  text-2xl font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
+                            class=" absolute  z-10 bottom-0 text-center p-2  text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
                             Pulsera de Jade Azul
                         </h1>
 
@@ -441,14 +446,15 @@
 
         </div>
     </section>
-    <section class="  my-10 mb-20">
-        <div class="md:w-[500px] w-[300px] mx-auto relative coming ">
-            <img src="{{ asset('images/vendor/image.png') }}" class="  opacity-75 rounded-md  h-full w-full" alt="">
-            <div class=" absolute top-1/3 right-0 left-0 flex flex-col items-center justify-center">
-
+    <section class="  my-10 mb-20 ">
+        <div class="md:w-[500px]  w-[300px]  mx-auto relative ">
+            <img src="{{ asset('images/vendor/image.png') }}" class=" z-0  rounded-md coming   h-full w-full"
+                alt="">
+            <div class=" bg-coming absolute top-0 bottom-0  right-0 left-0 flex flex-col items-center justify-center">
                 <span class="  text-white  text-center font-medium text-3xl    p-2 ">Coming soon..</span>
                 <span class="  text-white  text-center font-medium text-3xl    p-2 ">Conjuntos.</span>
             </div>
+
         </div>
     </section>
     <section class=" md:w-[600px] w-[350px] mx-auto my-10 mb-32">
@@ -457,13 +463,13 @@
             <div
                 class="toggle flex justify-between  hover:text-emerald-200  text-white border p-2 hover:border-emerald-300 cursor-pointer">
                 <div class=" flex items-center gap-2">
-               <x-svgs.right></x-svgs.right>                                 
+                    <x-svgs.right></x-svgs.right>
                     <h2>Jade</h2>
                 </div>
                 <div class=" btn-open-closed">
                     <x-svgs.arrow-down>
                     </x-svgs.arrow-down>
-                    
+
                 </div>
             </div>
             <p class="answer text-white opacity-0  invisible h-0">
@@ -474,54 +480,66 @@
         </div>
         <div class=" my-4">
 
-        <div class="toggle flex justify-between hover:text-emerald-200  text-white border p-2 hover:border-emerald-300 cursor-pointer">
-            <div class=" flex items-center gap-2">
-                <x-svgs.right></x-svgs.right>                                  
-                <h2>Plata</h2>
+            <div
+                class="toggle flex justify-between hover:text-emerald-200  text-white border p-2 hover:border-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <x-svgs.right></x-svgs.right>
+                    <h2>Plata</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <x-svgs.arrow-down>
+                    </x-svgs.arrow-down>
+
+                </div>
             </div>
-            <div class="btn-open-closed">
-                <x-svgs.arrow-down>
-                </x-svgs.arrow-down>
-                  
-            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
         </div>
-        <p class="answer text-white opacity-0 invisible h-0">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum reprehenderit voluptate.
-        </p>
-    </div>
-<div class=" my-4">
-        <div class="toggle flex justify-between border  text-white  p-2 hover:text-emerald-200 hover:border-emerald-300 cursor-pointer">
-            <div class=" flex items-center gap-2">
-               <x-svgs.right></x-svgs.right>                                  
-                <h2>Piel</h2>
+        <div class=" my-4">
+            <div
+                class="toggle flex justify-between border  text-white  p-2 hover:text-emerald-200 hover:border-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <x-svgs.right></x-svgs.right>
+                    <h2>Piel</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <x-svgs.arrow-down>
+                    </x-svgs.arrow-down>
+
+                </div>
             </div>
-            <div class="btn-open-closed">
-                <x-svgs.arrow-down>
-                </x-svgs.arrow-down>
-                  
-            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
         </div>
-        <p class="answer text-white opacity-0 invisible h-0">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum reprehenderit voluptate.
-        </p>
-</div>
-<div class=" my-4 ">
-        <div class="toggle flex justify-between  text-white border p-2 hover:border-emerald-200 hover:text-emerald-300 cursor-pointer">
-            <div class=" flex items-center gap-2">
-               <x-svgs.right></x-svgs.right>                 
-                <h2>Latón</h2>
+        <div class=" my-4 ">
+            <div
+                class="toggle flex justify-between  text-white border p-2 hover:border-emerald-200 hover:text-emerald-300 cursor-pointer">
+                <div class=" flex items-center gap-2">
+                    <x-svgs.right></x-svgs.right>
+                    <h2>Latón</h2>
+                </div>
+                <div class="btn-open-closed">
+                    <x-svgs.arrow-down>
+                    </x-svgs.arrow-down>
+                </div>
             </div>
-            <div class="btn-open-closed">
-             <x-svgs.arrow-down>
-             </x-svgs.arrow-down>
-            </div>
+            <p class="answer text-white opacity-0 invisible h-0">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto
+                laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum
+                reprehenderit voluptate.
+            </p>
         </div>
-        <p class="answer text-white opacity-0 invisible h-0">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti sapiente deleniti sint illo architecto laudantium amet ab sed quia? Mollitia, ratione. Voluptate, repellat dolorum. Quia libero laudantium earum reprehenderit voluptate.
-        </p>
-</div>
 
     </section>
+
+
+
 
     <script defer>
         document.addEventListener("DOMContentLoaded", function() {
