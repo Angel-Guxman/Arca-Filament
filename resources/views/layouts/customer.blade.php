@@ -180,8 +180,8 @@
                 <ul class=" flex flex-col gap-3">
             <a href="{{route('home')}}" class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} "> 
                 Inicio</a>  
-                <a href="{{route('catalogue')}}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
-                <a href="{{route('history')}}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
+                <a href="{{route('catalogue') }}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
+                <a href="{{route('history') }}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
             </ul>
         </div>
     </div>

@@ -340,7 +340,7 @@
         <a href="{{route('earrings') }}">Aretes</a>
     </div>
 
-    <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Catálogo</h1>
+    <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Favoritos</h1>
 
     <div class="relative inline-block">
         <button class="text-white flex  hover:text-emerald-200 cursor-pointer filter" id="filter-button">
