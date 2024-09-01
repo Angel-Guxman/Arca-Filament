@@ -31,4 +31,12 @@ Route::get('/Favorites', function () {
     return view('customer.favorites');
 })->name('favorites');
 
+Route::get('/PrivacyNotice', function () {
+    return view('customer.privacyNotice');
+})->name('privacyNotice');
+
+Route::get('/ProductInformation', function () {
+    return view('customer.productInformation');
+})->name('productInformation');
+
 Route::get('/carrito',[CartController::class,'index'])->name('cart');
