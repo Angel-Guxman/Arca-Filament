@@ -17,7 +17,7 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input type="text" wire:model.live="search" placeholder="Buscar productos..."
+                    <input type="text" wire:model.live.debounce.500ms="search" placeholder="Buscar productos..."
                         class="block w-full p-3 ps-9 text-sm   outline-gray-800 outline-1 focus:outline  border  border-gray-700   bg-gray-50     text-gray-700 "
                         required />
                     <div class="absolute inset-y-0 end-2.5 flex items-center">
@@ -30,17 +30,29 @@
                 </div>
             </form>
             @if ($search !== '')
+
+
                 <ul class=" pt-2 bg-white pb-1 max-h-60 overflow-y-scroll ">
                     <h3 class=" p-1 text-gray-700 mx-2 my-1 border-b-2">Productos</h3>
-                    @forelse($products as $product)
+                    <div wire:loading>
                         <a href=""
-                            class=" px-1 text-sm hover:bg-gray-200/70  m-2 block text-gray-700   p-1     opacity-80">{{ $product->name }}</a>
-                    @empty
-                        <a class=" px-1 m-2 block text-gray-700 border rounded p-1  opacity-80">No se encontraron
-                            usuarios.</a>
-                    @endforelse
+                            class=" px-1 text-sm  m-2 block text-gray-700   p-1     opacity-80">Buscando..</a>
+                    </div>
+                    <div wire:loading.remove>
+
+
+
+                        @forelse($products as $product)
+                            <a href=""
+                                class=" px-1 text-sm hover:bg-gray-200/70  m-2 block text-gray-700   p-1     opacity-80">{{ $product->name }}</a>
+                        @empty
+                            <a class=" px-1 m-2 block text-sm text-gray-700  rounded p-1  opacity-80">No se
+                                encontraron
+                                productos.</a>
+                        @endforelse
+                    </div>
                 </ul>
-            @else
+
             @endif
 
 

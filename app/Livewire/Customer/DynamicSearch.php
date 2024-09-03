@@ -11,6 +11,9 @@ class DynamicSearch extends Component
 {
 
     public $search = '';
+
+    
+    
     public function render()
     {
         $products =$this->search? Product::where('name', 'like', '%' . $this->search . '%')->get():[];

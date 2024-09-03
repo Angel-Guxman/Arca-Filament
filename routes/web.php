@@ -32,3 +32,7 @@ Route::get('/Favorites', function () {
 })->name('favorites');
 
 Route::get('/carrito',[CartController::class,'index'])->name('cart');
+
+Route::get('/perfil', function () {
+    return view('customer.profile');
+})->name('profile');

@@ -154,9 +154,10 @@
                     <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.hamburger-button></x-svgs.hamburger-button>
                     </button>
-                    <button href="" class="hidden md:block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                    <a href="{{ route('profile') }}"
+                        class="hidden md:inline-block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
                         <x-svgs.user-button></x-svgs.user-button>
-                    </button>
+                    </a>
 
                 </li>
                 <li class=" flex justify-center">
@@ -280,13 +281,15 @@
         const $searchMenu = document.querySelector('#search-menu');
         $buttonSearch.addEventListener('click', () => {
             $searchMenu.classList.remove('hidden');
-            console.log('ci');
+            document.body.style.overflow = 'hidden';
+
         })
 
 
         $searchClose.addEventListener('click', () => {
             $searchMenu.classList.add('hidden');
-            console.log('hdf');
+            document.body.style.overflow = '';
+
 
 
         })
