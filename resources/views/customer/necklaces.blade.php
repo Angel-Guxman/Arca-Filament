@@ -335,9 +335,9 @@
     </div>
 
     <div class="dashboard-menu" id="dashboard-menu">
-        <a href="{{route('bracelets') }}">Pulseras</a>
-        <a href="{{route('necklaces') }}">Collares</a>
-        <a href="{{route('earrings') }}">Aretes</a>
+        <a href="{{ route('bracelets') }}">Pulseras</a>
+        <a href="{{ route('necklaces') }}">Collares</a>
+        <a href="{{ route('earrings') }}">Aretes</a>
     </div>
 
     <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Collares</h1>
@@ -398,8 +398,7 @@
             <div class="carousel-container">
                 @for ($i = 0; $i < $repetitions; $i++)
                     <div class="carousel-item">
-                        {{-- href="/producto/{{ $product['id'] }}" --}}
-                        <a  hre='#' class="zoom-container">
+                        <a href="{{ route('productInformation', ['id' => $index]) }}" class="zoom-container">
                             <img class="w-100 h-80 mb-2" src='{{ asset($product['image']) }}' alt="{{ $product['name'] }}">
                             <div class="zoom-icon">
                                 <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
@@ -495,9 +494,19 @@
             }
 
             const modal = document.getElementById('filter-modal');
+            const carouselWrapper = document.querySelector('.carousel-wrapper');
+
             modal.classList.remove('show');
             modal.classList.add('hide');
-            setTimeout(() => modal.classList.add('hidden'), 500);
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Restaurar la posición del carrusel
+                carouselWrapper.classList.remove('shift-right');
+            }, 500);
+
+            // Limpiar los campos de entrada
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
         });
 
         document.querySelectorAll('.zoom-container').forEach(container => {
