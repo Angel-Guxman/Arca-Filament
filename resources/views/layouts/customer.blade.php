@@ -17,7 +17,7 @@
 
 </head>
 
-<body class=" bg-black">
+<body class=" bg-black  ">
     <style>
         body {
             font-family: "Poppins", sans-serif;
@@ -31,8 +31,10 @@
 
         .carrusel-header-home {
             width: 200%;
-            animation: carrusel 20s infinite  linear/* ,
-            ensulugar 2s 1 linear forwards 20s */;
+            animation: carrusel 20s infinite linear
+                /* ,
+            ensulugar 2s 1 linear forwards 20s */
+            ;
         }
 
         .text-carrusel {
@@ -69,28 +71,53 @@
             border-radius: 5px;
             /* Radio de esquina del thumb */
         }
-        .menu-option:hover{
-            box-shadow: 0 0  10px rgb(255,255, 255, 0.4);
+
+        .menu-option:hover {
+            box-shadow: 0 0 10px rgb(255, 255, 255, 0.4);
         }
-        .transition-menu{
+
+        .transition-menu {
             animation: menu-hamburger-animation 250ms ease;
         }
-        @keyframes menu-hamburger-animation{
-            0%{
+
+        @keyframes menu-hamburger-animation {
+            0% {
                 transform: translateX(-450px);
             }
-            100%{
+
+            100% {
                 transform: translateX(0px);
             }
         }
-        .catalogue:hover .option-catalogue{
-        visibility: visible;
-        min-height: 130px;
-        width: 250px;
-        opacity: 100%;
-        transition:  width 250ms ease, opacity 250ms ease, visibility 250ms ease;
+
+        .catalogue:hover .option-catalogue {
+            visibility: visible;
+            min-height: 130px;
+            width: 250px;
+            opacity: 100%;
+            transition: width 250ms ease, opacity 250ms ease, visibility 250ms ease;
         }
     </style>
+
+
+    {{-- menu hamburguesa --}}
+    <div class=" menu-hamburger hidden   h-full    md:hidden fixed z-20 left-0 right-0 top-0 backdrop-brightness-50">
+        <div class="flex justify-start items-center h-[100%]">
+            <div class="container-menu   w-full max-w-[450px]  mt-5   pb-10    p-4 px-4 bg-black shadow-2xl  z-20">
+                <h1 class=" text-white  text-center py-2">Menú</h1>
+                <ul class=" flex flex-col gap-3">
+                    <a href="{{ route('home') }}"
+                        class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} ">
+                        Inicio</a>
+                    <a href="{{ route('catalogue') }}"
+                        class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
+                    <a href="{{ route('history') }}"
+                        class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia
+                        del Jade</a>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <header class="header-home  py-1 bg-black text-white">
         <div class="carrusel-header-home flex   items-center h-full">
@@ -103,31 +130,54 @@
 
         </div>
     </header>
-    <section class=" sticky top-0 z-20 bg-white ">
-        <nav class=" h-full border">
+    <section class=" sticky  top-0 z-20 bg-white  ">
+
+
+        <nav class=" h-full border relative">
+            <div class=" absolute hidden      min-h-[85px]    left-0 right-0    z-20" id="search-menu">
+
+                <livewire:customer.dynamic-search />
+            </div>
+            {{-- closed button --}}
+            <div class="hidden  w-full  absolute  z-40 justify-start items-end  md:hidden btn-closed    ">
+
+                <button class=" hover:bg-neutral-100 ml-2 bg-white  p-2 duration-200 h-fit   rounded-full ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
             <ul class=" grid grid-cols-3  items-center px-2  h-full ">
                 <li class="   ">
                     <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.hamburger-button></x-svgs.hamburger-button>
+                    </button>
+                    <button href="" class="hidden md:block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                        <x-svgs.user-button></x-svgs.user-button>
                     </button>
 
                 </li>
                 <li class=" flex justify-center">
                     <a class=" text-2xl tracking-widest" href="">ARCA</a>
                 </li>
-                <li class="      flex justify-end items-center  ">
+                <li class="    relative      flex justify-end items-center  ">
                     <button id="button-search"
-                        class=" mr-[2px] hover:scale-105 duration-200 flex  p-1 rounded-full justify-center items-center "
+                        class=" mr-[2px]  duration-200 flex  hover:bg-gray-100 p-1 rounded-full justify-center items-center  "
                         href="">
                         <x-svgs.search-button></x-svgs.search-button>
                     </button>
-                    <input
-                        class=" ring-1 outline-none p-[1px]    ring-gray-300 duration-100   sm:h-4/6 sm:w-44 sm:opacity-100 sm:visible  h-0 w-0 opacity-0 invisible focus:ring-2 rounded-md "
-                        type="text" name="search" id="search">
-                    <a href="{{route('cart')}}"
+
+                    <a href="{{ route('cart') }}"
                         class=" ml-3 mr-1 hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.cart-button></x-svgs.cart-button>
 
+
+                    </a>
+                    <a href="{{ route('home') }}"
+                        class="  hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
+                        <x-svgs.heart-button></x-svgs.heart-button>
 
                     </a>
                 </li>
@@ -136,56 +186,40 @@
         <footer class=" hidden md:block       bg-neutral-100/90 ">
             <nav class=" border-b-2 w-full flex justify-center items-center">
                 <ul class=" w-full grid grid-cols-3 justify-items-center ">
-                    <a   href="{{ route('home') }}" class=" text-black py-2 px-3  duration-200   hover:bg-gray-200/80  {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} ">
-                      Inicio
+                    <a href="{{ route('home') }}"
+                        class=" text-black py-2 px-3  duration-200   hover:bg-gray-200/80  {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} ">
+                        Inicio
                     </a>
                     <div class="catalogue relative ">
-                    <a href="{{ route('catalogue') }}"  class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-black' : '' }} ">
-                       
-                         Catálogo
-                         <x-svgs.arrow-down  class="  size-4">
-                         </x-svgs.arrow-down>
-                       
-                    </a>
-                    <ul class=" invisible h-0 w-0 opacity-0 absolute p-2 pt-3    flex flex-col   option-catalogue  bg-neutral-100/80 border ">
+                        <a href="{{ route('catalogue') }}"
+                            class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-gray-600' : '' }} ">
+
+                            Catálogo
+                            {{--     <x-svgs.arrow-down  class="  size-4">
+                         </x-svgs.arrow-down> --}}
+
+                        </a>
+                        {{--   sub menu
+                  <ul class=" invisible h-0 w-0 opacity-0 absolute p-2 pt-3    flex flex-col   option-catalogue  bg-neutral-100/80 border ">
                       
                             <a href="" class=" py-1 pl-3 bg-neutral-100  mb-1  hover:scale-[.99]   duration-200     text-sm ">Bracelets</a>
                             <a href="" class="py-1 pl-3  mb-1 bg-neutral-100   hover:scale-[.99]  duration-200   r text-sm  ">Necklaces</a>
                             <a href="" class="py-1  pl-3  bg-neutral-100    hover:scale-[.99]  duration-200  text-sm  ">Earrings</a>
                       
-                    </ul>
-                </div>
-                
-                    <a  href=" {{ route('history') }}" class=" py-2 px-3 text-black  duration-200   hover:bg-gray-200/80 {{ request()->routeis('history') ? 'border-b-2  border-black' : '' }}  ">
-                       La Esencia del Jade
+                    </ul> --}}
+                    </div>
+
+                    <a href=" {{ route('history') }}"
+                        class=" py-2 px-3 text-black  duration-200   hover:bg-gray-200/80 {{ request()->routeis('history') ? 'border-b-2  border-gray-600' : '' }}  ">
+                        La Esencia del Jade
                     </a>
                 </ul>
-              
+
             </nav>
         </footer>
     </section>
- 
-    <div class=" menu-hamburger hidden   md:hidden  fixed z-20 left-0 right-0 top-0 bottom-0 backdrop-brightness-50">
-        <div class=" flex justify-start items-end    h-[18%]">
-            <button class=" btn-closed bg-neutral-100 ml-2 mb-1 p-2 hover:scale-105 duration-200 h-fit   rounded-full ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <div class="flex justify-start items-center  h-[33%]">
-            <div class="container-menu   w-full max-w-[450px]  mt-5   pb-10    p-4 px-4 bg-black shadow-2xl  z-20">
-                <h1 class=" text-white  text-center py-2">Menú</h1>
-                <ul class=" flex flex-col gap-3">
-            <a href="{{route('home')}}" class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} "> 
-                Inicio</a>  
-                <a href="{{route('catalogue') }}" class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
-                <a href="{{route('history') }}" class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia del Jade</a>
-            </ul>
-        </div>
-    </div>
-</div>
+
+
 
     <main class=" bg-black min-h-dvh">
         @yield('content')
@@ -239,32 +273,51 @@
     <a href="" class=" fixed  bottom-0 right-0 my-5 mx-3">
         <x-svgs.whatsapp-button></x-svgs.whatsapp-button>
     </a>
+
     <script defer>
-        const $searchButton = document.querySelector('#button-search');
-        const $search = document.querySelector('#search');
+        const $searchClose = document.querySelector('#search-close');
+        const $buttonSearch = document.querySelector('#button-search');
+        const $searchMenu = document.querySelector('#search-menu');
+        $buttonSearch.addEventListener('click', () => {
+            $searchMenu.classList.remove('hidden');
+            console.log('ci');
+        })
+
+
+        $searchClose.addEventListener('click', () => {
+            $searchMenu.classList.add('hidden');
+            console.log('hdf');
+
+
+        })
 
         /*   $searchButton.addEventListener('click',()=>{
             $search.classList.remove('invisible','h-0','w-0','opacity-0');
           }) */
-          const hamburgerBtn=document.querySelector('.hamburger-btn');
-          const menuHamburger=document.querySelector('.menu-hamburger');
-          const containerMenu=document.querySelector('.container-menu');
-          const links=Array.from(document.querySelectorAll('.link-menu-hamburger'));
-          links.forEach(l => {
-            l.addEventListener('click',()=>{
-            menuHamburger.classList.add('hidden');
-            containerMenu.classList.remove('transition-menu');
-            document.body.style.overflow = '';
+        const hamburgerBtn = document.querySelector('.hamburger-btn');
+        const menuHamburger = document.querySelector('.menu-hamburger');
+        const containerMenu = document.querySelector('.container-menu');
+        const btnClosed = document.querySelector('.btn-closed');
+        const links = Array.from(document.querySelectorAll('.link-menu-hamburger'));
+        links.forEach(l => {
+            l.addEventListener('click', () => {
+                menuHamburger.classList.add('hidden');
+                btnClosed.classList.replace('flex', 'hidden');
+                containerMenu.classList.remove('transition-menu');
+                document.body.style.overflow = '';
             })
-          });
-        hamburgerBtn.addEventListener('click',()=>{
+        });
+        hamburgerBtn.addEventListener('click', () => {
             menuHamburger.classList.remove('hidden');
-            document.body.style.overflow='hidden';
+            btnClosed.classList.replace('hidden', 'flex');
+            document.body.style.overflow = 'hidden';
             containerMenu.classList.add('transition-menu');
         })
-        const btnClosed = document.querySelector('.btn-closed');
+
         btnClosed.addEventListener('click', () => {
             menuHamburger.classList.add('hidden');
+            menuHamburger.classList.add('hidden');
+            btnClosed.classList.replace('flex', 'hidden');
             containerMenu.classList.remove('transition-menu');
             document.body.style.overflow = '';
 
