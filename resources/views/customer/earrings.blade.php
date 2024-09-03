@@ -398,8 +398,7 @@
             <div class="carousel-container">
                 @for ($i = 0; $i < $repetitions; $i++)
                     <div class="carousel-item">
-                        {{-- href="/producto/{{ $product['id'] }}" --}}
-                        <a hre='#' class="zoom-container">
+                        <a href="{{ route('productInformation', ['id' => $index]) }}" class="zoom-container">
                             <img class="w-100 h-80 mb-2" src='{{ asset($product['image']) }}' alt="{{ $product['name'] }}">
                             <div class="zoom-icon">
                                 <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">

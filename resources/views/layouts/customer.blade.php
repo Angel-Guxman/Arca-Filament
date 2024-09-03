@@ -175,7 +175,7 @@
 
 
                     </a>
-                    <a href="{{ route('home') }}"
+                    <a href="{{ route('favorites') }}"
                         class="  hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.heart-button></x-svgs.heart-button>
 
@@ -228,11 +228,12 @@
     <footer class=" bg-[#191919]  p-4 mt-4  text-white">
         <div class=" grid grid-cols-3">
             <div class=" flex flex-col items-center text-center gap-5 ">
-                <a href="" class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Avisos
+                <a href="{{ route('privacyNotice') }}"
+                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Avisos
                     de Privacidad</a>
                 <a
                     href=""class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Cuidados</a>
-                <a href=""
+                <a href="{{ route('history') }}"
                     class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Historia</a>
             </div>
             <div class=" flex flex-col items-center gap-4">
