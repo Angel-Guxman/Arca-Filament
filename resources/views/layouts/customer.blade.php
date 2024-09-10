@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ env('APP_NAME') }}</title>
+    <title>@yield('title', env('APP_NAME')) </title>
     @vite('resources/css/app.css')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,7 @@
         rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('images/arca-a.ico') }}" sizes="16x16">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.4.0/build/css/intlTelInput.css">
 
 </head>
 
@@ -104,16 +105,28 @@
     <div class=" menu-hamburger hidden   h-full    md:hidden fixed z-20 left-0 right-0 top-0 backdrop-brightness-50">
         <div class="flex justify-start items-center h-[100%]">
             <div class="container-menu   w-full max-w-[450px]  mt-5   pb-10    p-4 px-4 bg-black shadow-2xl  z-20">
-                <h1 class=" text-white  text-center py-2">Menú</h1>
+                <h1 class=" text-white  mb-2  text-center underline-offset-4  underline  py-2">Menú</h1>
                 <ul class=" flex flex-col gap-3">
                     <a href="{{ route('home') }}"
-                        class="text-sm  link-menu-hamburger  border hover:opacity-95 hover:scale-[.99] menu-option duration-200  rounded-md p-2 {{ request()->routeIs('home') ? ' text-black bg-white/95' : 'text-white bg-black' }} ">
+                        class="text-sm  link-menu-hamburger text-center  border hover:opacity-95 hover:scale-[.99] menu-option duration-200   p-2 {{ request()->routeIs('home') ? ' bg-black  border-emerald-400/80 text-emerald-100' : 'text-gray-100 bg-black border-gray-400' }} ">
                         Inicio</a>
                     <a href="{{ route('catalogue') }}"
-                        class="link-menu-hamburger border  text-sm  duration-200 rounded-md p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? 'bg-white/95 text-black' : 'text-white bg-black' }}">Cátalogo</a>
+                        class="link-menu-hamburger border  text-sm text-center  duration-200  p-2 hover:opacity-95 hover:scale-[.99] menu-option {{ request()->routeIs('catalogue') ? ' bg-black  border-emerald-400/80 text-emerald-100' : 'text-gray-100 bg-black border-gray-400' }}">Cátalogo</a>
                     <a href="{{ route('history') }}"
-                        class="link-menu-hamburger   duration-200 text-sm  border rounded-md p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('history') ? ' bg-white/95 text-black' : 'text-white bg-black' }} ">Esencia
+                        class="link-menu-hamburger   duration-200 text-sm  text-center border  p-2  hover:opacity-95 hover:scale-[.99] menu-option   {{ request()->routeIs('history') ? ' bg-black  border-emerald-400/80 text-emerald-100' : 'text-gray-100 bg-black  border-gray-400' }} ">Esencia
                         del Jade</a>
+                    @auth
+                        <a href="{{ route('profile') }}"
+                            class="link-menu-hamburger   duration-200 text-sm  text-center  border  p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('profile') ? ' bg-black  border-emerald-400/80 text-emerald-100' : 'text-gray-100 border-gray-400  bg-black' }} ">
+                            Perfil
+                        </a>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="link-menu-hamburger   duration-200 text-sm  text-center  border  p-2  hover:opacity-95 hover:scale-[.99] menu-option  {{ request()->routeIs('profile') ? ' bg-black  border-emerald-400/80 text-emerald-100' : 'text-gray-100 border-gray-400 bg-black' }} ">
+                            Iniciar Sesión
+                        </a>
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -141,7 +154,7 @@
             {{-- closed button --}}
             <div class="hidden  w-full  absolute  z-40 justify-start items-end  md:hidden btn-closed    ">
 
-                <button class=" hover:bg-neutral-100 ml-2 bg-white  p-2 duration-200 h-fit   rounded-full ">
+                <button class=" hover:bg-gray-100 ml-2 bg-white  p-2 duration-200 h-fit   rounded-full ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -149,19 +162,29 @@
                 </button>
             </div>
 
-            <ul class=" grid grid-cols-3  items-center px-2  h-full ">
-                <li class="   ">
+            <ul class=" grid grid-cols-3   items-center px-2  h-full ">
+                <li class=" flex items-center   ">
                     <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
                         <x-svgs.hamburger-button></x-svgs.hamburger-button>
                     </button>
-                    <a href="{{ route('profile') }}"
-                        class="hidden md:inline-block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
-                        <x-svgs.user-button></x-svgs.user-button>
-                    </a>
+                    @auth
+                        <a href="{{ route('profile') }}"
+                            class="hidden md:inline-block   hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                            <x-svgs.user-button></x-svgs.user-button>
+
+                        </a>
+
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="hidden md:inline-block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                            <x-svgs.user-button></x-svgs.user-button>
+                        </a>
+                    @endguest
 
                 </li>
                 <li class=" flex justify-center">
-                    <a class=" text-2xl tracking-widest" href="">ARCA</a>
+                    <a class=" text-2xl tracking-widest" href="{{ route('home') }}">ARCA</a>
                 </li>
                 <li class="    relative      flex justify-end items-center  ">
                     <button id="button-search"
@@ -196,18 +219,10 @@
                             class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-gray-600' : '' }} ">
 
                             Catálogo
-                            {{--     <x-svgs.arrow-down  class="  size-4">
-                         </x-svgs.arrow-down> --}}
+
 
                         </a>
-                        {{--   sub menu
-                  <ul class=" invisible h-0 w-0 opacity-0 absolute p-2 pt-3    flex flex-col   option-catalogue  bg-neutral-100/80 border ">
-                      
-                            <a href="" class=" py-1 pl-3 bg-neutral-100  mb-1  hover:scale-[.99]   duration-200     text-sm ">Bracelets</a>
-                            <a href="" class="py-1 pl-3  mb-1 bg-neutral-100   hover:scale-[.99]  duration-200   r text-sm  ">Necklaces</a>
-                            <a href="" class="py-1  pl-3  bg-neutral-100    hover:scale-[.99]  duration-200  text-sm  ">Earrings</a>
-                      
-                    </ul> --}}
+
                     </div>
 
                     <a href=" {{ route('history') }}"

@@ -3,12 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
+    use HasRoles;
     use HasFactory, Notifiable;
 
     /**
@@ -20,6 +24,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_name',
+        'remember_token',
+        'phone',
+        'first_street',
+        'second_street',
+        'outdoor_number',
+        'interior_number',
+        'address',
+        'country',
+        'municipality',
+        'state',
+        'post_code',
+        'indications',
     ];
 
     /**
