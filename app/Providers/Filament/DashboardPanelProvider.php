@@ -19,6 +19,9 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Http\Middleware\RedirectIfNotFilamentAdmin;
+use App\Http\Middleware\RoleAdministratorMiddleware;
+
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -69,6 +72,7 @@ class DashboardPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                RoleAdministratorMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

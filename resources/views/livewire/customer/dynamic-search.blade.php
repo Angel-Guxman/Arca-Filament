@@ -3,7 +3,7 @@
 
     </div>
     <div class=" relative     h-full w-full z-20  ">
-        <div class=" absolute    bg-white min-h-[85px] right-0 -z-10 left-0">
+        <div class=" absolute    bg-gray-100 min-h-[90px]  right-0 -z-10 left-0">
 
         </div>
         <div class="  w-fit mx-auto  ">
@@ -22,7 +22,7 @@
                         required />
                     <div class="absolute inset-y-0 end-2.5 flex items-center">
                         <button type="submit"
-                            class="text-white    bottom-0 bg-gray-800 hover:bg-gray-900  focus:outline-none  text-sm px-3 py-2 ">Search</button>
+                            class="text-white    bottom-0 bg-gray-900 hover:bg-gray-950  focus:outline-none  text-sm px-3 py-2 ">Search</button>
                     </div>
                     <div class=" absolute -right-10 inset-y-0 flex items-center">
                         <x-svgs.x></x-svgs.x>
