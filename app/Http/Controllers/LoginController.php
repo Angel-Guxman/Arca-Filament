@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -35,6 +36,12 @@ class LoginController extends Controller
 
         if(!auth()->attempt($request->only('email','password'),$request->remember)){
             return back()->with('error','Los datos no coincide con nuestros registros');
+        }
+        $user=Auth::user();
+        if($user->hasRole('administrator')){
+            return redirect('dashboard')->with('status',[
+                'success'=>'Inicio de Sesión Correctamente.'
+            ]);
         }
         return redirect()->route('home')->with('status',[
             'success'=>'Inicio de Sesión Correctamente.'

@@ -3,6 +3,7 @@
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\RoleAdministratorMiddleware;
 use App\Http\Middleware\RoleCustomerMiddleware;
+use App\Http\Middleware\RoleCustomerNA;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => RoleAdministratorMiddleware::class,
             'customer'=>RoleCustomerMiddleware::class,
             'guest'=>GuestMiddleware::class,
+            'customer-not-auth'=>RoleCustomerNA::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

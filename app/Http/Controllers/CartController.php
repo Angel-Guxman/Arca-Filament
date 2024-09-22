@@ -18,8 +18,7 @@ class CartController extends Controller
         $user=Auth::user();
         if($user){
             $cart=Cart::firstOrCreate(['user_id'=>$user->id]);
-            $cartItems=CartItem::where('cart_id',$cart->id)->get();
-            
+            $cartItems=CartItem::where('cart_id',$cart->id)->with('product')->get();
         return view('customer.cart',compact(['cart','cartItems']));
             
         }        
