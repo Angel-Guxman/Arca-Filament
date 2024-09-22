@@ -1,140 +1,29 @@
 @extends('layouts.customer')
 @section('content')
-    <style>
-        .grid-cont {
-            display: grid;
-            grid-template-columns: 1fr;
-        }
+    @auth
 
-        @media (min-width: 1024px) {
-            .grid-cont {
-                grid-template-columns: 3fr 1fr;
-            }
-        }
-    </style>
-
-    <h1 class=" text-4xl text-white p-4 md:ml-14 ml-0 md:text-start text-center mt-4    ">Carrito de compras</h1>
-    <section class=" grid-cont  lg:grid-cols-2  ">
-        <div>
-            <div class=" border-b border-t  grid grid-cols-3 gap-1 p-2 ">
-                <div class="">
-                    <span class=" text-white text-center w-full block py-3 ">Producto</span>
-                    <div class=" mx-auto h-[100px] w-[100px] md:h-[150px] md:w-[150px]  object-contain">
-                        <img class=" h-full w-full rounded-md" src="{{ asset('images/Anillos.png') }}" alt="img">
-                    </div>
-                </div>
-                <div class="   flex    items-center justify-center">
-                    <div class="  flex flex-col gap-3     truncate    ">
-
-                        <span class=" block  text-center max-w-[240px] w-auto  truncate   text-white  ">
-                            Pulsera de Jade dojdo sjfefp asj dajp adisaodv dapmdp dvdccdo
-                        </span>
-
-
-                        <span class=" block text-white w-full text-center  ">
-                            $350.30
-                        </span>
-                        <div class="  flex justify-center items-center gap-2  w-fit mx-auto ">
-                            <div class=" flex   justify-around  items-center border mx-auto gap-[10px] ">
-                                <a href="" class=" group  h-full py-2 px-1 ">
-                                    <x-svgs.minus></x-svgs.minus>
-                                </a>
-                                <span class=" text-sm block text-white">
-                                    1000
-                                </span>
-                                <a href="" class=" group h-full py-2 px-1">
-                                    <x-svgs.plus></x-svgs.plus>
-                                </a>
-                            </div>
-                            <div class="  p-1 ">
-                                <a href="" class=" block group   p-1  rounded-full hover:bg-gray-500/30    ">
-                                    <x-svgs.trash></x-svgs.trash>
-                                </a>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <footer class="    flex flex-wrap justify-center items-center">
-                    <section class=" flex flex-col gap-2 text-center">
-                        <span class=" block text-white">Subtotal</span>
-                        <span class=" block text-white">$7478.20</span>
-                    </section>
-                </footer>
+        @livewire('customer.cart', ['cart' => $cart, 'cartItems' => $cartItems])
+    @endauth
+    @guest
+        <section>
+            <h2 class="  text-center font-medium text-2xl p-2 text-white">Para ver su Carrito Inicie Sesión</h2>
+            <div class=" mx-auto w-fit p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class=" size-6" viewBox="0 0 16 16">
+                    <path fill="white" fill-rule="evenodd"
+                        d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293z" />
+                </svg>
             </div>
-            <div class=" border-b border-t  grid grid-cols-3 gap-1 p-2 ">
-                <div class="">
-                    <span class=" text-white text-center w-full block py-3 ">Producto</span>
-                    <div class=" mx-auto h-[100px] w-[100px] md:h-[150px] md:w-[150px]  object-contain">
-                        <img class=" h-full w-full rounded-md" src="{{ asset('images/Anillos.png') }}" alt="img">
-                    </div>
-                </div>
-                <div class="   flex    items-center justify-center">
-                    <div class="  flex flex-col gap-3     truncate    ">
+            <div class=" flex  items-center gap-4 flex-col m-5 mt-0">
+                <small class=" text-white"><i>
+                        "Un pequeño detalle lo cambia todo"
+                    </i> </small>
 
-                        <span class=" block  text-center max-w-[240px] w-auto  truncate   text-white  ">
-                            Pulsera de Jade dojdo sjfefp asj dajp adisaodv dapmdp dvdccdo
-                        </span>
-
-
-                        <span class=" block text-white w-full text-center  ">
-                            $350.30
-                        </span>
-                        <div class="  flex justify-center items-center gap-2  w-fit mx-auto ">
-                            <div class=" flex   justify-around  items-center border mx-auto gap-[10px] ">
-                                <a href="" class=" group  h-full py-2 px-1 ">
-                                    <x-svgs.minus></x-svgs.minus>
-                                </a>
-                                <span class=" text-sm block text-white">
-                                    1000
-                                </span>
-                                <a href="" class=" group h-full py-2 px-1">
-                                    <x-svgs.plus></x-svgs.plus>
-                                </a>
-                            </div>
-                            <div class="  p-1 ">
-                                <a href="" class=" block group   p-1  rounded-full hover:bg-gray-500/30    ">
-                                    <x-svgs.trash></x-svgs.trash>
-                                </a>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <footer class="    flex flex-wrap justify-center items-center">
-                    <section class=" flex flex-col gap-2 text-center">
-                        <span class=" block text-white">Subtotal</span>
-                        <span class=" block text-white">$7478.20</span>
-                    </section>
-                </footer>
+                <a href="  {{ route('login') }} "
+                    class=" text-white border py-2 px-3 w-fit duration-200 hover:scale-[.99]  inline-block  hover:border-emerald-200 hover:text-emerald-100">
+                    Iniciar Sesión
+                </a>
             </div>
 
-
-
-
-
-        </div>
-
-
-        <div class=" flex justify-center    p-4 ">
-            <div class=" flex flex-col  mt-10 border p-10 w-fit h-fit  gap-4">
-                <h2 class=" text-white">Detalles del Pedido</h2>
-                <div class=" flex  text-white gap-2  justify-center items-center">
-                    <h3>Total</h3> <span>$900</span>
-                </div>
-                <div class=" flex justify-center">
-                    <a class=" py-[6px] px-2 bg-white text-black border  hover:scale-105 duration-200  " href="">
-                        Pagar Pedido
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-
-    </section>
+        </section>
+    @endguest
 @endsection

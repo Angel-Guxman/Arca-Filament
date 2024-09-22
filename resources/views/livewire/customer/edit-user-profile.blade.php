@@ -5,11 +5,11 @@
             <div class=" grid sm:grid-cols-2 grid-cols-1 gap-2">
 
                 <div class="mb-5">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre
+                    <label for="name" class="block mb-2 text-sm font-medium  text-white">Nombre
                         <span class=" text-red-400">*</span>
                     </label>
                     <input type="text" id="name" name="name" wire:model="name"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         placeholder="Albert" required />
                     @error('name')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -17,11 +17,11 @@
                 </div>
 
                 <div class="mb-5">
-                    <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido
+                    <label for="last_name" class="block mb-2 text-sm font-medium text-white">Apellido
                         <span class=" text-red-400">*</span>
                     </label>
                     <input type="text" id="last_name" wire:model="last_name" name="last_name"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         placeholder="Einstein" required />
                     @error('last_name')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -30,11 +30,11 @@
             </div>
             <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="mb-5">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+                    <label for="email" class="block mb-2 text-sm font-medium  text-white">Email
                         <span class=" text-red-400">*</span>
                     </label>
                     <input type="email" id="email" wire:model="email" name="email"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         placeholder="name@example.com" required />
                     @error('email')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -43,10 +43,9 @@
 
 
                 <div class="mb-5">
-                    <label for="phone"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono</label>
+                    <label for="phone" class="block mb-2 text-sm font-medium  text-white">Telefono</label>
                     <input type="tel" id="phone" name="phone" wire:model="phone"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->phone ? 'required' : '' }} />
                     @error('phone')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -56,11 +55,10 @@
 
             <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="mb-5">
-                    <label for="first_street"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primera
+                    <label for="first_street" class="block mb-2 text-sm font-medium  text-white">Primera
                         Calle</label>
                     <input type="text" id="first_street" wire:model="first_street" name="first_street"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->first_street ? 'required' : '' }} />
                     @error('first_street')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -69,11 +67,10 @@
 
 
                 <div class="mb-5">
-                    <label for="second_street"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Segunda
+                    <label for="second_street" class="block mb-2 text-sm font-medium  text-white">Segunda
                         Calle</label>
                     <input type="text" id="second_street" wire:model="second_street" name="second_street"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->second_street ? 'required' : '' }} />
                     @error('first_street')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -82,12 +79,11 @@
             </div>
             <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="mb-5">
-                    <label for="interior_number"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero
+                    <label for="interior_number" class="block mb-2 text-sm font-medium  text-white">Numero
                         Interior
                     </label>
                     <input type="text" id="interior_number" wire:model="interior_number" name="interior_number"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->interior_number ? 'required' : '' }} />
                     @error('interior_number')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -96,10 +92,9 @@
 
 
                 <div class="mb-5">
-                    <label for="address"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                    <label for="address" class="block mb-2 text-sm font-medium  text-white">Dirección</label>
                     <input type="text" id="address" wire:model="address" name="address"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->address ? 'required' : '' }} />
                     @error('address')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -110,37 +105,31 @@
             <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
 
                 <div class="mb-5">
-                    <label for="state"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+                    <label for="state" class="block mb-2 text-sm font-medium  text-white">Estado</label>
                     <select name="state" id="state" wire:model.live="state"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->state ? 'required' : '' }}>
                         <option value="">Selecciona un Estado</option>
                         @foreach ($data as $index => $value)
                             <option value="{{ $index }}">{{ $index }}</option>
                         @endforeach
                     </select>
-                    {{--    <input type="text" id="state" name="state" wire:model="state"
-                        
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
-                        placeholder="N/A" {{ $user->state ? 'required' : '' }} /> --}}
+
                     @error('city')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="mb-5">
-                    <label for="municipality"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipio</label>
+                    <label for="municipality" class="block mb-2 text-sm font-medium text-white">Municipio</label>
                     <select name="municipality" id="municipality" wire:model="municipality"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400">
+                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400">
                         <option value={{ null }}>Selecciona un Municipio</option>
                         @foreach ($municipios as $municipio)
                             <option value="{{ $municipio }}">{{ $municipio }}</option>
                         @endforeach
                     </select>
-                    {{--     <input type="text" id="municipality" name="municipality" wire:model="municipality"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
-                        placeholder="name@example.com" {{ $user->city ? 'required' : '' }} /> --}}
+
                     @error('municipality')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
                     @enderror
@@ -148,10 +137,10 @@
             </div>
             <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="mb-5">
-                    <label for="post_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código
+                    <label for="post_code" class="block mb-2 text-sm font-medium text-white">Código
                         Postal</label>
-                    <input type="text" id="post_code" wire:model="post_code" name="post_code"
-                        class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                    <input type="text" id="post_code" maxlength="100" wire:model="post_code" name="post_code"
+                        class=" border outline-none   h-14   text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                         {{ $user->post_code ? 'required' : '' }} />
                     @error('post_code')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -160,11 +149,13 @@
 
 
                 <div class="mb-5">
-                    <label for="indications"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Indicaciones</label>
-                    <input type="text" id="indications" name="indications" wire:model="indications"
-                        class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->indications ? 'required' : '' }} />
+                    <label for="indications" class="block mb-2 text-sm font-medium  text-white">Indicaciones</label>
+                    <textarea id="indications" name="indications" wire:model="indications"
+                        class=" border outline-none   max-h-14     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                        {{ $user->indications ? 'required' : '' }}>
+
+                        </textarea>
+
                     @error('indications')
                         <span class=" block text-red-400 text-xs">{{ $message }}</span>
                     @enderror

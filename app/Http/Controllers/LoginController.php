@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -27,15 +28,17 @@ class LoginController extends Controller
     {
         //
         $request->validate([
-'email'=>'required|email ',
-'password'=>'required',
+        'email'=>'required|email ',
+        'password'=>'required',
         ]);
       
 
         if(!auth()->attempt($request->only('email','password'),$request->remember)){
             return back()->with('error','Los datos no coincide con nuestros registros');
         }
-        return redirect()->route('home');
+        return redirect()->route('home')->with('status',[
+            'success'=>'Inicio de Sesión Correctamente.'
+        ]);
     }
 
     /**

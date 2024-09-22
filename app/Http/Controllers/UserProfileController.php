@@ -75,7 +75,9 @@ class UserProfileController extends Controller
         $user=Auth::user();
         if($user){
             auth()->logout();
-            return redirect()->route('home');
+            return redirect()->route('home')->with('status',[
+                'success'=>'Sesión Finalizada.'
+            ]);
         }else{
             return redirect()->route('home');
         }

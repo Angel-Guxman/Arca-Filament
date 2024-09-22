@@ -10,7 +10,7 @@
                     <span class=" text-red-400">*</span>
                 </label>
                 <input type="password" id="current_password" name="current_password" wire:model="current_password"
-                    class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                    class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                     placeholder="Albert" required />
                 @error('current_password')
                     <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -18,25 +18,25 @@
             </div>
 
             <div class="mb-5">
-                <label for="new_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nueva
+                <label for="new_password" class="block mb-2 text-sm font-medium text-white">Nueva
                     Contraseña
                     <span class=" text-red-400">*</span>
                 </label>
                 <input type="password" id="new_password" name="new_password" wire:model="new_password"
-                    class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
-                    placeholder="Albert" required />
+                    class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
+                    placeholder="" required />
                 @error('new_password')
                     <span class=" block text-red-400 text-xs">{{ $message }}</span>
                 @enderror
             </div>
             <div class="mb-5">
-                <label for="new_password_confirmation"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar contraseña
+                <label for="new_password_confirmation" class="block mb-2 text-sm font-medium  text-white">Confirmar
+                    contraseña
                     <span class=" text-red-400">*</span>
                 </label>
                 <input type="password" id="new_password_confirmation" name="new_password_confirmation"
                     wire:model="new_password_confirmation"
-                    class=" border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                    class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                     placeholder="Albert" required />
                 @error('new_password_confirmation')
                     <span class=" block text-red-400 text-xs">{{ $message }}</span>

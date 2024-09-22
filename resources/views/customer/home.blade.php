@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /*  .custom-size {
-                                        width: 90%;
-                                        height: 80%;
-                                    } */
+                                                                                                                                                                                                    width: 90%;
+                                                                                                                                                                                                    height: 80%;
+                                                                                                                                                                                                } */
         .bg-coming {
             /* background: rgb(255, 255, 255,.2); */
             /* background: rgba(255, 255, 255, 0.3);  */
@@ -255,8 +255,28 @@
                 transform: rotate(180deg);
             }
         }
+
+        .notification {
+            animation: init 500ms linear forwards
+        }
+
+        @keyframes init {
+            0% {
+                transform: translateX(+300px)
+            }
+
+            100% {
+                transform: translateX(0)
+            }
+        }
     </style>
-    <section class=" p-4">
+    <section class=" p-4 relative  ">
+        @session('status')
+            <div
+                class="p-4  notification  text-emerald-300 border border-emerald-100 bg-black top-2 rounded  right-2 z-10 absolute ">
+                {{ $value['success'] }}
+            </div>
+        @endsession
         <div class=" md:mx-10 my-5 md:max-h-[500px]   relative       grid grid-cols-1 md:grid-cols-2 ">
             <section
                 class="    md:max-h-[500px] md:static z-10 left-0 right-0 top-7 bottom-0    md:grid absolute text-white  grid-cols-1 items-center justify-items-center ">
@@ -543,6 +563,10 @@
 
     <script defer>
         document.addEventListener("DOMContentLoaded", function() {
+            const notification = document.querySelector('.notification');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
             const backArrows = document.querySelectorAll(
                 ".icon-back-carrusel-products-customer"
             );

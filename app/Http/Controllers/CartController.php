@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -12,6 +15,14 @@ class CartController extends Controller
     public function index()
     {
         //
+        $user=Auth::user();
+        if($user){
+            $cart=Cart::firstOrCreate(['user_id'=>$user->id]);
+            $cartItems=CartItem::where('cart_id',$cart->id)->get();
+            
+        return view('customer.cart',compact(['cart','cartItems']));
+            
+        }        
         return view('customer.cart');
     }
 

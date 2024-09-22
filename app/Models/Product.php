@@ -9,4 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     public $fillable=['id','name','description','price'];
+    public function carts(){
+        return $this->belongsToMany(Cart::class,'cart_items');      
+    } 
 }

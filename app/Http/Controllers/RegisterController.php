@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -39,6 +40,8 @@ class RegisterController extends Controller
         ]);
         $user->assignRole('customer');
         if( auth()->attempt($request->only('email','password'),$request->remember)){
+            $user=auth()->user();
+        Cart::create(['user_id'=>$user->id]);
             return redirect()->route('home');
         }else{
             return back()->with('error','Ha ocurrido un error');
