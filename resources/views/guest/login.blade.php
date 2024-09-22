@@ -28,7 +28,7 @@
         @endif
 
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Electrónico
                 <span class=" text-red-400">*</span>
             </label>
             <input type="email" id="email" name="email" value="{{ old('email') }}"
@@ -43,7 +43,7 @@
                 <span class=" text-red-400">*</span>
             </label>
             <div class=" relative ">
-                <input type="password" id="password" name="password" value="{{ old('password') }}"
+                <input type="password" id="password" name="password"
                     class="  border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
                     required />
                 <div class="  absolute right-2   inset-y-0 flex items-center">
