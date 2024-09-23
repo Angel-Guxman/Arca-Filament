@@ -164,8 +164,7 @@
         <h2>No Encontrado</h2>
         <h1>404</h1>
         <p>Lo Siento. El contenido que estas buscando no existe. O escribiste mal el enlace.</p>
-        <button class="btn-jade" onclick="window.location.href='{{ route('home') }}'">Volver a la Página
-            Principal</button>
+        <button class="btn-jade" onclick="window.location.href='{{ route('home') }}'">Volver a la Página Principal</button>
     </div>
 </body>
 

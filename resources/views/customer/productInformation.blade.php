@@ -125,6 +125,12 @@
             margin-left: 0;
         }
 
+        .back-items {
+            margin-left: 40%;
+            margin-top: -12%;
+            position: absolute;
+        }
+
         @media (max-width: 1024px) {
             .flex-col {
                 flex-direction: column;
@@ -170,6 +176,12 @@
                 justify-content: center;
             }
 
+            .back-items {
+            margin-left: 80%;
+            margin-top: -90%;
+            position: absolute;
+        }
+
         }
 
         @media (max-width: 767px) {
@@ -197,6 +209,12 @@
             button {
                 margin-left: 10px;
             }
+
+            .back-items {
+            margin-left: 70%;
+            margin-top: -110%;
+            position: absolute;
+        }
 
         }
     </style>
@@ -232,6 +250,19 @@
             </div>
 
             <div class="w-full md:w-1/2 md:ml-10 mt-10 md:mt-0 text-white">
+                <div class="back-items">
+                    <a href="{{ route('catalogue') }}" class="   flex justify-center gap-1 items-center group hover:text-emerald-100">
+            
+            
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                            class="size-[16px]  text-white group-hover:text-emerald-100">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+            
+                        <span class="  block text-white  group-hover:text-emerald-100 text-xl">regresar</span>
+                    </a>
+            
+                </div>
                 <h1 class="text-5xl mb-4">Pulsera de Jade</h1>
                 <p class="text-xl mb-6">$650.00 MXN</p>
 
@@ -250,9 +281,8 @@
                 </div>
 
                 <div class="flex space-x-4 mb-6 items-button">
-                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Agregar
-                        Producto</button>
-                    <button class="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-300">Regresar a Productos</button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Agregar Producto</button>
+                    <button class="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-300" onclick="window.location.href='{{ route('cart') }}'">Comprar</button>
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-8 h-8 heart-icon text-white cursor-pointer">
