@@ -43,7 +43,6 @@ Route::get('/ProductInformation', function () {
     return view('customer.productInformation');
 })->name('productInformation');
 
-Route::get('/carrito',[CartController::class,'index'])->name('cart');
 //*verificar la ruta del perfil del admin
 //proteger las rutas de los clientes los cuales el admin no debe usar y debe estar autenticado el usuario
 Route::middleware(['auth','customer'])->group(function(){
@@ -51,6 +50,11 @@ Route::middleware(['auth','customer'])->group(function(){
     Route::post('/logout',[UserProfileController::class,'logout'])->name('logout');
 
     Route::get('/historial-pedidos',[UserOrderController::class,'index'])->name('order-history');
+});
+//rutas para solo customers y no importa si esta autenticado
+Route::middleware(['customer-not-auth'])->group(function(){
+Route::get('/carrito',[CartController::class,'index'])->name('cart');
+
 });
 
 Route::middleware(['guest'])->group(function(){
