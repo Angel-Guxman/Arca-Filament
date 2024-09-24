@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('post_code')->nullable();
             $table->text('indications')->nullable(); // Indicaciones (nullable)
+            $table->string('rol')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

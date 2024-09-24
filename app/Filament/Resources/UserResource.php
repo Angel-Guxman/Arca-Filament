@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -23,7 +24,7 @@ class UserResource extends Resource
     //nombre de la lista,new,migajas
     protected static ?string $modelLabel = 'Usuario';
     //nombre del grupo al que pertenece en el panel
-    protected static ?string $navigationGroup = 'Gestión de Usuarios';
+ /*    protected static ?string $navigationGroup = 'Gestión de Usuarios'; */
     //orden conforme al grupo 1 arriba 4 abajo
     protected static ?int $navigationSort = 1;
     //url
@@ -37,6 +38,7 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {//para crear y editar
+        
         return $form
             ->schema([
                 Forms\Components\Section::make('Información del Usuario')
@@ -46,18 +48,82 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->label('Nombre del Usuario'),
+                    Forms\Components\TextInput::make('last_name')
+                    ->required()
+                    ->maxLength(255)
+                    ->label('Apellido del Usuario'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255)
-                    ->label('Correo del Usuario')
-                ])->columns(2),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                ->label('Contraseña del Usuario')
+                    ->label('Correo del Usuario'),
+                    Forms\Components\TextInput::make('password')
+                    ->label('Contraseña del Usuario')
                     ->password()
                     ->required()
+                    ->visibleOn('create')
+                    ->minLength(5)
                     ->maxLength(255),
+                        Forms\Components\Select::make('rol')
+                        ->options([
+                            'customer' => 'Cliente',
+                            'administrator' => 'Administrador',
+                        ])
+                        ->required()
+                        ->label('Elige un rol'),
+                    Forms\Components\TextInput::make('phone')
+                    ->required()
+                    ->minLength(5)
+                    ->maxLength(255)
+                    ->label('Telefono'),
+                    Forms\Components\TextInput::make('first_street')
+                    ->required()
+                    ->maxLength(255)
+                    ->minLength(2)
+                    ->label('Primera calle'),
+                    Forms\Components\TextInput::make('outdoor_number')
+                    ->required()
+                    ->minLength(1)
+                    ->maxLength(255)
+                    ->label('Numero exterior'),
+                    Forms\Components\TextInput::make('interior_number')
+                    ->required()
+                    ->minLength(1)
+                    ->maxLength(255)
+                    ->label('numero interior'),
+                    Forms\Components\TextInput::make('address')
+                    ->required()
+                    ->minLength(5)
+                    ->maxLength(255)
+                    ->label('Dirección'),
+                    Forms\Components\TextInput::make('country')
+                    ->required()
+                    ->minLength(3)
+                    ->maxLength(255)
+                    ->label('Pais'),
+                    Forms\Components\TextInput::make('municipality')
+                    ->required()
+                    ->minLength(3)
+                    ->maxLength(255)
+                    ->label('Municipio'),
+                    Forms\Components\TextInput::make('state')
+                    ->required()
+                    ->minLength(3)
+                    ->maxLength(255)
+                    ->label('Estado'),
+                    Forms\Components\TextInput::make('post_code')
+                    ->required()
+                    ->minLength(1)
+                    ->maxLength(255)
+                    ->label('Codigo Postal'),
+                    Forms\Components\Textarea::make('indications')
+                    ->required()
+                    ->rows(5)
+                    ->minLength(1)
+                    ->maxLength(255)
+                    ->label('Indicaciones'),
+            
+                    ])->columns(2),
             ]);
     }
 
@@ -85,7 +151,9 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
