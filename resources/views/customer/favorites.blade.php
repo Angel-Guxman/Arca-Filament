@@ -293,7 +293,9 @@
                         </div>
                         <p class=" text-white mt-2"> {{ $product['price'] }}</p>
                         <div class="container-add">
-                            <p class="text-black">Agregar Producto</p>
+                            <a href="{{ route ('cart')}}">
+                                <p class="text-black">Agregar Producto</p>
+                            </a>
                         </div>
                     </div>
                 @endfor
