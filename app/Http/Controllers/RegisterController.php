@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -38,9 +39,9 @@ class RegisterController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
         ]);
-        $user->assignRole('customer');
         if( auth()->attempt($request->only('email','password'),$request->remember)){
-            $user=auth()->user();
+            $us=Auth::user();
+            $us->assignRole('customer');
         Cart::create(['user_id'=>$user->id]);
             return redirect()->route('home');
         }else{

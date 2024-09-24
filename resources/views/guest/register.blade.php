@@ -29,7 +29,7 @@
                 <span class=" text-red-400">*</span>
             </label>
             <input type="text" id="name" name="name" value="{{ old('name') }}"
-                class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400
+                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400
                 "
                 placeholder="Albert" required />
             @error('name')
@@ -37,7 +37,7 @@
             @enderror
         </div>
         <div class="mb-5">
-            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido
+            <label for="last_name" class="block mb-2 text-sm font-medium  text-white">Apellido
                 <span class=" text-red-400">*</span>
             </label>
             <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}"
@@ -50,11 +50,11 @@
 
 
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Electrónico
+            <label for="email" class="block mb-2 text-sm font-medium  text-white">Correo Electrónico
                 <span class=" text-red-400">*</span>
             </label>
             <input type="email" id="email" name="email" value="{{ old('email') }}"
-                class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400 
+                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400 
               
                 "
                 placeholder="name@example.com" required />
@@ -63,13 +63,13 @@
             @enderror
         </div>
         <div class="mb-5">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña
+            <label for="password" class="block mb-2 text-sm font-medium  text-white">Contraseña
                 <span class=" text-red-400">*</span>
 
             </label>
             <div class=" relative ">
                 <input type="password" id="password" name="password" value="{{ old('password') }}"
-                    class="  border outline-none     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+                    class="  border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
                     required />
                 <div class="  absolute right-2   inset-y-0 flex items-center ">
 
@@ -88,18 +88,18 @@
         <div class="flex items-start mb-5">
             <div class="flex items-center h-5">
                 <input id="remember" name="remember" type="checkbox"
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
+                    class="w-4 h-4 border  rounded  focus:ring-3 focus:ring-blue-300 bg-gray-700 border-gray-600 dark:focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800" />
 
             </div>
-            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Recordar</label>
+            <label for="remember" class="ms-2 text-sm font-medium  text-gray-300">Recordar</label>
         </div>
         <div class="flex justify-start mb-5">
 
-            <span href="" class="mr-2 inline-block text-sm font-medium text-gray-900 dark:text-gray-300">
+            <span href="" class="mr-2 inline-block text-sm font-medium  text-gray-300">
                 ¿Ya tienes una Cuenta?
             </span>
             <a href="{{ route('login') }}"
-                class="ms-2 inline-block text-sm underline underline-offset-4 font-medium text-gray-900 dark:text-gray-300 hover:text-emerald-100  hover:scale-[1.02] duration-[150ms] ">
+                class="ms-2 inline-block text-sm underline underline-offset-4 font-medium  text-gray-300 hover:text-emerald-100  hover:scale-[1.02] duration-[150ms] ">
                 Iniciar
                 Sesión
             </a>

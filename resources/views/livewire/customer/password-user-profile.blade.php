@@ -5,8 +5,7 @@
 
 
             <div class="mb-5">
-                <label for="current_password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña Actual
+                <label for="current_password" class="block mb-2 text-sm font-medium  text-white">Contraseña Actual
                     <span class=" text-red-400">*</span>
                 </label>
                 <input type="password" id="current_password" name="current_password" wire:model="current_password"
