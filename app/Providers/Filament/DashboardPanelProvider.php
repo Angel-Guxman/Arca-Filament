@@ -19,7 +19,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use App\Http\Middleware\RedirectIfNotFilamentAdmin;
 use App\Http\Middleware\RoleAdministratorMiddleware;
 
 
