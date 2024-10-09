@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserOrderController;
@@ -11,9 +12,7 @@ Route::get('/', function () {
     return view('customer.home');
 })->name('home');
 
-Route::get('/Catalogue', function () {
-    return view('customer.catalogue');
-})->name('catalogue');
+Route::get('/Catalogue', [ProductController::class, 'index'])->name('catalogue');   
 
 Route::get('/History', function () {
     return view('customer.history');
@@ -52,8 +51,9 @@ Route::middleware(['auth','customer'])->group(function(){
     Route::get('/historial-pedidos',[UserOrderController::class,'index'])->name('order-history');
 });
 //rutas para solo customers y no importa si esta autenticado
-Route::middleware(['customer-not-auth'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 Route::get('/carrito',[CartController::class,'index'])->name('cart');
+Route::get('/products',[CartController::class,'getProducts'])->name('products');
 
 });
 

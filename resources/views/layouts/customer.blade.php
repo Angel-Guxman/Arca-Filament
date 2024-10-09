@@ -287,9 +287,10 @@
 
 
     </footer>
-    <a href="" class=" fixed  bottom-0 right-0 my-5 mx-3">
+    <a href="https://wa.me/529984930161?text=Hola%20quiero%20más%20información!" class="fixed bottom-0 right-0 my-5 mx-3">
         <x-svgs.whatsapp-button></x-svgs.whatsapp-button>
     </a>
+    
 
     <script defer>
         const $searchClose = document.querySelector('#search-close');
