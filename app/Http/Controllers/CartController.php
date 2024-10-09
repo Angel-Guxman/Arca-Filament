@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,15 @@ class CartController extends Controller
             
         }        
         return view('customer.cart');
+    }
+
+    public function getProducts () {
+        if (Auth::check()) {
+            $products = Product::all();
+                return view ('customer.products', compact('products'));
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

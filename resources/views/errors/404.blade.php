@@ -31,11 +31,6 @@
 
     .container {
         text-align: center;
-        background: #ffffff;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
         position: relative;
     }
 
@@ -49,28 +44,11 @@
         z-index: -2;
     }
 
-    .jade-icon {
-        font-size: 6rem;
-        color: #388E3C;
-        margin-bottom: 20px;
-        animation: floating 3s infinite ease-in-out;
-    }
 
-    @keyframes floating {
-
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-15px);
-        }
-    }
 
     h1 {
         font-family: 'Playfair Display', serif;
-        font-size: 7rem;
+        font-size: 15rem;
         color: #8BC34A;
         margin-bottom: 0.5rem;
     }
@@ -79,12 +57,6 @@
         font-family: 'Playfair Display', serif;
         font-size: 2rem;
         margin-bottom: 1.5rem;
-        color: #2c3e50;
-    }
-
-    p {
-        font-size: 1.15rem;
-        margin-bottom: 2rem;
         color: #2c3e50;
     }
 
@@ -158,12 +130,7 @@
 <body>
     <div class="overlay"></div>
     <div class="container">
-        <div class="jade-icon">
-            <i class=" bx bx-diamond"></i>
-        </div>
-        <h2>No Encontrado</h2>
         <h1>404</h1>
-        <p>Lo Siento. El contenido que estas buscando no existe. O escribiste mal el enlace.</p>
         @role('administrator')
             <button class="btn-jade" onclick="window.location.href='{{ url('dashboard') }}'">Volver a la Página
                 Principal</button>

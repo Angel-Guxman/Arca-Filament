@@ -11,7 +11,7 @@ class LoginController extends Controller
     /**
      * Display a listing of the resource.
      */
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +32,7 @@ class LoginController extends Controller
         'email'=>'required|email ',
         'password'=>'required',
         ]);
-      
+    
 
         if(!auth()->attempt($request->only('email','password'),$request->remember)){
             return back()->with('error','Los datos no coincide con nuestros registros');
