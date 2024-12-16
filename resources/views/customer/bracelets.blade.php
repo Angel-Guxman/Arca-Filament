@@ -10,6 +10,7 @@
             overflow: hidden;
             transition: transform 0.5s ease;
             margin-bottom: 80px;
+            flex-wrap: wrap;
         }
 
         .carousel-container {
@@ -22,12 +23,29 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        .carousel-item.shift-right {
+            margin-left: 280px;
+            /* Ajusta este valor según el tamaño que necesites */
+            transition: margin-left 0.5s ease;
+        }
+
         .carousel-item {
             flex: 0 0 25%;
             padding: 0 40px;
             scroll-snap-align: start;
             box-sizing: border-box;
+            margin-bottom: 40px;
         }
+
+        .product-image {
+            width: 100%;
+
+            height: 200px;
+
+            object-fit: cover;
+
+        }
+
 
         .carousel-item img {
             width: 100%;
@@ -71,6 +89,7 @@
             right: 10px;
             cursor: pointer;
             z-index: 20;
+
         }
 
         .zoom-container:hover .zoom-icon {
@@ -231,6 +250,23 @@
             overflow: hidden;
         }
 
+        .heart-icon {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .heart-icon.favorited {
+            color: #077E51;
+
+        }
+
+        .notification {
+            position: fixed;
+            top: 6rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
         @media (max-width: 1024px) {
             .carousel-item {
                 flex: 0 0 50%;
@@ -278,6 +314,8 @@
                 right: 10px;
             }
         }
+
+
 
         @media (max-width: 767px) {
             .carousel-item {
@@ -335,14 +373,16 @@
     </div>
 
     <div class="dashboard-menu" id="dashboard-menu">
-        <a href="{{ route('bracelets') }}">Pulseras</a>
-        <a href="{{ route('necklaces') }}">Collares</a>
-        <a href="{{ route('earrings') }}">Aretes</a>
+        @foreach ($categories as $category)
+            <a href="{{ route('customer.show', $category->id) }}">{{ $category->name }}</a>
+        @endforeach
     </div>
+    
+
 
     <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Pulseras</h1>
 
-    <div class="relative inline-block">
+    <div class="relative inline-block mb-24">
         <button class="text-white flex  hover:text-emerald-200 cursor-pointer filter" id="filter-button">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
@@ -365,64 +405,55 @@
                 <label for="max-price" class="block mb-2 text-sm text-white">Precio Máximo:</label>
                 <input type="number" id="max-price" name="max-price" step="1" min="0" required
                     class="w-full p-1 border rounded mb-4 text-sm">
-                <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded text-sm w-full">Filtrar</button>
+                <button type="submit"
+                    class="bg-emerald-500 text-white px-4 py-2 rounded text-sm w-full">Filtrar</button>
             </form>
         </div>
     </div>
 
-    @php
-        $order = request('order', 'asc');
+    <p class="text-right text-white -mt-6 mr-24 container-Products"> {{ count($products) }} Productos</p>
 
-        $products = [
-            ['name' => 'Pulsera Jade', 'price' => '$ 456.00 MXN', 'image' => 'images/Pulsera.png'],
-            ['name' => 'Collares Jade', 'price' => '$ 544.00 MXN', 'image' => 'images/Collares.png'],
-            ['name' => 'Aretes Jade', 'price' => '$ 874.00 MXN', 'image' => 'images/Aretes.png'],
-            ['name' => 'Anillos Jade', 'price' => '$ 354.00 MXN', 'image' => 'images/Anillos.png'],
-            ['name' => 'benito Jade', 'price' => '$ 354.00 MXN', 'image' => 'images/Aretes.png'],
-        ];
-
-        usort($products, function ($a, $b) use ($order) {
-            $nameA = strtolower($a['name']);
-            $nameB = strtolower($b['name']);
-            return $order === 'asc' ? strcmp($nameA, $nameB) : strcmp($nameA, $nameB);
-        });
-
-        $repetitions = 4;
-        $totalProducts = count($products) * $repetitions;
-    @endphp
-
-    <p class="text-right text-white -mt-6 mr-24 container-Products"> {{ $totalProducts }} Productos</p>
-
-    @foreach ($products as $index => $product)
-        <div class="carousel-wrapper mt-24">
-            <div class="carousel-container">
-                @for ($i = 0; $i < $repetitions; $i++)
-                    <div class="carousel-item">
-                        <a href="{{ route('productInformation', ['id' => $index]) }}" class="zoom-container">
-                            <img class="w-100 h-80 mb-2" src='{{ asset($product['image']) }}' alt="{{ $product['name'] }}">
-                            <div class="zoom-icon">
-                                <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
-                            </div>
-                        </a>
-                        <div class="product-info flex items-center justify-between">
-                            <p class=" text-white">{{ $product['name'] }}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6 heart-icon text-white cursor-pointer">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                            </svg>
-                        </div>
-                        <p class=" text-white mt-2"> {{ $product['price'] }}</p>
-                        <div class="container-add">
-                            <a href="{{ route ('cart')}}">
-                                <p class="text-black">Agregar Producto</p>
-                            </a>
-                        </div>
+    <div class="carousel-wrapper">
+        @foreach ($products as $product)
+            <div class="carousel-item">
+                <div class="zoom-container">
+                    <a href="{{ route('productInformation', ['id' => $product->id]) }}">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                    </a>
+                    <div class="zoom-icon">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
                     </div>
-                @endfor
+                </div>
+                <div class="product-info flex items-center justify-between">
+                    <p class="text-white">{{ $product->name }}</p>
+                    <svg data-product-id="{{ $product->id }}" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="size-6 heart-icon text-white cursor-pointer {{ in_array($product->id, session('favorites', [])) ? 'favorited' : '' }}"
+                        onclick="toggleFavorite(event)">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                </div>
+                <p class="text-white mt-2">$ {{ $product->price }} MXN</p>
+                <div class="container-add">
+                    <form action="{{ route('cart.add', ['productId' => $product->id]) }}" method="POST">
+                        @csrf
+                        <button type="button" onclick="addToCart({{ $product->id }})"
+                            class="text-black border py-2 px-3 duration-200 hover:scale-[.99]">
+                            Agregar al Carrito
+                        </button>
+                    </form>
+                </div>
             </div>
+        @endforeach
+    </div>
+
+    @if (session('status'))
+        <div
+            class="p-4 notification text-emerald-300 border border-emerald-100 bg-black top-2 rounded right-2 z-10 absolute">
+            {{ session('status') }}
         </div>
-    @endforeach
+    @endif
 
     <div id="zoomModal" class="zoom-modal">
         <span class="zoom-close">&times;</span>
@@ -432,6 +463,91 @@
     </div>
 
     <script>
+        function addToCart(productId) {
+            fetch("{{ route('cart.add', ['productId' => '__PRODUCT_ID__']) }}".replace('__PRODUCT_ID__', productId), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId: productId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Crea la notificación
+                        // Crea la notificación
+                        const notification = document.createElement('div');
+                        notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
+                            'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
+                        notification.textContent = data.message; // Usa el mensaje del backend
+
+                        // Agrega la notificación al cuerpo del documento
+                        document.body.appendChild(notification);
+
+                        // Remueve la notificación después de 3 segundos
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 3000);
+
+                    } else {
+                        alert(data.message || "Hubo un problema al agregar el producto.");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+
+        function toggleFavorite(event) {
+            const productId = event.target.getAttribute('data-product-id');
+            const icon = event.target;
+
+            fetch('/favorites/toggle', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.action === 'added') {
+                            icon.classList.add('favorited');
+                            showNotification(data.message || 'Producto agregado a favoritos.');
+                        } else {
+                            icon.classList.remove('favorited');
+                            showNotification(data.message || 'Producto eliminado de favoritos.');
+                        }
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
+                'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
+            notification.textContent = message;
+
+            // Agrega la notificación al cuerpo del documento
+            document.body.appendChild(notification);
+
+            // Remueve la notificación después de 3 segundos
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+
         document.getElementById('hamburger-menu').addEventListener('click', function() {
             if (event.target.tagName === 'svg' || event.target.closest('svg')) {
                 const dashboardMenu = document.getElementById('dashboard-menu');
@@ -457,13 +573,11 @@
                 modal.classList.add('hide');
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                    carouselWrapper.classList.remove('shift-right');
                 }, 500);
             } else {
                 modal.classList.remove('hidden');
                 modal.classList.remove('hide');
                 modal.classList.add('show');
-                carouselWrapper.classList.add('shift-right');
             }
         });
 
@@ -539,14 +653,5 @@
                 }
             });
         });
-
-
-        window.onload = function() {
-            document.querySelectorAll('.heart-icon').forEach(icon => {
-                icon.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                });
-            });
-        };
     </script>
 @endsection
