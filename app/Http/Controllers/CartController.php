@@ -4,82 +4,128 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Product; 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Muestra el carrito
     public function index()
     {
-        //
-        $user=Auth::user();
-        if($user){
-            $cart=Cart::firstOrCreate(['user_id'=>$user->id]);
-            $cartItems=CartItem::where('cart_id',$cart->id)->with('product')->get();
-        return view('customer.cart',compact(['cart','cartItems']));
-            
-        }        
-        return view('customer.cart');
+        $user = Auth::user();
+        if ($user) {
+            $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+            $cartItems = CartItem::where('cart_id', $cart->id)->with('product')->get();
+    
+            // Aquí puedes agregar la ruta base de las imágenes
+            foreach ($cartItems as $item) {
+                $item->product->image_url = asset('storage/' . $item->product->image); // Asegúrate de que 'image' sea el nombre de la columna donde guardas la ruta de la imagen
+            }
+    
+            return view('customer.cart', compact(['cart', 'cartItems']));
+        }
+        return view('customer.cart'); // Muestra la vista del carrito vacío
+    }
+    
+
+    // Agrega un producto al carrito
+
+public function addToCart(Request $request, $productId)
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['success' => false, 'message' => 'Por favor, inicie sesión para agregar productos al carrito.']);
     }
 
-    public function getProducts () {
+    $product = Product::find($productId);
+    if (!$product) {
+        return response()->json(['success' => false, 'message' => 'Producto no encontrado.']);
+    }
+
+    $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+    $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $productId)->first();
+
+    if ($cartItem) {
+        $cartItem->quantity += 1;
+        $cartItem->save();
+    } else {
+        CartItem::create([
+            'cart_id' => $cart->id,
+            'product_id' => $productId,
+            'quantity' => 1,
+            'price' => $product->price,
+        ]);
+    }
+
+    return response()->json(['success' => true, 'message' => 'Producto agregado al carrito.']);
+}
+
+public function updateQuantity(Request $request, $cartItemId)
+{
+    $cartItem = CartItem::find($cartItemId);
+    if (!$cartItem) {
+        return response()->json(['success' => false, 'message' => 'Artículo no encontrado en el carrito.']);
+    }
+
+    $newQuantity = $request->input('quantity');
+    $product = Product::find($cartItem->product_id);
+
+    // Verifica si la cantidad nueva es válida
+    if ($newQuantity > $product->stock) {
+        return response()->json(['success' => false, 'message' => 'No hay suficiente stock disponible.']);
+    }
+
+    $cartItem->quantity = $newQuantity;
+    $cartItem->save();
+
+    // Calcular el subtotal del producto
+    $subtotal = $cartItem->quantity * $product->price;
+
+    // Calcular el total del carrito
+    $cart = Cart::find($cartItem->cart_id);
+    $total = $cart->cartItems->sum(function($item) {
+        return $item->quantity * $item->product->price;
+    });
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Cantidad actualizada.',
+        'subtotal' => number_format($subtotal, 2), // Devolver el subtotal actualizado
+        'total' => number_format($total, 2)         // Devolver el total actualizado
+    ]);
+}
+
+
+
+
+
+
+    // Elimina un producto del carrito
+    public function removeFromCart($cartItemId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Por favor, inicie sesión para eliminar productos del carrito.');
+        }
+
+        $cartItem = CartItem::find($cartItemId);
+        if (!$cartItem) {
+            return redirect()->back()->with('error', 'Artículo no encontrado en el carrito.');
+        }
+
+        $cartItem->delete();
+
+        return redirect()->back()->with('success', 'Artículo eliminado del carrito.');
+    }
+
+    // Método para obtener los productos
+    public function getProducts()
+    {
         if (Auth::check()) {
             $products = Product::all();
-                return view ('customer.products', compact('products'));
-        } else {
-            return redirect()->route('login');
+            return view('customer.products', compact('products'));
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('login');
     }
 }

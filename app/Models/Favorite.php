@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Favorite extends Model
 {
     use HasFactory;
-    public $fillable=['id','user_id'];
+
+    protected $fillable = ['id', 'user_id', 'product_id']; // Campos que se pueden llenar
+
     public function user(){
         return $this->belongsTo(User::class);
     }
+
     public function products(){
-        return $this->belongsToMany(Product::class,'cart_items');
+        return $this->belongsToMany(Product::class,'favorites_items');
     }
+
 }
