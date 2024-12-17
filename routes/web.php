@@ -20,27 +20,12 @@ Route::get('/Necklaces', [ProductController::class, 'index'])->name('necklaces')
 Route::get('/Bracelets', [ProductController::class, 'index'])->name('bracelets');
 Route::get('/category/{id}', [CategoryController::class, 'show'])->name('customer.show');
 
+Route::get('/productInformation/{id}', [ProductController::class, 'show'])->name('productInformation');
 
-Route::get('/ProductInformation', function () {
-    return view('customer.productInformation');
-})->name('productInformation');
-
-
-
-
-
-Route::get('/History', function () {
-    return view('customer.history');
-})->name('history');
-
-Route::get('/Favorites', function () {
-    return view('customer.favorites');
-})->name('favorites');
-
-Route::get('/PrivacyNotice', function () {
-    return view('customer.privacyNotice');
-})->name('privacyNotice');
-
+//Son rutas publicas estaticas
+Route::get('/History', function () {return view('customer.history');})->name('history');
+Route::get('/Favorites', function () {return view('customer.favorites');})->name('favorites');
+Route::get('/PrivacyNotice', function () {return view('customer.privacyNotice');})->name('privacyNotice');
 
 //*verificar la ruta del perfil del admin
 //proteger las rutas de los clientes los cuales el admin no debe usar y debe estar autenticado el usuario

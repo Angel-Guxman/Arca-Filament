@@ -79,8 +79,25 @@ public function updateQuantity(Request $request, $cartItemId)
     $cartItem->quantity = $newQuantity;
     $cartItem->save();
 
-    return response()->json(['success' => true, 'message' => 'Cantidad actualizada.']);
+    // Calcular el subtotal del producto
+    $subtotal = $cartItem->quantity * $product->price;
+
+    // Calcular el total del carrito
+    $cart = Cart::find($cartItem->cart_id);
+    $total = $cart->cartItems->sum(function($item) {
+        return $item->quantity * $item->product->price;
+    });
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Cantidad actualizada.',
+        'subtotal' => number_format($subtotal, 2), // Devolver el subtotal actualizado
+        'total' => number_format($total, 2)         // Devolver el total actualizado
+    ]);
 }
+
+
+
 
 
 

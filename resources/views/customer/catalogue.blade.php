@@ -653,5 +653,6 @@
                     }
                 });
             });
+            
         </script>
     @endsection

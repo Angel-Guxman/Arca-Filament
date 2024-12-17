@@ -1,7 +1,6 @@
 @extends('layouts.customer')
 @section('content')
     @auth
-
         @livewire('customer.cart', ['cart' => $cart, 'cartItems' => $cartItems])
     @endauth
     @guest
@@ -26,4 +25,4 @@
 
         </section>
     @endguest
-@endsection
+    @endsection

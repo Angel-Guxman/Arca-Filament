@@ -23,7 +23,20 @@ class ProductController extends Controller
 
         return view('customer.catalogue', compact('products', 'categories'));
     }
+
     
+
+    public function show($id)
+    {
+        // Buscar el producto por su ID, si no existe, devolver un error 404
+        $product = Product::findOrFail($id);
+
+        // Pasar el producto a la vista
+        return view('customer.productInformation', compact('product'));
+    }
+
+
+
 
     public function store(Request $request)
     {
