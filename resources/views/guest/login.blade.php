@@ -16,9 +16,13 @@
 
     </div>
 
-    <form class="max-w-md mx-auto mb-10 mt-2  border border-gray-700/80 p-5 bg-gray-950/80" action="{{ route('login') }}"
-        method="POST">
+    <form class="max-w-md mx-auto mb-10 mt-2  border border-gray-700/80 p-5 bg-gray-950/80"
+        action="{{ route('auth.login') }}" method="POST">
         @csrf
+        @if (request('product_slug') && request('quantity'))
+            <input type="hidden" name="product_slug" value="{{ request('product_slug') }}">
+            <input type="hidden" name="quantity" value="{{ request('quantity') }}">
+        @endif
 
 
 
@@ -32,7 +36,7 @@
                 <span class=" text-red-400">*</span>
             </label>
             <input type="email" id="email" name="email" value="{{ old('email') }}"
-                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
+                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-black text-black focus:ring-emerald-500 focus:border-emerald-500"
                 placeholder="name@example.com" required />
             @error('email')
                 <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -44,13 +48,13 @@
             </label>
             <div class=" relative ">
                 <input type="password" id="password" name="password"
-                    class="  border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
+                    class="  border outline-none      text-sm      block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-black text-black "
                     required />
                 <div class="  absolute right-2   inset-y-0 flex items-center">
 
-                    <x-svgs.eye id="toggle-eye" class=" cursor-pointer size-5 text-white"></x-svgs.eye>
+                    <x-svgs.eye id="toggle-eye" class=" cursor-pointer size-5 text-black"></x-svgs.eye>
                     <x-svgs.eye-closed id="toggle-eye-closed"
-                        class=" cursor-pointer hidden size-5 text-white"></x-svgs.eye-closed>
+                        class=" cursor-pointer hidden size-5 text-black"></x-svgs.eye-closed>
 
                 </div>
             </div>
@@ -77,7 +81,7 @@
             </a>
         </div>
         <button type="submit"
-            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none  font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Iniciar
+            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none  font-medium text-sm w-full  px-5 py-3 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Iniciar
             Sesión</button>
     </form>
     <script defer>

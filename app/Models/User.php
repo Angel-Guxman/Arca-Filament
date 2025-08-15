@@ -15,7 +15,6 @@ class User extends Authenticatable
     use HasRoles;
     use HasFactory, Notifiable;
 
-// En User.php (modelo de usuario)
 public function favorites()
 {
     return $this->belongsToMany(Product::class, 'favorites', 'user_id', 'product_id');

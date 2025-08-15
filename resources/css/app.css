@@ -2,3 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --buttons-border-width: 1px;
+    }
+}
+@layer components {
+    .scroll-hidden {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE y Edge */
+        &::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge (basado en Chromium) */
+        }
+    }
+    .toast-notification-error {
+        @apply w-fit fixed    right-10   top-[150px] px-2 py-3 z-[50] bg-gradient-to-r from-red-600/20  via-gray-800 to-gray-900 backdrop-brightness-[.2] backdrop-blur-sm text-white rounded-lg  ;
+    }
+      .toast-notification-success {
+        @apply w-fit fixed    right-10   top-[150px] px-2 py-3 z-[50]  bg-gradient-to-r from-green-600/20  via-gray-800 to-gray-900  backdrop-brightness-[.2] backdrop-blur-sm text-white rounded-lg  ;
+    }
+}
+
+.toast-notification-error,
+.toast-notification-success {
+    animation: slideDownFadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideDownFadeIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.toast-hide {
+    animation: slideUpFadeOut 0.4s ease-in forwards;
+}
+
+@keyframes slideUpFadeOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+  body {
+            font-family: "Poppins", sans-serif;
+        }
+
+
+
+
+
+        body::-webkit-scrollbar {
+            width: 5px;
+            /* horizontal */
+            height: 5px;
+
+        }
+
+        /* Estilo del "track" (fondo) de la barra de desplazamiento */
+        body::-webkit-scrollbar-track {
+            background: #fffefe00;
+
+        }
+
+        body::-webkit-scrollbar-thumb {
+
+            background: #888;
+            /* Color del thumb */
+            border-radius: 5px;
+            /* Radio de esquina del thumb */
+        }
+
+        input[type="number"] {
+            -webkit-appearance: textfield;
+               -moz-appearance: textfield;
+                    appearance: textfield;
+          }
+          input[type=number]::-webkit-inner-spin-button,
+          input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+          }

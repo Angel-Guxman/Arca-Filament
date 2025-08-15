@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /*  .custom-size {
-                                                                                                                                                                                                    width: 90%;
-                                                                                                                                                                                                    height: 80%;
-                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 90%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 80%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .bg-coming {
             /* background: rgb(255, 255, 255,.2); */
             /* background: rgba(255, 255, 255, 0.3);  */
@@ -270,29 +270,43 @@
             }
         }
     </style>
-    <section class=" p-4 relative  ">
-        @session('status')
-            <div
-                class="p-4  notification  text-emerald-300 border border-emerald-100 bg-black top-2 rounded  right-2 z-10 absolute ">
-                {{ $value['success'] }}
+    @session('status')
+        <div id="notification"
+            class="w-full max-w-xs fixed  right-4  mt-5 p-4 z-[12] text-gray-400 bg-neutral-900  rounded-lg shadow"
+            role="alert">
+            <div class="flex items-center   flex-wrap">
+                <div class="  bg-neutral-700 rounded-full p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-5 text-neutral-400 ">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+
+                </div>
+
+                <div class="ms-3 text-sm font-normal">
+                    <span class="mb-1 text-sm font-semibold text-white"> {{ $value['success'] }}</span>
+                </div>
+
             </div>
-        @endsession
+        </div>
+    @endsession
+    <section class=" p-4 relative  ">
         <div class=" md:mx-10 my-5 md:max-h-[500px]   relative       grid grid-cols-1 md:grid-cols-2 ">
             <section
                 class="    md:max-h-[500px] md:static z-10 left-0 right-0 top-7 bottom-0    md:grid absolute text-white  grid-cols-1 items-center justify-items-center ">
                 <div class=" flex flex-col gap-4 ">
 
                     <h1 class=" text-8xl mx-auto arca-letter-animation ">Arca</h1>
-                    <h3 class=" text-3xl mx-auto  arca-letter-animation border-b-[1px] border-emerald-300/90">Accesorios de
+                    <h3 class=" text-3xl mx-auto  arca-letter-animation     ">Accesorios de
                         Jade</h3>
-                    <a href=""
+                    <a href="{{ route('catalogue') }}"
                         class="  text-xl border    md:border-[#2f3336] mx-auto p-2 hover:bg-white hover:text-black duration-200 md:hover:scale-105 relative">
 
                         Comprar</a>
                 </div>
             </section>
             <div class=" max-h-[400px]      ">
-                <img class="  md:hover:brightness-105 brightness-50 opacity-95 md:opacity-100  md:brightness-100 md:border-[#2f3336]  md:border md:p-10  max-h-full w-auto mx-auto object-contain   "
+                <img class="  md:hover:brightness-105 brightness-50 opacity-95 md:opacity-100  md:brightness-100      max-h-full w-auto mx-auto object-contain   "
                     src="{{ asset('images/image.png') }}" alt="" />
             </div>
         </div>
@@ -351,19 +365,24 @@
                 <i class='bx bx-chevron-left'></i>
             </span>
             <div class=" cont-carrusel-product">
-                @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group  duration-200   overflow-hidden md:min-w-[350px] md:min-h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                @forelse ($bracelets as $bracelet)
+                    <a href="{{ route('productInformation', ['slug' => $bracelet->slug]) }} "
+                        class=" relative group  duration-200   overflow-hidden md:min-w-[350px] md:min-h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
                         href=''>
 
-                        <img src="{{ asset('images/Pulsera.png') }}" alt=""
+                        <img src="{{ asset($bracelet->images[0]->image) }}" alt=""
                             class="   rounded-t-md   hover:scale-105  img-products-customer group-hover:opacity-95  duration-300  h-full w-full">
 
                         <h1
                             class=" absolute  z-10 bottom-0 text-center p-2   text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
-                            Pulsera de Jade Azul
+                            {{ $bracelet->name }}
+
                         </h1>
                     </a>
-                @endfor
+
+                @empty
+                @endforelse
+
 
 
             </div>
@@ -394,21 +413,24 @@
                 <i class='bx bx-chevron-left'></i>
             </span>
             <div class=" cont-carrusel-product">
-                @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px]  h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
+                @forelse ($necklaces as $necklace)
+                    <a href="{{ route('productInformation', ['slug' => $necklace->slug]) }} "
+                        class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px]  h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
                         href=''>
 
-                        <img src="{{ asset('images/Collares.png') }}" alt=""
+                        <img src="{{ asset($necklace->images[0]->image) }}" alt=""
                             class=" hover:scale-105  img-products-customer group-hover:opacity-95  duration-200  rounded-md   h-full w-full">
 
                         <h1
                             class=" absolute  z-10 bottom-0 text-center p-2  text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
-                            Pulsera de Jade Azul
+                            {{ $necklace->name }}
                         </h1>
 
 
                     </a>
-                @endfor
+                @empty
+                @endforelse
+
 
 
             </div>
@@ -436,21 +458,22 @@
                 <i class='bx bx-chevron-left'></i>
             </span>
             <div class=" cont-carrusel-product">
-                @for ($i = 0; $i < 10; $i++)
-                    <a class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  "
-                        href=''>
+                @forelse ($earrings as $earring)
+                    <a href="{{ route('productInformation', ['slug' => $earring->slug]) }} "
+                        class=" relative group overflow-hidden  md:min-w-[350px] md:h-[350px] h-[300px] min-w-[300px]   card-carrusel-product shadow-md  bg-black  ">
 
-                        <img src="{{ asset('images/Aretes.png') }}" alt=""
+                        <img src="{{ asset($earring->images[0]->image) }}" alt=""
                             class=" hover:scale-105   img-products-customer group-hover:opacity-95  duration-300 rounded-md   h-full w-full">
 
                         <h1
                             class=" absolute  z-10 bottom-0 text-center p-2  text-lg font-medium left-0 right-0 group-hover:opacity-100  text-white  product-name-card  ">
-                            Pulsera de Jade Azul
+                            {{ $earring->name }}
                         </h1>
 
 
                     </a>
-                @endfor
+                @empty
+                @endforelse
 
 
             </div>
@@ -563,7 +586,7 @@
 
     <script defer>
         document.addEventListener("DOMContentLoaded", function() {
-            const notification = document.querySelector('.notification');
+            const notification = document.querySelector('#notification');
             setTimeout(() => {
                 notification.classList.add('hidden');
             }, 3000);

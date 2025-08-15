@@ -76,11 +76,7 @@
                 margin-top: 6%;
             }
 
-            .zoom-container {
-                position: relative;
-                display: inline-block;
-                overflow: visible;
-            }
+
 
             .zoom-icon {
                 display: none;
@@ -92,9 +88,7 @@
 
             }
 
-            .zoom-container:hover .zoom-icon {
-                display: block;
-            }
+
 
             .zoom-icon img {
                 width: 25px;
@@ -212,39 +206,7 @@
                 cursor: pointer;
             }
 
-            .dashboard-menu {
-                display: none;
-                position: absolute;
-                right: 0px;
-                background: #2d2d2d;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-                padding: 10px;
-                width: 200px;
-                top: 122px;
-            }
 
-            .dashboard-menu.show {
-                display: block;
-            }
-
-            .dashboard-menu a {
-                display: block;
-                padding: 10px;
-                color: white;
-                text-decoration: none;
-                border-bottom: 1px solid #3d3d3d;
-                transition: background 0.3s ease;
-            }
-
-            .dashboard-menu a:hover {
-                background: #1d1d1d;
-            }
-
-            .dashboard-menu a:last-child {
-                border-bottom: none;
-            }
 
             .no-scroll {
                 overflow: hidden;
@@ -366,85 +328,156 @@
             }
         </style>
 
-        <div class="hamburger-menu" id="hamburger-menu">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 7.5h16.5m-16.5 7.5h16.5" />
-            </svg>
-        </div>
 
-        <div class="dashboard-menu" id="dashboard-menu">
-            @foreach ($categories as $category)
-                <a href="{{ route('customer.show', $category->id) }}">{{ $category->name }}</a>
-            @endforeach
-        </div>
+        <div class=" flex justify-between mx-4    md:mx-10 mt-2  items-center ">
 
+            <h1 class=" text-white text-3xl p-3 lg:text-5xl   ">Catálogo</h1>
 
-        <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Catálogo</h1>
+            <div id="notification-failed"
+                class="w-full max-w-[200px] fixed hidden   right-4   top-[200px] p-4 z-[12] bg-neutral-900   shadow"
+                role="alert">
+                <div class="flex items-center gap-1  ">
+                    <div class="   rounded-full  ">
 
-        <div class="relative inline-block mb-24">
-            <button class="text-white flex  hover:text-emerald-200 cursor-pointer filter" id="filter-button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                </svg>
-                <p class="ml-2 mr-2">Filtrar y ordenar</p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </button>
-
-            <div id="filter-modal" class="absolute hidden bg-black rounded-lg shadow-lg mt-2 p-4"
-                style="width: 209px; z-index: 1000; top: 18px; left: 29%;">
-                <form id="price-filter-form">
-                    <label for="min-price" class="block mb-2 text-sm text-white">Precio Mínimo:</label>
-                    <input type="number" id="min-price" name="min-price" step="1" min="0" required
-                        class="w-full p-1 border rounded mb-2 text-sm">
-                    <label for="max-price" class="block mb-2 text-sm text-white">Precio Máximo:</label>
-                    <input type="number" id="max-price" name="max-price" step="1" min="0" required
-                        class="w-full p-1 border rounded mb-4 text-sm">
-                    <button type="submit"
-                        class="bg-emerald-500 text-white px-4 py-2 rounded text-sm w-full">Filtrar</button>
-                </form>
-            </div>
-        </div>
-
-        <p class="text-right text-white -mt-6 mr-24 container-Products"> {{ count($products) }} Productos</p>
-
-        <div class="carousel-wrapper">
-            @foreach ($products as $product)
-                <div class="carousel-item">
-                    <div class="zoom-container">
-                        <a href="{{ route('productInformation', ['id' => $product->id]) }}">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                        </a>
-                        <div class="zoom-icon">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
-                        </div>
-                    </div>
-                    <div class="product-info flex items-center justify-between">
-                        <p class="text-white">{{ $product->name }}</p>
-                        <svg data-product-id="{{ $product->id }}" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            class="size-6 heart-icon text-white cursor-pointer {{ in_array($product->id, session('favorites', [])) ? 'favorited' : '' }}"
-                            onclick="toggleFavorite(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5 text-red-500">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
+
+
                     </div>
-                    <p class="text-white mt-2">$ {{ $product->price }} MXN</p>
-                    <div class="container-add">
-                        <form action="{{ route('cart.add', ['productId' => $product->id]) }}" method="POST">
-                            @csrf
-                            <button type="button" onclick="addToCart({{ $product->id }})"
-                                class="text-black border py-2 px-3 duration-200 hover:scale-[.99]">
-                                Agregar al Carrito
-                            </button>
-                        </form>
-                    </div>
+                    <span id="notification-content-failed" class=" flex-1 text-xs font-semibold text-gray-300 "> </span>
                 </div>
+
+
+            </div>
+            <div id="notification-success"
+                class="w-full max-w-[200px] fixed hidden   right-4   top-[200px] p-4 z-[12] bg-neutral-900   shadow"
+                role="alert">
+                <div class="flex items-center gap-1  ">
+                    <div class="   rounded-full  ">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5    text-green-500   ">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+
+                    </div>
+                    <span class=" flex-1 text-xs font-semibold text-gray-300 ">Agregado Correctamente</span>
+                </div>
+
+                <div class=" text-sm font-normal flex flex-col gap-2 mt-2  pl-3">
+                    <span id="notification-content" class=" line-clamp-1 text-xs font-semibold text-white">
+                    </span>
+                    <div class="  aspect-video   ">
+                        <img id="notification-img" src="" alt=""
+                            class="   h-full w-full object-cover object-center">
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div id="toast-message-cta"
+                class="w-full max-w-xs fixed hidden right-4  mt-20 p-4 z-[12] text-gray-400 bg-neutral-900  rounded-lg shadow"
+                role="alert">
+                <div class="flex">
+
+                    <div class="ms-3 text-sm font-normal">
+                        <span id="title-toast-notification" class="mb-1 text-sm font-semibold text-white"></span>
+                        <div id="content-toast-notification" class="mb-2 text-sm font-normal">
+                        </div>
+                        <a href="{{ route('login') }}"
+                            class="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-800">Iniciar
+                            Sesión</a>
+                    </div>
+                    <button type="button" onclick="closeAlert()"
+                        class="ms-auto -mx-1.5 -my-1.5 bg-neutral-800 justify-center items-center flex-shrink-0 text-gray-500 hover:text-white rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-neutral-700 inline-flex h-8 w-8"
+                        data-dismiss-target="#toast-message-cta" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class=" relative">
+                <div class="   cursor-pointer bg-gray-950 hover:bg-gray-900 border-[.3px] border-gray-700    rounded-full p-2  "
+                    id="hamburger-menu" onclick="filterForCategory()">
+                    <x-svgs.hamburger-button class=" text-indigo-100 size-8"></x-svgs.hamburger-button>
+                </div>
+                <div class=" bg-gray-950 absolute right-[17px] mt-2    max-h-[250px] overflow-y-scroll  scroll-hidden  z-[11]  w-[200px]  hidden"
+                    id="menu-category">
+                    @foreach ($categories as $category)
+                        @if (request('category') && request('category') === $category->name)
+                            <a class="block p-2 text-white no-underline  border-b border-gray-700  duration-300 last:border-b-0  hover:bg-gray-900"
+                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
+                        @else
+                            <a class="block p-2 text-indigo-100 no-underline border-b border-gray-700  duration-300 last:border-b-0 hover:bg-gray-900"
+                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+        <div class=" flex justify-between items-center mr-4 md:mr-10">
+
+
+            <div class="relativ ml-4 md:ml-10 my-6  ">
+                <button
+                    class="text-indigo-100 flex gap-1 items-center outline outline-[.3px] bg-gray-950 hover:outline-[1px] outline-gray-700 p-1   cursor-pointer "
+                    onclick="filterForPrice()">
+                    <x-svgs.settings>
+
+                    </x-svgs.settings>
+                    <p class=" text-sm ">Filtrar por precio</p>
+                    <x-svgs.arrow-down>
+                    </x-svgs.arrow-down>
+                </button>
+
+                <div
+                    class="absolute hidden z-10 container-filter-price w-[200px] border-gray-700   bg-gray-950 border-[.3px] shadow-lg mt-2 p-4">
+                    <form method="GET" class="">
+                        <label for="min-price" class="block mb-2 text-sm text-white">Precio mínimo:</label>
+                        <input type="number" id="min-price" value="{{ request('min-price') }}" name="min-price"
+                            step="1" min="0" required
+                            class="w-full outline-none p-1 bg-gray-200    mb-2 text-sm">
+                        <label for="max-price" class="block mb-2 text-sm text-white">Precio máximo:</label>
+                        <input type="number" id="max-price" value="{{ request('max-price') }}" name="max-price"
+                            step="1" min="0" required
+                            class="w-full outline-none bg-gray-200  p-1   mb-4 text-sm">
+                        <button type="submit"
+                            class="       tracking-wider bg-emerald-800/10  hover:bg-emerald-800/20 text-emerald-500/80 border-[.3px] border-emerald-800   mt-2 font-semibold  py-2  text-sm w-full">Filtrar</button>
+                    </form>
+                </div>
+            </div>
+
+            <p
+                class=" text-indigo-100 text-sm  font-semibold  bg-gray-950 tracking-widest px-3 cursor-default select-none border-[0.3px] border-gray-700 py-2  ">
+                {{ $products->total() }} productos
+            </p>
+        </div>
+
+        <div
+            class=" grid  mt-2   grid-cols-1 sm:grid-cols-2   lg:grid-cols-3 xl:gap-2 xl:grid-cols-4 gap-5    justify-items-center  ">
+            @foreach ($products as $product)
+                @php
+                    $isFavorite = in_array($product->id, $favorites);
+                    $class = $isFavorite
+                        ? 'text-emerald-500 drop-shadow-[0_1px_10px_rgba(51,255,0)]'
+                        : 'text-white drop-shadow-[0_1px_10px_rgba(255,255,255)]';
+                @endphp
+
+                <x-customer.product-card :$product :$class>
+                </x-customer.product-card>
             @endforeach
+        </div>
+        <div class="  flex justify-center items-center my-5 ">
+            {{ $products->links() }}
         </div>
 
         @if (session('status'))
@@ -461,190 +494,279 @@
             </div>
         </div>
 
-        <script>
-            
-            function addToCart(productId) {
-                fetch("{{ route('cart.add', ['productId' => '__PRODUCT_ID__']) }}".replace('__PRODUCT_ID__', productId), {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            productId: productId
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Crea la notificación
-                            // Crea la notificación
-                            const notification = document.createElement('div');
-                            notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
-                                'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
-                            notification.textContent = data.message; // Usa el mensaje del backend
-
-                            // Agrega la notificación al cuerpo del documento
-                            document.body.appendChild(notification);
-
-                            // Remueve la notificación después de 3 segundos
-                            setTimeout(() => {
-                                notification.remove();
-                            }, 3000);
-
+        <script defer>
+            let process = false;
+            let typeProcess = ''
+            let timeoutId;
+            let timeOutCart;
+            async function cartCount() {
+                const cartCount = document.getElementById('cart-count')
+                if (!cartCount) {
+                    console.log('sin un contador');
+                    return
+                }
+                try {
+                    const response = await axios.get('/cart-count')
+                    if (response.data.success) {
+                        let count = response.data.count;
+                        if (count >= 100) {
+                            cartCount.innerHTML = `  <small >+99</small>`;
                         } else {
-                            alert(data.message || "Hubo un problema al agregar el producto.");
+                            cartCount.textContent = `  <small >${count}</small>`;
                         }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-
-
-
-            function toggleFavorite(event) {
-                const productId = event.target.getAttribute('data-product-id');
-                const icon = event.target;
-
-                fetch('/favorites/toggle', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            product_id: productId
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            if (data.action === 'added') {
-                                icon.classList.add('favorited');
-                                showNotification(data.message || 'Producto agregado a favoritos.');
-                            } else {
-                                icon.classList.remove('favorited');
-                                showNotification(data.message || 'Producto eliminado de favoritos.');
-                            }
-                        } else {
-                            console.error(data.message);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
-                    'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
-                notification.textContent = message;
-
-                // Agrega la notificación al cuerpo del documento
-                document.body.appendChild(notification);
-
-                // Remueve la notificación después de 3 segundos
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-
-
-            document.getElementById('hamburger-menu').addEventListener('click', function() {
-                if (event.target.tagName === 'svg' || event.target.closest('svg')) {
-                    const dashboardMenu = document.getElementById('dashboard-menu');
-                    dashboardMenu.classList.toggle('show');
-                }
-            });
-
-            document.addEventListener('click', function(event) {
-                const dashboardMenu = document.getElementById('dashboard-menu');
-                const hamburgerMenu = document.getElementById('hamburger-menu');
-
-                if (!hamburgerMenu.contains(event.target) && !dashboardMenu.contains(event.target)) {
-                    dashboardMenu.classList.remove('show');
-                }
-            });
-
-            document.getElementById('filter-button').addEventListener('click', function() {
-                const modal = document.getElementById('filter-modal');
-                const carouselWrapper = document.querySelector('.carousel-wrapper');
-
-                if (modal.classList.contains('show')) {
-                    modal.classList.remove('show');
-                    modal.classList.add('hide');
-                    setTimeout(() => {
-                        modal.classList.add('hidden');
-                    }, 500);
-                } else {
-                    modal.classList.remove('hidden');
-                    modal.classList.remove('hide');
-                    modal.classList.add('show');
-                }
-            });
-
-            document.getElementById('price-filter-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const minPrice = parseFloat(document.getElementById('min-price').value);
-                const maxPrice = parseFloat(document.getElementById('max-price').value);
-
-                let found = false;
-
-                document.querySelectorAll('.carousel-item').forEach(item => {
-                    const priceText = item.querySelector('p.text-white.mt-2').innerText;
-                    const price = parseFloat(priceText.replace('$', '').replace('MXN', '').trim());
-
-                    if (price >= minPrice && price <= maxPrice) {
-                        found = true;
-                        item.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                        item.classList.add('highlight');
-                        setTimeout(() => item.classList.remove('highlight'), 3000);
-                        return false;
+                        cartCount.classList.remove('hidden')
                     }
-                });
+                } catch (error) {
+                    console.log('ocurrio un error en el contador');
 
-                if (!found) {
-                    alert('No se encontraron productos en el rango de precios especificado.');
+                    console.log(error);
                 }
 
-                const modal = document.getElementById('filter-modal');
-                const carouselWrapper = document.querySelector('.carousel-wrapper');
+            }
 
-                modal.classList.remove('show');
-                modal.classList.add('hide');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    // Restaurar la posición del carrusel
-                    carouselWrapper.classList.remove('shift-right');
-                }, 500);
+            //function for add to cart
+            async function addToCart(id) {
+                if (!id || process) {
+                    return
+                }
 
-                // Limpiar los campos de entrada
-                document.getElementById('min-price').value = '';
-                document.getElementById('max-price').value = '';
-            });
 
-            document.querySelectorAll('.zoom-container').forEach(container => {
+                const buttonAddCart = document.getElementById(`add-cart-${id}`)
+                if (buttonAddCart) {
+                    buttonAddCart.classList.add('cursor-not-allowed')
+                }
 
-                const zoomIcon = container.querySelector('.zoom-icon');
-                const img = container.querySelector('img');
+                process = true
+                try {
+                    const response = await axios.post(`/cart/add/${id}`)
+                    if (response.data.success) {
+
+                        if (timeOutCart) {
+                            clearTimeout(timeOutCart)
+                        }
+                        cartCount()
+                        const notificationFailed = document.getElementById('notification-failed')
+
+                        if (notificationFailed && !notificationFailed.classList.contains('hidden')) {
+                            notificationFailed.classList.add('hidden')
+                        }
+                        const notification = document.getElementById('notification-success')
+                        const product = response.data.product
+                        const content = document.getElementById('notification-content')
+                        content.textContent =
+                            `${product.name}`
+                        const img = document.getElementById('notification-img')
+                        img.src = `{{ asset('${product.images[0].image}') }}`
+                        notification.classList.remove('hidden')
+                        timeOutCart = setTimeout(() => {
+                            notification.classList.add('hidden')
+                        }, 2500)
+                    } else {
+                        if (timeOutCart) {
+                            clearTimeout(timeOutCart)
+                        }
+                        const notificationSuccess = document.getElementById('notification-success')
+
+                        if (notificationSuccess && !notificationSuccess.classList.contains('hidden')) {
+                            notificationSuccess.classList.add('hidden')
+                        }
+                        const notification = document.getElementById('notification-failed')
+                        const content = document.getElementById('notification-content-failed')
+                        if (response.data.message) {
+                            content.textContent =
+                                `${response.data.message}`
+                        } else {
+                            content.textContent = 'No se pudo Agregar el Producto'
+                        }
+                        notification.classList.remove('hidden')
+                        timeOutCart = setTimeout(() => {
+                            notification.classList.add('hidden')
+                        }, 2500)
+
+
+                    }
+                } catch (error) {
+                    console.log('hubo un error al agregar el producto al carrito');
+                    console.log(error);
+                    if (timeOutCart) {
+                        clearTimeout(timeOutCart)
+                    }
+                    const notification = document.getElementById('notification-failed')
+                    const content = document.getElementById('notification-content-failed')
+                    content.textContent = 'Hubo un error al agregar el producto'
+                    notification.classList.remove('hidden')
+                    timeOutCart = setTimeout(() => {
+                        notification.classList.add('hidden')
+                    }, 2500)
+                } finally {
+                    if (buttonAddCart) {
+                        buttonAddCart.classList.remove('cursor-not-allowed')
+                    }
+                    process = false
+
+                }
+
+
+            }
+            //function for alert toast
+
+            function closeAlert() {
+                /*  process = false; */
+                const alert = document.getElementById('toast-message-cta');
+                alert.classList.add('hidden')
+            }
+
+            function alertToast(type) {
+                if (type === typeProcess) {
+                    return
+                } else if (type === 'cart') {
+                    typeProcess = 'cart'
+                    const alert = document.getElementById('toast-message-cta');
+                    if (timeoutId) { //
+                        clearTimeout(timeoutId);
+                    }
+
+                    const title = document.getElementById('title-toast-notification')
+                    title.textContent = '¡Inicia sesión primero!'
+                    const content = document.getElementById('content-toast-notification')
+                    content.textContent = 'Por favor, inicia sesión para agregar este producto al carrito.'
+                    alert.classList.remove('hidden');
+                    timeoutId = setTimeout(() => {
+                        alert.classList.add('hidden');
+                        typeProcess = ''
+                    }, 5000);
+
+                } else if (type === "favorite") {
+                    typeProcess = 'favorite'
+                    const alert = document.getElementById('toast-message-cta');
+                    if (timeoutId) { //si hay notificacion
+                        clearTimeout(timeoutId);
+                    }
+                    const title = document.getElementById('title-toast-notification')
+                    title.textContent = '¡Inicia sesión primero!'
+                    const content = document.getElementById('content-toast-notification')
+                    content.textContent = 'Por favor, inicia sesión para agregar este producto a tus favoritos.'
+                    alert.classList.remove('hidden');
+                    timeoutId = setTimeout(() => {
+                        alert.classList.add('hidden');
+                        typeProcess = ''
+                    }, 5000);
+
+
+                }
+            }
+            //function for add to favorite
+            async function addFavorite(idProduct) {
+                if (process || !idProduct) {
+                    return
+                }
+                process = true;
+                const btnCart = document.getElementById(`add-cart-${idProduct}`);
+                if (btnCart) {
+                    btnCart.disabled = true;
+                }
+                const heart = document.getElementById(`favorite-${idProduct}`);
+                const heartSelect = heart.classList.contains('text-emerald-500');
+
+                const datos = {
+                    idProduct
+                }
+                try {
+                    const response = await axios.post('/favorites/toggle', datos);
+                    if (response.data.success) {
+                        if (response.data.message === "Favorite removed") {
+                            heart.classList.replace('text-emerald-500', 'text-white');
+                            heart.classList.replace('drop-shadow-[0_1px_10px_rgba(51,255,0)]',
+                                'drop-shadow-[0_1px_10px_rgba(255,255,255)]');
+                        } else if (response.data.message === "Favorite added") {
+                            heart.classList.replace('text-white', 'text-emerald-500');
+                            heart.classList.replace('drop-shadow-[0_1px_10px_rgba(255,255,255)]',
+                                'drop-shadow-[0_1px_10px_rgba(51,255,0)]');
+                        }
+                    }
+
+                } catch (error) {
+                    console.log("hubo un error");
+                    console.log(error);
+
+                } finally {
+                    setTimeout(() => {
+                        if (btnCart) {
+                            btnCart.disabled = false;
+                        }
+                        process = false;
+                    }, 2500);
+                }
+
+
+
+
+
+
+            }
+            //filter for category
+            function filterForCategory() {
+                const menuCategory = document.querySelector('#menu-category');
+                if (menuCategory.classList.contains("hidden")) {
+                    menuCategory.classList.remove("hidden");
+                    setTimeout(() => {
+                        document.body.addEventListener('click', closeContainerCategory);
+                    }, 0);
+                } else {
+                    menuCategory.classList.add("hidden");
+                    document.body.removeEventListener('click', closeContainerCategory);
+                }
+
+            }
+
+            function closeContainerCategory(e) {
+                const menuCategory = document.querySelector('#menu-category');
+                if (!menuCategory.contains(e.target)) {
+                    menuCategory.classList.add('hidden');
+                    document.body.removeEventListener('click', closeContainerCategory);
+                }
+            }
+            //filter for price
+            function filterForPrice() {
+                const container = document.querySelector('.container-filter-price')
+                if (container.classList.contains("hidden")) {
+
+                    container.classList.remove('hidden')
+                    setTimeout(() => {
+                        document.body.addEventListener('click', closeContainer);
+                    }, 0);
+                } else {
+                    container.classList.add('hidden')
+                    document.body.removeEventListener('click', closeContainer);
+                }
+            }
+
+            //function for close filter price container
+            function closeContainer(e) {
+                const container = document.querySelector('.container-filter-price')
+                if (!container.contains(e.target)) {
+                    container.classList.add("hidden")
+                    document.body.removeEventListener("click", closeContainer)
+                }
+            }
+
+
+            //funcion for zoom
+            function zoom(idProducto) {
+                console.log(idProducto);
+                const imagenconId = `${idProducto}-img`
+                const img = document.getElementById(`${imagenconId}`);
                 const zoomModal = document.getElementById('zoomModal');
                 const zoomedImage = document.getElementById('zoomedImage');
                 const zoomClose = document.querySelector('.zoom-close');
-
-                zoomIcon.addEventListener('click', () => {
-                    zoomedImage.src = img.src;
-                    zoomModal.style.display = "block";
-                    document.body.classList.add('no-scroll');
-                });
-
+                zoomedImage.src = img.src;
+                zoomModal.style.display = "block";
+                document.body.classList.add('no-scroll');
                 zoomClose.addEventListener('click', () => {
                     zoomModal.style.display = "none";
                     document.body.classList.remove(
                         'no-scroll');
                 });
-
                 zoomModal.addEventListener('click', (e) => {
                     if (e.target === zoomModal) {
                         zoomModal.style.display = "none";
@@ -652,7 +774,8 @@
                             'no-scroll');
                     }
                 });
-            });
-            
+
+
+            }
         </script>
     @endsection

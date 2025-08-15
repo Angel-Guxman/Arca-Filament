@@ -377,7 +377,7 @@
             <a href="{{ route('customer.show', $category->id) }}">{{ $category->name }}</a>
         @endforeach
     </div>
-    
+
 
 
     <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Aretes</h1>
@@ -405,8 +405,7 @@
                 <label for="max-price" class="block mb-2 text-sm text-white">Precio Máximo:</label>
                 <input type="number" id="max-price" name="max-price" step="1" min="0" required
                     class="w-full p-1 border rounded mb-4 text-sm">
-                <button type="submit"
-                    class="bg-emerald-500 text-white px-4 py-2 rounded text-sm w-full">Filtrar</button>
+                <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded text-sm w-full">Filtrar</button>
             </form>
         </div>
     </div>
@@ -418,7 +417,7 @@
             <div class="carousel-item">
                 <div class="zoom-container">
                     <a href="{{ route('productInformation', ['id' => $product->id]) }}">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
                     </a>
                     <div class="zoom-icon">
                         <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">

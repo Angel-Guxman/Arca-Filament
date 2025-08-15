@@ -130,7 +130,7 @@
 <body>
     <div class="overlay"></div>
     <div class="container">
-        <h1>404</h1>
+        <h1>Error</h1>
         @role('administrator')
             <button class="btn-jade" onclick="window.location.href='{{ url('dashboard') }}'">Volver a la Página
                 Principal</button>

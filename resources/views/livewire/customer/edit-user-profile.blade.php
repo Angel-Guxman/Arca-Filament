@@ -1,5 +1,5 @@
 <div>
-    <form class="max-w-xl mx-auto mt-10 mb-2     " wire:submit.prevent="updateView">
+    <form class="max-w-xl mx-auto mt-10 mb-2      " wire:submit.prevent="updateView">
         <div>
 
             <div class=" grid sm:grid-cols-2 grid-cols-1 gap-2">
@@ -166,6 +166,8 @@
             <div class=" flex justify-start gap-2 flex-wrap">
                 <button type="submit"
                     class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Guardar</button>
+                <button type="button" wire:click='changeToView'
+                    class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Volver</button>
 
 
             </div>
@@ -176,14 +178,14 @@
     <div class=" max-w-xl mx-auto mt-3    mb-10 ">
         <h3 class=" text-gray-400  font-medium text-sm mb-2 ">Otras Opciones</h3>
         <div class=" flex gap-3  w-full  ">
-            <div class="  ">
+            {{--   <div class="  ">
                 <form class="    " wire:submit.prevent="changeToView">
                     @csrf
                     <button type="submit"
                         class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100"
                         aria-current="page">Volver</button>
                 </form>
-            </div>
+            </div> --}}
 
             <div class="  ">
                 <form action="{{ route('logout') }}" class="    " method="POST">

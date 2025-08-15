@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', env('APP_NAME')) </title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -15,6 +16,7 @@
     <link rel="shortcut icon" href="{{ asset('images/arca-a.ico') }}" sizes="16x16">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.4.0/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -101,6 +103,123 @@
     </style>
 
 
+
+
+    <header class="header-home  py-1 bg-black text-white">
+        <div class="carrusel-header-home flex   items-center h-full">
+            <div class=" text-carrusel text-center">
+                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
+            </div>
+            <div class=" text-carrusel text-center">
+                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
+            </div>
+
+        </div>
+    </header>
+    <section class=" sticky  top-0 z-[21] bg-white  ">
+
+
+        <nav class=" h-full  border relative ">
+            <div class=" absolute hidden      min-h-[85px]    left-0 right-0    z-20" id="search-menu">
+
+                <livewire:customer.dynamic-search />
+            </div>
+            {{-- closed button --}}
+            <div
+                class="hidden  w-full  absolute  z-[21]  backdrop-brightness-50 justify-start items-end  md:hidden btn-closed    ">
+
+                <button class=" hover:bg-gray-100 ml-2 bg-white  p-2 duration-200 h-fit   rounded-full ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <ul class=" grid grid-cols-3   items-center px-2  h-full ">
+                <li class=" flex items-center  z-[19]  ">
+                    <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
+                        <x-svgs.hamburger-button class=" size-6"></x-svgs.hamburger-button>
+                    </button>
+                    @auth
+                        <a href="{{ route('profile') }}"
+                            class="hidden md:inline-block   hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                            <x-svgs.user-button></x-svgs.user-button>
+
+                        </a>
+
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="hidden md:inline-block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
+                            <x-svgs.user-button></x-svgs.user-button>
+                        </a>
+                    @endguest
+
+                </li>
+                <li class=" flex justify-center">
+                    <a class=" text-2xl tracking-widest" href="{{ route('home') }}">ARCA</a>
+                </li>
+                <li class="    relative      flex justify-end items-center  ">
+                    <button id="button-search"
+                        class=" mr-[2px]  duration-200 flex  hover:bg-gray-100 p-1 rounded-full justify-center items-center  "
+                        href="">
+                        <x-svgs.search-button></x-svgs.search-button>
+                    </button>
+
+                    <a href="{{ route('cart') }}"
+                        class=" ml-3 mr-1 hover:scale-105 duration-200 relative hover:bg-gray-100 p-2 rounded-full ">
+
+                        <x-svgs.cart-button></x-svgs.cart-button>
+                        @auth
+
+                            <div id="cart-count"
+                                class="bottom-0 hidden rounded-full bg-black text-xs text-white px-2 py-[2px] right-0 absolute">
+
+
+                            </div>
+
+                        @endauth
+
+
+                    </a>
+                    <a href="{{ route('favorites') }}"
+                        class="  hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
+                        <x-svgs.heart-button></x-svgs.heart-button>
+
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <section class=" w-full  md:block  hidden      bg-neutral-100/90 ">
+            <nav class=" border-b-2 w-full flex justify-center items-center">
+                <ul class=" w-full grid grid-cols-3 justify-items-center ">
+                    <a href="{{ route('home') }}"
+                        class=" text-black py-2 px-3  duration-200   hover:bg-gray-200/80  {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} ">
+                        Inicio
+                    </a>
+                    <div class="catalogue relative ">
+                        <a href="{{ route('catalogue') }}"
+                            class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-gray-600' : '' }} ">
+
+                            Catálogo
+
+
+                        </a>
+
+                    </div>
+
+                    <a href=" {{ route('history') }}"
+                        class=" py-2 px-3 text-black  duration-200   hover:bg-gray-200/80 {{ request()->routeis('history') ? 'border-b-2  border-gray-600' : '' }}  ">
+                        La Esencia del Jade
+                    </a>
+                </ul>
+
+            </nav>
+            </footer>
+        </section>
+    </section>
     {{-- menu hamburguesa --}}
     <div class=" menu-hamburger hidden   h-full    md:hidden fixed z-20 left-0 right-0 top-0 backdrop-brightness-50">
         <div class="flex justify-start items-center h-[100%]">
@@ -131,109 +250,6 @@
             </div>
         </div>
     </div>
-
-    <header class="header-home  py-1 bg-black text-white">
-        <div class="carrusel-header-home flex   items-center h-full">
-            <div class=" text-carrusel text-center">
-                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
-            </div>
-            <div class=" text-carrusel text-center">
-                <h2 class=" text-xl tracking-widest">We don´t made jewelry, we made amulets </h2>
-            </div>
-
-        </div>
-    </header>
-    <section class=" sticky  top-0 z-20 bg-white  ">
-
-
-        <nav class=" h-full border relative">
-            <div class=" absolute hidden      min-h-[85px]    left-0 right-0    z-20" id="search-menu">
-
-                <livewire:customer.dynamic-search />
-            </div>
-            {{-- closed button --}}
-            <div class="hidden  w-full  absolute  z-40 justify-start items-end  md:hidden btn-closed    ">
-
-                <button class=" hover:bg-gray-100 ml-2 bg-white  p-2 duration-200 h-fit   rounded-full ">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <ul class=" grid grid-cols-3   items-center px-2  h-full ">
-                <li class=" flex items-center   ">
-                    <button href="" class=" md:hidden hamburger-btn hover:bg-gray-100 p-2 rounded-full">
-                        <x-svgs.hamburger-button></x-svgs.hamburger-button>
-                    </button>
-                    @auth
-                        <a href="{{ route('profile') }}"
-                            class="hidden md:inline-block   hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
-                            <x-svgs.user-button></x-svgs.user-button>
-
-                        </a>
-
-                    @endauth
-                    @guest
-                        <a href="{{ route('login') }}"
-                            class="hidden md:inline-block hamburger-btn hover:bg-gray-100 p-2 rounded-full ">
-                            <x-svgs.user-button></x-svgs.user-button>
-                        </a>
-                    @endguest
-
-                </li>
-                <li class=" flex justify-center">
-                    <a class=" text-2xl tracking-widest" href="{{ route('home') }}">ARCA</a>
-                </li>
-                <li class="    relative      flex justify-end items-center  ">
-                    <button id="button-search"
-                        class=" mr-[2px]  duration-200 flex  hover:bg-gray-100 p-1 rounded-full justify-center items-center  "
-                        href="">
-                        <x-svgs.search-button></x-svgs.search-button>
-                    </button>
-
-                    <a href="{{ route('cart') }}"
-                        class=" ml-3 mr-1 hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
-                        <x-svgs.cart-button></x-svgs.cart-button>
-
-
-                    </a>
-                    <a href="{{ route('favorites') }}"
-                        class="  hover:scale-105 duration-200 hover:bg-gray-100 p-2 rounded-full">
-                        <x-svgs.heart-button></x-svgs.heart-button>
-
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <footer class=" hidden md:block       bg-neutral-100/90 ">
-            <nav class=" border-b-2 w-full flex justify-center items-center">
-                <ul class=" w-full grid grid-cols-3 justify-items-center ">
-                    <a href="{{ route('home') }}"
-                        class=" text-black py-2 px-3  duration-200   hover:bg-gray-200/80  {{ request()->routeIs('home') ? 'border-b-2  border-gray-600' : '' }} ">
-                        Inicio
-                    </a>
-                    <div class="catalogue relative ">
-                        <a href="{{ route('catalogue') }}"
-                            class="      flex items-center gap-1 py-2 px-3 text-black    hover:bg-gray-200/80 duration-200 {{ request()->routeIs('catalogue') ? 'border-b-2  border-gray-600' : '' }} ">
-
-                            Catálogo
-
-
-                        </a>
-
-                    </div>
-
-                    <a href=" {{ route('history') }}"
-                        class=" py-2 px-3 text-black  duration-200   hover:bg-gray-200/80 {{ request()->routeis('history') ? 'border-b-2  border-gray-600' : '' }}  ">
-                        La Esencia del Jade
-                    </a>
-                </ul>
-
-            </nav>
-        </footer>
-    </section>
 
 
 
@@ -287,12 +303,39 @@
 
 
     </footer>
-    <a href="https://wa.me/529984930161?text=Hola%20quiero%20más%20información!" class="fixed bottom-0 right-0 my-5 mx-3">
+    <a href="https://wa.me/529984930161?text=Hola%20quiero%20más%20información!"
+        class="fixed bottom-0 right-0 my-5 mx-3">
         <x-svgs.whatsapp-button></x-svgs.whatsapp-button>
     </a>
-    
+
 
     <script defer>
+        async function cartCount() {
+            const cartCount = document.getElementById('cart-count')
+            if (!cartCount) {
+                return
+            }
+            try {
+                const response = await axios.get('/cart-count')
+                if (response.data.success) {
+                    let count = response.data.count;
+                    if (count >= 100) {
+                        cartCount.innerHTML = `  <small >+99</small>`;
+                        cartCount.classList.remove('hidden')
+                    } else if (count > 0) {
+                        cartCount.innerHTML = `  <small >${count}</small>`;
+                        cartCount.classList.remove('hidden')
+
+                    }
+                }
+            } catch (error) {
+                console.log('ocurrio un error en el contador principal');
+
+                console.log(error);
+            }
+
+        }
+        cartCount()
         const $searchClose = document.querySelector('#search-close');
         const $buttonSearch = document.querySelector('#button-search');
         const $searchMenu = document.querySelector('#search-menu');

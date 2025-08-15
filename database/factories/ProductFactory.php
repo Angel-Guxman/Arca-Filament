@@ -21,6 +21,7 @@ class ProductFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(),
             'price' =>fake()->numberBetween(200,10000) ,
+            "category_id"=>1
         ];
     }
 }

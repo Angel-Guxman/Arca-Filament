@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 
 
@@ -23,25 +24,28 @@ class FavoriteController extends Controller
         $favoriteProducts = session('favorites', []);
         return view('favorites.index', compact('favoriteProducts'));
     }
-
     public function toggleFavorite(Request $request)
     {
-        $productId = $request->input('product_id');
-        $favorites = session('favorites', []);
-    
-        if (in_array($productId, $favorites)) {
-            // Si ya está en favoritos, lo eliminamos
-            $favorites = array_diff($favorites, [$productId]);
-            $action = 'removed';
-        } else {
-            // Si no está en favoritos, lo agregamos
-            $favorites[] = $productId;
-            $action = 'added';
+        $productId = $request->input('idProduct');
+        $userId = auth()->id(); // Suponiendo que el usuario está autenticado
+        if(!auth()){
+return to_route("login");
         }
     
-        session(['favorites' => $favorites]);
+        $favorite = Favorite::where('product_id', $productId)
+                            ->where('user_id', $userId)
+                            ->first();
     
-        return response()->json(['success' => true, 'action' => $action, 'favorites' => $favorites]);
+        if ($favorite) {
+            $favorite->delete();
+            return response()->json(['success' => true, 'message' => 'Favorite removed']);
+        } else {
+            Favorite::create([
+                'product_id' => $productId,
+                'user_id' => $userId,
+            ]); 
+            return response()->json(['success' => true, 'message' => 'Favorite added']);
+        }
     }
     
 

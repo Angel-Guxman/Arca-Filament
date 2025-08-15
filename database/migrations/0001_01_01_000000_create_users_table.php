@@ -21,14 +21,14 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('first_street')->nullable();
             $table->string('second_street')->nullable();
-            $table->string('outdoor_number')->nullable(); // Número Exterior (nullable)
-            $table->string('interior_number')->nullable(); // Número 
+            $table->integer('outdoor_number')->nullable(); // Número Exterior (nullable)
+            $table->integer('interior_number')->nullable(); // Número
             $table->string('address')->nullable();
             $table->string('country')->nullable();
             $table->string('municipality')->nullable();
             $table->string('state')->nullable();
-            $table->string('post_code')->nullable();
-            $table->text('indications')->nullable(); // Indicaciones (nullable)
+            $table->integer('post_code')->nullable();
+            $table->text('indications')->nullable();
             $table->string('rol')->nullable();
             $table->rememberToken();
             $table->timestamps();

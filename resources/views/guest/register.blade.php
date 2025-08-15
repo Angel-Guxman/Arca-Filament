@@ -16,7 +16,7 @@
 
     </div>
 
-    <form method="POST" action="{{ route('register') }}"
+    <form method="POST" action="{{ route('auth.register') }}"
         class="max-w-md mx-auto mb-10 mt-2 border border-gray-700/80 bg-gray-950/80 p-5">
         @csrf
         <h1 class=" text-white mb-5 font-semibold text-xl text-center ">Registrarse</h1>
@@ -105,7 +105,7 @@
             </a>
         </div>
         <button type="submit"
-            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none  font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Registrarse</button>
+            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none  font-medium text-sm w-full  px-5 py-3 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Registrarse</button>
     </form>
     <script defer>
         const toggleEye = document.querySelector('#toggle-eye');

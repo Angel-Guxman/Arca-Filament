@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
          Role::create(['name' => 'customer']);
          Role::create(['name' => 'administrator']);
          User::factory(10)->create();
-         Product::factory(10)->create();
+        $this->call([CategoriesSeeder::class,ProductsSeeder::class,ImageProductsSeeder::class]);
+       //  Product::factory(10)->create();
 
 
        $customerUser= User::factory()->create([

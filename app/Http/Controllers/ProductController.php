@@ -5,14 +5,48 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all(); // Obtiene todos los productos
-        $categories = Category::all(); // Obtiene todas las categorías
-        return view('customer.catalogue', compact('products', 'categories'));
+        $products=[];
+        $favorites=[];
+        $user=Auth::user();
+        if($user){
+           $favorites= $user->favorites->pluck('id')->toArray();
+        }
+        if($request->has('category')){
+            $category=$request->input('category');
+            $products = Product::
+            whereHas('category', function ($query) use ($category) {
+                $query->where('name', 'like', "%$category%"); 
+            })->with(['images' => function ($query) {
+                $query->where('featured', true);
+            }])
+            ->paginate(6)->withQueryString();
+            
+        }else if($request->has(['min-price','max-price'])){
+            $minPrice=$request->input('min-price')*100;
+            $maxPrice=$request->input('max-price')*100;
+            $products = Product::where('price','>=',$minPrice)->where('price','<=',$maxPrice)->with(['images' => function ($query) {
+                $query->where('featured', true);
+            }])->paginate(6)->withQueryString();
+          
+   
+        }else{      
+           
+            $products = Product::with(['images' => function ($query) {
+                $query->where('featured', true); 
+            }])->paginate(6);   
+           
+        }
+      
+  
+        $categories = Category::all(); 
+       
+        return view('customer.catalogue', compact('products', 'categories','favorites'));
     }
 
     public function showByCategory($id)
@@ -26,13 +60,23 @@ class ProductController extends Controller
 
     
 
-    public function show($id)
+    public function show($slug)
     {
-        // Buscar el producto por su ID, si no existe, devolver un error 404
-        $product = Product::findOrFail($id);
-
-        // Pasar el producto a la vista
-        return view('customer.productInformation', compact('product'));
+        $favorites=[];
+        $user=Auth::user();
+        if($user){
+           $favorites= $user->favorites->pluck('id')->toArray();
+        }
+        $product = Product::where('slug','=',$slug)->with('images')->first();
+       
+      
+        if($product){
+           
+            return view('customer.productInformation', compact('product','favorites'));
+        }else{
+            return to_route('catalogue');
+           
+        }
     }
 
 

@@ -53,12 +53,12 @@
 
 
 
-    <section class="    top-0 z-20">
-        <nav class=" h-full  relative">
+    <section class="     top-0 z-20">
+        <nav class="  flex justify-center  relative">
 
-            <li class=" flex justify-center w-fit mx-auto text-white  py-10">
-                <a class=" text-4xl tracking-widest" href="{{ route('home') }}">ARCA</a>
-            </li>
+
+            <a class=" text-4xl tracking-widest text-white py-8 " href="{{ route('home') }}">ARCA</a>
+
 
         </nav>
 
@@ -66,56 +66,11 @@
 
 
 
-    <main class=" bg-black min-h-dvh">
+    <main class=" bg-black ">
         @yield('content')
     </main>
 
-    <footer class=" bg-[#191919]  p-4 mt-4  text-white">
-        <div class=" grid grid-cols-3">
-            <div class=" flex flex-col items-center text-center gap-5 ">
-                <a href="{{ route('privacyNotice') }}"
-                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Avisos
-                    de Privacidad</a>
-                <a
-                    href=""class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Cuidados</a>
-                <a href="{{ route('history') }}"
-                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Historia</a>
-            </div>
-            <div class=" flex flex-col items-center gap-4">
-                <a href=""
-                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Misión</a>
-                <a href=""
-                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Visión</a>
-                <a href=""
-                    class=" hover:scale-105 duration-200 hover:underline-offset-4 hover:underline">Contacto</a>
-            </div>
-            <div class=" flex flex-col  text-center items-center gap-4">
-                <h2>Redes Sociales</h2>
-                <div class=" flex gap-3 ">
-                    <a href="" class=" hover:scale-105 duration-200">
-                        <x-svgs.instagram-icon></x-svgs.instagram-icon>
-                    </a>
-                    <a href="" class=" hover:scale-105 duration-200">
-                        <x-svgs.facebook-icon></x-svgs.facebook-icon>
-                    </a>
-                    <a href="" class=" hover:scale-105 duration-200 ">
-                        <x-svgs.messenger-icon></x-svgs.messenger-icon>
-                    </a>
 
-                </div>
-                <h2>Alessandro Cardone</h2>
-            </div>
-
-        </div>
-        <div class=" w-full mt-8">
-            <h3 class=" mx-auto w-fit">
-                © Arca S.A. de C.V. 2024.
-
-            </h3>
-        </div>
-
-
-    </footer>
     <a href="" class=" fixed  bottom-0 right-0 my-5 mx-3">
         <x-svgs.whatsapp-button></x-svgs.whatsapp-button>
     </a>

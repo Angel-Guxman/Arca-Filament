@@ -10,7 +10,7 @@
         <ul class="flex flex-wrap mx-auto w-fit -mb-px">
             <li class="me-2">
                 <a href="{{ route('profile') }}"
-                    class="inline-block p-4  rounded-t-lg   {{ request()->routeIs('profile') ? 'text-emerald-500/80 border-b-2 border-emerald-500/80' : ' hover:border-gray-300 hover:text-gray-300 hover:border-b-2' }}">Perfil</a>
+                    class="inline-block p-4  rounded-t-lg   {{ request()->routeIs('profile') ? 'text-emerald-500 border-b-2 border-emerald-500/90' : ' hover:border-gray-300 hover:text-gray-300 hover:border-b-2' }}">Perfil</a>
             </li>
             <li class="me-2">
                 <a href="{{ route('order-history') }}"

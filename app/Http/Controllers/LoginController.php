@@ -29,22 +29,30 @@ class LoginController extends Controller
     {
         //
         $request->validate([
-        'email'=>'required|email ',
-        'password'=>'required',
+            'email' => 'required|email ',
+            'password' => 'required|min:4',
         ]);
-    
 
-        if(!auth()->attempt($request->only('email','password'),$request->remember)){
-            return back()->with('error','Los datos no coincide con nuestros registros');
+
+        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) {
+            return back()->with('error', 'Los datos no coincide con nuestros registros');
         }
-        $user=Auth::user();
-        if($user->hasRole('administrator')){
-            return redirect('dashboard')->with('status',[
-                'success'=>'Inicio de Sesión Correctamente.'
+        $user = Auth::user();
+        if ($user->hasRole('administrator')) {
+            return redirect('dashboard')->with('status', [
+                'success' => 'Inicio de Sesión Correctamente.'
             ]);
         }
-        return redirect()->route('home')->with('status',[
-            'success'=>'Inicio de Sesión Correctamente.'
+        if (session()->has('pending_purchase')) {
+            $pending = session('pending_purchase');
+            session()->forget('pending_purchase');
+            return redirect()->route('create-order', [
+                'product_slug' => $pending['slug'],
+                'quantity' => $pending['quantity'],
+            ]);
+        }
+        return redirect()->route('home')->with('status', [
+            'success' => 'Inicio de Sesión Correctamente.'
         ]);
     }
 

@@ -8,59 +8,131 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PagoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('customer.home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/Catalogue', [ProductController::class, 'index'])->name('catalogue');
-Route::get('/Earrings', [ProductController::class, 'index'])->name('earrings');
-Route::get('/Necklaces', [ProductController::class, 'index'])->name('necklaces');
-Route::get('/Bracelets', [ProductController::class, 'index'])->name('bracelets');
+Route::get('/catalogo', [ProductController::class, 'index'])->name('catalogue');
+Route::get('/aretes', [ProductController::class, 'index'])->name('earrings');
+Route::get('/collares', [ProductController::class, 'index'])->name('necklaces');
+Route::get('/brazaletes', [ProductController::class, 'index'])->name('bracelets');
 Route::get('/category/{id}', [CategoryController::class, 'show'])->name('customer.show');
 
-Route::get('/productInformation/{id}', [ProductController::class, 'show'])->name('productInformation');
+Route::get('/producto-informacion/{slug}', [ProductController::class, 'show'])->name('productInformation');
 
 //Son rutas publicas estaticas
-Route::get('/History', function () {return view('customer.history');})->name('history');
-Route::get('/Favorites', function () {return view('customer.favorites');})->name('favorites');
-Route::get('/PrivacyNotice', function () {return view('customer.privacyNotice');})->name('privacyNotice');
+Route::get('/historia', function () {
+    return view('customer.history');
+})->name('history');
+Route::get('/favoritos', function () {
+    return view('customer.favorites');
+})->name('favorites');
+Route::get('/aviso-privacidad', function () {
+    return view('customer.privacyNotice');
+})->name('privacyNotice');
 
 //*verificar la ruta del perfil del admin
 //proteger las rutas de los clientes los cuales el admin no debe usar y debe estar autenticado el usuario
-Route::middleware(['auth','customer'])->group(function(){
-    Route::get('/perfil',[UserProfileController::class,'index'])->name('profile');
-    Route::post('/logout',[UserProfileController::class,'logout'])->name('logout');
-
-    Route::get('/historial-pedidos',[UserOrderController::class,'index'])->name('order-history');
+Route::middleware(['auth', 'customer'])->group(function () {
+    Route::get('/perfil', [UserProfileController::class, 'index'])->name('profile');
+    Route::post('/logout', [UserProfileController::class, 'logout'])->name('logout');
+    Route::get('/historial-pedidos', [UserOrderController::class, 'index'])->name('order-history');
 });
 //rutas para solo customers y no importa si esta autenticado
-Route::middleware(['auth'])->group(function(){
-Route::get('/carrito',[CartController::class,'index'])->name('cart');
-Route::get('/products', [CartController::class, 'getProducts'])->name('products');
-Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/update-quantity/{cartItemId}', [CartController::class, 'updateQuantity']);
-Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/favorites', [FavoriteController::class, 'showFavorites'])->middleware('auth');
-Route::post('/favorites/toggle', [FavoriteController::class, 'toggleFavorite'])->middleware('auth');
-Route::post('/favorites/remove', [FavoriteController::class, 'removeFavorite']);
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/carrito', [CartController::class, 'index'])->name('cart');
+    Route::get('/productos', [CartController::class, 'getProducts'])->name('products');
+    Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/add-quantity/{productId}/{quantity}', [CartController::class, 'addToCartWithCounter']);
+    Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::get('/favoritos', [FavoriteController::class, 'showFavorites'])->middleware('auth')->name('favorites');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggleFavorite'])->middleware('auth');
+    Route::post('/favorites/remove', [FavoriteController::class, 'removeFavorite']);
 });
 
-Route::middleware(['guest'])->group(function(){
+Route::get('/cart-count', [CartController::class, 'cartCount'])->name('cartCount');
+Route::get('/si', [CartController::class, 'test'])->name('si');
 
-    Route::get('/inicio-sesion',[LoginController::class,'create'])->name('login');
-    Route::post('/inicio-sesion',[LoginController::class,'store'])->name('login');
-    
-    Route::get('/registro',[RegisterController::class,'create'])->name('register');
-    Route::post('/registro',[RegisterController::class,'store'])->name('register');
+
+Route::middleware(['guest'])->group(function () {
+    Route::name("auth.")->group(function () {
+        Route::post('/auth/registro', [RegisterController::class, 'store'])->name('register');
+        Route::post('/auth/inicio-sesion', [LoginController::class, 'store'])->name('login');
+    });
+    Route::get('/registro', [RegisterController::class, 'create'])->name('register');
+    Route::get('/inicio-sesion', [LoginController::class, 'create'])->name('login');
 });
 
-Route::get('/perfil/password',function(){
-return 'hey';
-}
+Route::get(
+    '/perfil/password',
+    function () {
+        return 'hey';
+    }
 )->name('hey');
 
+Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
 
+/* Route::get('/prueba', function ( Illuminate\Http\Request $request) {
+    if ($request->has('name')) {
+        dd($request->query('name'));
+
+    }else{
+        dd('no hay nombre');
+    }
+})->name('prueba'); */
+Route::get('/prueba', function (Illuminate\Http\Request $request) {
+    return view('customer.test');
+})->name('prueba');
+Route::post('/prueba-post', function (Illuminate\Http\Request $request) {
+    $request->validate([
+        'apellido' => 'min:4'
+    ]);
+    return redirect()->route('view-test', [
+        'apellido' => $request->input('apellido')
+    ]);
+})->name('prueba-post');
+Route::get("/view-test", function (Illuminate\Http\Request $request) {
+    return view('customer.tes2', [
+        'apellido' => $request->input('apellido')
+    ]);
+})->name('view-test');
+
+Route::post('/prueba-post-2', function (Illuminate\Http\Request $request) {
+    $request->validate([
+        'nick' => 'min:4'
+    ]);
+    return view('customer.final', [
+        'nick' => $request->input('nick')
+    ]);
+})->name('prueba-post-2');
+
+//oreder without cart
+Route::get('/continuar-compra/step1', [OrderController::class, 'createOrder'])->name('create-order')->middleware('store-pending-purchase');
+Route::get('/continuar-compra/step2', [OrderController::class, 'createOrderPay'])->name('create-order-pay');
+//order with cart
+Route::get('/continuar-compra/carrito/step1', [OrderController::class, 'createOrderCart'])->name('create-order-cart');
+Route::get('/continuar-compra/carrito/step2', [OrderController::class, 'createOrderCartPay'])->name('create-order-cart-pay');
+
+// Stripe checkout routes
+/* Route::get('/checkout/success', function () {
+    return view('customer.success');
+})->name('checkout.success');
+
+Route::get('/checkout/cancel', function () {
+    return view('customer.cancel');
+})->name('checkout.cancel');
+ */
+Route::get('/compra-exitosa', function () {
+    return view('customer.success');
+})->name('order-success');
+Route::get('/compra-cancelada', function () {
+    return view('customer.cancel');
+})->name('order-cancel');
+
+
+Route::prefix('api')->group(function () {
+    Route::post('/order-store', [OrderController::class, 'storeOrder'])->name('store-order');
+});
