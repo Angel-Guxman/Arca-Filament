@@ -10,47 +10,59 @@
         <section class=" flex">
             <div class="   lg:basis-4/6">
                 @foreach ($cartItems as $item)
-                    <div class=" last:border-b border-t  border-neutral-700 flex ml-20 py-3  gap-4 ">
-                        <div class=" basis-2/6">
-                            <img class=" object-contain hover:opacity-100 opacity-95 duration-100   w-full aspect-auto "
+                    <div class=" last:border-b border-t  relative border-neutral-700 flex ml-20 py-3 space-x-4">
+                        <div class="absolute top-2 right-2 p-1">
+                            <x-svgs.close
+                                class="size-7 text-neutral-400 hover:text-white cursor-pointer "></x-svgs.close>
+                        </div>
+                        <div class=" ">
+                            <img class=" object-contain hover:opacity-100 opacity-95 duration-100   max-w-[170px] aspect-auto "
                                 src="{{ asset($item->product->featured_image_url) }}" alt="{{ $item->product->name }}">
 
 
                         </div>
-                        <div class=" basis-4/6">
+                        <div class="   w-full">
                             <span
-                                class=" text-white/90 font-light text-xl uppercase font-sans block">{{ $item->product->name }}</span>
-                            <span class="block   font-sans  mt-4 tracking-wider text-white">$
-                                {{ number_format($item->price) }} MX</span>
-                            <div class="flex items-center gap-x-3 mt-3 ">
-                                <div class=" flex justify-center items-center  gap-x-4   w-fit">
-                                    <span
-                                        class="decrease-quantity text-white  cursor-pointer h-full outline outline-[0.5px] hover:opacity-95 hover:bg-neutral-800 hover:outline-[1px] py-1.5 px-1"
-                                        data-id="{{ $item->id }}">
-                                        <x-svgs.minus></x-svgs.minus>
-                                    </span>
-                                    <span class="text-sm block text-white">{{ $item->quantity }}</span>
-                                    <span
-                                        class="increase-quantity hover:bg-neutral-800 cursor-pointer text-white  outline  h-full py-1.5 px-1  outline-[0.5px] hover:outline-[1px]  "
-                                        data-id="{{ $item->id }}" data-stock="{{ $item->product->stock }}">
-                                        <x-svgs.plus></x-svgs.plus>
-                                    </span>
-                                </div>
+                                class=" text-white/90 font-medium text-xl tracking-wider uppercase font-sans block">{{ $item->product->name }}</span>
 
-                                <div class="p-1">
-                                    <button onclick="submitDeleteForm({{ $item->id }})"
-                                        class="block group   cursor-pointer p-1 rounded-full ">
-                                        <x-svgs.trash></x-svgs.trash>
-                                    </button>
+                            <div
+                                class="  text-sm w-fit px-2  text-white/80 font-light uppercase  py-1 rounded-md mt-3 font-sans flex items-center gap-x-1">
+                                <x-svgs.tag class="size-4"></x-svgs.tag>
+
+                                <span class="  block">{{ $item->product->category->name }}</span>
+
+                            </div>
+                            {{--   <span class="block   font-sans  mt-4 tracking-wider text-white">$
+                                {{ number_format($item->price) }} MX</span> --}}
+                            <div class="flex items-center justify-between pr-5   ">
+
+                                <div class="flex items-center gap-x-3 mt-3 ">
+                                    <div
+                                        class=" flex justify-center items-center border border-neutral-700 rounded-md  gap-x-4 hover:border-neutral-500   w-fit">
+                                        <span
+                                            class="decrease-quantity text-white  cursor-pointer h-full hover:opacity-95  py-1.5 px-1"
+                                            data-id="{{ $item->id }}">
+                                            <x-svgs.minus class="size-5"></x-svgs.minus>
+                                        </span>
+                                        <span class="text-sm block text-white">{{ $item->quantity }}</span>
+                                        <span class="increase-quantity cursor-pointer text-white  h-full py-1.5 px-1   "
+                                            data-id="{{ $item->id }}" data-stock="{{ $item->product->stock }}">
+                                            <x-svgs.plus class="size-5"></x-svgs.plus>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                                <div class="  flex flex-col items-center">
+                                    {{-- <span class="text-white">{{ json_encode($item->product) }}</span> --}}
+                                    <span
+                                        class=" block uppercase text-white  text-sm font-medium mt-4 tracking-wider">Subtotal</span>
+
+                                    <span class="block text-lg  font-sans  mt-2 tracking-wider text-white">$
+                                        {{ number_format($item->price) }} MXN</span>
                                 </div>
                             </div>
-                            <div class="">
-                                <span
-                                    class=" block uppercase text-white  text-sm font-medium mt-2 tracking-wider">Subtotal</span>
 
-                                <span class="block text-lg  font-sans  mt-2 tracking-wider text-white">$
-                                    {{ number_format($item->price) }} MX</span>
-                            </div>
                         </div>
 
 
@@ -63,15 +75,22 @@
             <div class=" lg:basis-2/6 hidden lg:block   ">
 
 
-                <div class="flex flex-col  bg-neutral-900 mx-auto sticky top-[200px]  p-4 w-fit h-fit gap-4">
+                <div
+                    class="flex flex-col  bg-neutral-950  border-[0.5px] border-neutral-700 mx-auto sticky top-[200px]  p-4 w-fit h-fit gap-4">
                     <h2 class="text-white font-mono tracking-wide uppercase  text-center">Resumen del Pedido</h2>
                     <div class="   grid grid-cols-2 p-3  gap-y-3 text-white  text-sm  gap-x-10">
-                        <span class="">Productos ({{ $cartItems->count() }})</span> <span
-                            class=" text-end text-white/80">$900</span>
-                        <span class=" pt-2">Total</span> <span class=" pt-2 text-end text-white/80">$900</span>
+                        <span class="">Productos ({{ $cartItems->count() }})</span>
+                        <span class=" text-end text-white/80">$900</span>
+                        <span class="">Envio</span>
+                        <span class=" text-end text-white/80">$100</span>
                     </div>
-                    <div class="flex justify-center">
-                        <a class="py-[6px] px-4 uppercase text-sm bg-black text-white outline outline-[0.3px] hover:outline-[1px]  "
+                    <div class=" flex justify-between items-center text-sm px-2 border-t border-neutral-700 ">
+
+                        <span class=" pt-2 text-white">Total</span>
+                        <span class=" pt-2 text-end text-white/90">$900</span>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <a class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500 rounded-md  duration-200  "
                             href="">
                             Continuar
                         </a>

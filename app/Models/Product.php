@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Support\Str;
 
 use App\Casts\MoneyCast;
@@ -10,25 +11,25 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'price', 'stock', 'image', 'category_id','slug','featured'];
+    protected $fillable = ['name', 'price', 'stock', 'image', 'category_id', 'slug', 'featured'];
 
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
-    
 
-    
+
+
 
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-    
+
     public function items()
     {
-        return $this->belongsToMany(Cart::class, 'cart_items');      
-    } 
+        return $this->belongsToMany(Cart::class, 'cart_items');
+    }
 
     protected $casts = [
         'price' => MoneyCast::class,
@@ -41,19 +42,21 @@ class Product extends Model
             $model->slug = $model->generateUniqueSlug($model->name);
         });
     }
-    public function images(){
-        return $this->hasMany(ImageProduct::class,'product_id');
+    public function images()
+    {
+        return $this->hasMany(ImageProduct::class, 'product_id');
     }
 
     // En el modelo Product
-public function featuredImage()
-{
-    return $this->hasOne(ImageProduct::class, 'product_id')->where('featured', 1);
-}
-public function getFeaturedImageUrlAttribute()
-{
-    return $this->featuredImage?->image ?? 'images/default.png';
-}
+    public function featuredImage()
+    {
+        return $this->hasOne(ImageProduct::class, 'product_id')->where('featured', 1);
+    }
+    public function getFeaturedImageUrlAttribute()
+    {
+        return $this->featuredImage?->image ?? 'images/default.png';
+    }
+
 
     /**
      * Generate a unique slug for the product.
@@ -73,4 +76,3 @@ public function getFeaturedImageUrlAttribute()
         return $slug;
     }
 }
-

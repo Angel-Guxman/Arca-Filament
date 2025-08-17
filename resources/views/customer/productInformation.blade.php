@@ -185,21 +185,21 @@
                 <p class="md:text-xl text-lg   font-light py-3 text-neutral-300">$ {{ number_format($product->price) }} MXN
                 </p>
 
-                <div class="flex item-center gap-4 mb-6 cell-items">
+                <div class="flex item-center  space-x-5 mb-6 cell-items">
 
 
 
 
                     <!-- Componente de detalle del producto -->
                     <div
-                        class="flex justify-around  items-stretch  hover:outline-[1.5px] outline outline-1  outline-[#2f3336] hover:outline-white/70   gap-[10px]">
+                        class="flex justify-around  items-stretch  hover:outline-[1.5px] outline outline-1  outline-[#2f3336] hover:outline-white/70   gap-[12px]">
                         <button data-action="minus" data-id="{{ $product->id }}" class="    py-2 px-2">
-                            <x-svgs.minus></x-svgs.minus>
+                            <x-svgs.minus class="size-5"></x-svgs.minus>
                         </button>
                         <span class="text-sm block text-white    my-auto"
                             id="quantity-product-{{ $product->id }}">1</span>
                         <button data-action="plus" data-id="{{ $product->id }}" class="  py-2 px-2">
-                            <x-svgs.plus></x-svgs.plus>
+                            <x-svgs.plus class="size-5"></x-svgs.plus>
                         </button>
                     </div>
                     @php
@@ -236,7 +236,7 @@
 
                     @auth
                         <button type="button" id="add-cart-{{ $product->id }}" data-product-id="{{ $product->id }}"
-                            class="bg-black  disabled:cursor-not-allowed  lg:text-base text-sm outline outline-1 outline-neutral-600 hover:outline-2 hover:outline-white/70 transition-all hover:opacity-85  text-white px-4 py-2  ">
+                            class=" button-primary py-2 px-4 lg:text-base text-sm disabled:cursor-not-allowed ">
                             Agregar al Carrito
                         </button>
 
@@ -244,19 +244,19 @@
 
                     @guest
                         <button type="button" onclick="alertToast('cart')"
-                            class="bg-black  lg:text-base text-sm outline outline-1 outline-neutral-600 hover:outline-2 hover:outline-white/70 transition-all hover:opacity-85  text-white px-4 py-2  ">
+                            class="button-primary py-2 px-4  lg:text-base text-sm  ">
                             Agregar al Carrito
                         </button>
                     @endguest
 
 
 
-                    <form action="{{ route('order.step1') }}" data-form-product-id="{{ $product->id }}"
+                    <form action="{{ route('create-order') }}" data-form-product-id="{{ $product->id }}"
                         data-form-product-slug="{{ $product->slug }}" id="form-sale" method="GET">
                         <input type="hidden" id="input-product-slug" name="product_slug" value="">
                         <input type="hidden" id="input-product-quantity" name="quantity" value="">
                         <button type="submit" id="button-sale"
-                            class=" disabled:opacity-50 disabled:cursor-not-allowed relative min-w-full   lg:text-base text-sm     hover:opacity-85 transition-opacity   bg-white text-black     p-2">
+                            class="  disabled:cursor-not-allowed relative min-w-full   lg:text-base text-sm button-secondary">
                             Comprar
                         </button>
 

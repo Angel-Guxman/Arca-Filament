@@ -331,7 +331,7 @@
 
         <div class=" flex justify-between mx-4    md:mx-10 mt-2  items-center ">
 
-            <h1 class=" text-white text-3xl p-3 lg:text-5xl   ">Catálogo</h1>
+            <h1 class=" text-white text-3xl p-3 lg:text-5xl  tracking-wider   ">Catálogo</h1>
 
             <div id="notification-failed"
                 class="w-full max-w-[200px] fixed hidden   right-4   top-[200px] p-4 z-[12] bg-neutral-900   shadow"
@@ -404,62 +404,65 @@
                 </div>
             </div>
 
-            <div class=" relative">
-                <div class="   cursor-pointer bg-gray-950 hover:bg-gray-900 border-[.3px] border-gray-700    rounded-full p-2  "
-                    id="hamburger-menu" onclick="filterForCategory()">
-                    <x-svgs.hamburger-button class=" text-indigo-100 size-8"></x-svgs.hamburger-button>
-                </div>
-                <div class=" bg-gray-950 absolute right-[17px] mt-2    max-h-[250px] overflow-y-scroll  scroll-hidden  z-[11]  w-[200px]  hidden"
-                    id="menu-category">
-                    @foreach ($categories as $category)
-                        @if (request('category') && request('category') === $category->name)
-                            <a class="block p-2 text-white no-underline  border-b border-gray-700  duration-300 last:border-b-0  hover:bg-gray-900"
-                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
-                        @else
-                            <a class="block p-2 text-indigo-100 no-underline border-b border-gray-700  duration-300 last:border-b-0 hover:bg-gray-900"
-                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+            <p
+                class=" text-indigo-100 text-sm flex items-center space-x-1  font-medium  before:content-[''] before:bg-emerald-500 before:mr-2 before:size-2 before:block before:rounded-full  bg-gray-950 tracking-widest px-3 cursor-default select-none border-[0.3px] border-gray-700 py-2  ">
+                {{ $products->total() }} Productos
+            </p>
 
         </div>
-        <div class=" flex justify-between items-center mr-4 md:mr-10">
+        <div class=" flex  space-x-6 lg:justify-normal justify-center items-center mr-0 md:mr-10">
 
 
             <div class="relativ ml-4 md:ml-10 my-6  ">
                 <button
-                    class="text-indigo-100 flex gap-1 items-center outline outline-[.3px] bg-gray-950 hover:outline-[1px] outline-gray-700 p-1   cursor-pointer "
+                    class="text-white/90 flex gap-1 items-center outline outline-[.3px] bg-neutral-900 hover:bg-neutral-800 rounded-full outline-neutral-700 px-3 py-2   cursor-pointer "
                     onclick="filterForPrice()">
-                    <x-svgs.settings>
+                    <x-svgs.filter class="size-5">
 
-                    </x-svgs.settings>
-                    <p class=" text-sm ">Filtrar por precio</p>
-                    <x-svgs.arrow-down>
-                    </x-svgs.arrow-down>
+                    </x-svgs.filter>
+                    <p class=" text-sm text-white/90">Filtrar por precio</p>
+
                 </button>
 
                 <div
-                    class="absolute hidden z-10 container-filter-price w-[200px] border-gray-700   bg-gray-950 border-[.3px] shadow-lg mt-2 p-4">
+                    class="absolute hidden z-10 container-filter-price w-[200px] border-neutral-700   bg-neutral-900 border-[.3px] shadow-lg mt-2 p-4">
                     <form method="GET" class="">
                         <label for="min-price" class="block mb-2 text-sm text-white">Precio mínimo:</label>
-                        <input type="number" id="min-price" value="{{ request('min-price') }}" name="min-price"
-                            step="1" min="0" required
-                            class="w-full outline-none p-1 bg-gray-200    mb-2 text-sm">
+                        <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" id="min-price"
+                            value="{{ request('min-price') }}" name="min-price" step="1" min="0" required
+                            class="input-field h-8  mb-4">
                         <label for="max-price" class="block mb-2 text-sm text-white">Precio máximo:</label>
-                        <input type="number" id="max-price" value="{{ request('max-price') }}" name="max-price"
-                            step="1" min="0" required
-                            class="w-full outline-none bg-gray-200  p-1   mb-4 text-sm">
-                        <button type="submit"
-                            class="       tracking-wider bg-emerald-800/10  hover:bg-emerald-800/20 text-emerald-500/80 border-[.3px] border-emerald-800   mt-2 font-semibold  py-2  text-sm w-full">Filtrar</button>
+                        <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" id="max-price"
+                            value="{{ request('max-price') }}" name="max-price" step="1" min="0" required
+                            class="input-field h-8  mb-4">
+                        <button type="submit" class="button-primary w-full  ">Filtrar</button>
                     </form>
                 </div>
             </div>
+            <div class=" relative">
+                <div class=" flex gap-1 items-center   cursor-pointer bg-neutral-900 hover:bg-neutral-800 border-[.3px] border-neutral-700    rounded-full p-2  "
+                    id="hamburger-menu" onclick="filterForCategory()">
+                    <x-svgs.sort class="size-5 text-white/90">
+                    </x-svgs.sort>
+                    <p class=" text-sm text-white/90 ">Filtrar por categoría</p>
+                </div>
+                <ul class=" bg-neutral-900 absolute left-0 mt-2 list-inside list-disc border-neutral-700 border-[.3px]   max-h-[250px] overflow-y-scroll text-sm  scroll-hidden  z-[11]  w-[200px]  hidden"
+                    id="menu-category">
 
-            <p
-                class=" text-indigo-100 text-sm  font-semibold  bg-gray-950 tracking-widest px-3 cursor-default select-none border-[0.3px] border-gray-700 py-2  ">
-                {{ $products->total() }} productos
-            </p>
+
+                    @foreach ($categories as $category)
+                        @if (request('category') && request('category') === $category->name)
+                            <a class="  list-item p-2 text-white/90 no-underline  border-b border-neutral-700  duration-300 last:border-b-0  hover:bg-neutral-800"
+                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
+                        @else
+                            <a class=" list-item p-2 text-white/90 no-underline  border-b border-neutral-700  duration-300 last:border-b-0  hover:bg-neutral-800"
+                                href="{{ route('catalogue') }}?category={{ $category->name }} ">{{ $category->name }}</a>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
+
         </div>
 
         <div

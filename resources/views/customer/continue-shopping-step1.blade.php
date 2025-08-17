@@ -198,9 +198,11 @@
                         <div class="mb-5">
                             <label for="address" class="block mb-2 text-sm font-semibold  text-neutral-200">Dirección
                                 <span class=" text-red-400">*</span></label>
-                            <textarea type="text" id="address" maxlength="100" name="address" value="{{ $user->address }}"
+                            <textarea type="text" id="address" name="address"
                                 class=" border outline-none   h-14   text-sm   max-h-14    block w-full p-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
-                                required></textarea>
+                                required>
+                                {{ old('address', $user->address) }}
+                            </textarea>
                             @error('address')
                                 <span class=" block text-red-400 text-xs">{{ $message }}</span>
                             @enderror
@@ -211,10 +213,10 @@
                             <label for="indications"
                                 class="block mb-2 text-sm font-semibold   text-neutral-200">Indicaciones
                                 <span class=" text-red-400">*</span></label>
-                            <textarea id="indications" name="indications" required value="{{ $user->indications }}"
+                            <textarea id="indications" name="indications" required
                                 class=" border outline-none   max-h-14     text-gray-900 text-sm      block w-full p-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 dark:text-white  focus:border-gray-400">
-
-                        </textarea>
+                                {{ old('indications', $user->indications) }}
+                            </textarea>
 
                             @error('indications')
                                 <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -283,7 +285,7 @@
             <div class="">
                 {{-- Mensajes de validación --}}
                 @if ($errors->any())
-                    <div class="bg-red-500 text-white p-3 rounded mb-4">
+                    <div class="bg-red-500 text-white p-3 rounded mb-4 mt-4">
                         <strong>Por favor corrige los siguientes errores:</strong>
                         <ul class="list-disc list-inside mt-2">
                             @foreach ($errors->all() as $error)

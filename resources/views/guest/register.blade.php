@@ -3,23 +3,24 @@
 
 @section('content')
     <div class=" max-w-md flex mx-auto justify-start items-center">
-        <a href="{{ route('home') }}" class="   flex justify-center gap-1 items-center group hover:text-emerald-100">
+        <a href="{{ route('home') }}"
+            class="  flex justify-center border-[0.5px] hover:border-neutral-500 border-neutral-600   gap-1 items-center group  p-2 w-fit">
 
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                class="size-[14px]  text-white group-hover:text-emerald-100">
+                class="size-[14px]  text-white ">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
             </svg>
 
-            <span class="  block text-white  group-hover:text-emerald-100 text-sm">regresar</span>
+            <span class="  block text-white  text-sm">regresar</span>
         </a>
 
     </div>
 
     <form method="POST" action="{{ route('auth.register') }}"
-        class="max-w-md mx-auto mb-10 mt-2 border border-gray-700/80 bg-gray-950/80 p-5">
+        class="max-w-md mx-auto mb-10 mt-2 rounded-md  border border-neutral-700/80 p-5 bg-neutral-900">
         @csrf
-        <h1 class=" text-white mb-5 font-semibold text-xl text-center ">Registrarse</h1>
+        <h1 class=" text-white mb-5 font-semibold text-xl text-center font-sans tracking-wider ">Registrarse</h1>
         @if (session('error'))
             <h3 class=" text-red-400 mb-3 font-medium text-sm text-center "> {{ session('error') }}</h3>
         @endif
@@ -29,7 +30,7 @@
                 <span class=" text-red-400">*</span>
             </label>
             <input type="text" id="name" name="name" value="{{ old('name') }}"
-                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400
+                class=" border outline-none     text-sm  rounded-md   block w-full p-2.5 bg-neutral-800 border-neutral-600 text-neutral-200 placeholder-neutral-400  focus:ring-neutral-500 focus:border-neutral-500
                 "
                 placeholder="Albert" required />
             @error('name')
@@ -40,8 +41,7 @@
             <label for="last_name" class="block mb-2 text-sm font-medium  text-white">Apellido
                 <span class=" text-red-400">*</span>
             </label>
-            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}"
-                class=" border outline-none    text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
+            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class=" input-field"
                 placeholder="Einstein" required />
             @error('last_name')
                 <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -53,10 +53,7 @@
             <label for="email" class="block mb-2 text-sm font-medium  text-white">Correo Electrónico
                 <span class=" text-red-400">*</span>
             </label>
-            <input type="email" id="email" name="email" value="{{ old('email') }}"
-                class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400 
-              
-                "
+            <input type="email" id="email" name="email" value="{{ old('email') }}" class=" input-field"
                 placeholder="name@example.com" required />
             @error('email')
                 <span class=" block text-red-400 text-xs">{{ $message }}</span>
@@ -68,8 +65,7 @@
 
             </label>
             <div class=" relative ">
-                <input type="password" id="password" name="password" value="{{ old('password') }}"
-                    class="  border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
+                <input type="password" id="password" name="password" value="{{ old('password') }}" class="input-field"
                     required />
                 <div class="  absolute right-2   inset-y-0 flex items-center ">
 
@@ -86,10 +82,17 @@
         </div>
 
         <div class="flex items-start mb-5">
-            <div class="flex items-center h-5">
-                <input id="remember" name="remember" type="checkbox"
-                    class="w-4 h-4 border  rounded  focus:ring-3 focus:ring-blue-300 bg-gray-700 border-gray-600 dark:focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800" />
-
+            <div class="flex items-center h-5 relative">
+                <input id="remember" name="remember" type="checkbox" class="input-checkbox peer" />
+                <span
+                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"
+                        stroke="currentColor" stroke-width="1">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </span>
             </div>
             <label for="remember" class="ms-2 text-sm font-medium  text-gray-300">Recordar</label>
         </div>
@@ -99,13 +102,12 @@
                 ¿Ya tienes una Cuenta?
             </span>
             <a href="{{ route('login') }}"
-                class="ms-2 inline-block text-sm underline underline-offset-4 font-medium  text-gray-300 hover:text-emerald-100  hover:scale-[1.02] duration-[150ms] ">
+                class="ms-2 inline-block text-sm underline underline-offset-4 font-medium  text-gray-300  hover:text-gray-200">
                 Iniciar
                 Sesión
             </a>
         </div>
-        <button type="submit"
-            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none  font-medium text-sm w-full  px-5 py-3 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Registrarse</button>
+        <button type="submit" class="button-primary w-full py-3">Registrarse</button>
     </form>
     <script defer>
         const toggleEye = document.querySelector('#toggle-eye');

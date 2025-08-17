@@ -32,9 +32,9 @@
                                 <span class="text-sm font-semibold tracking-wider text-white">{{ $name }}</span>
                             </div>
                         @endif --}}
-                        <button
+                        <a href="{{ route('order-cancel') }}"
                             class="text-sm font-medium tracking-wider hover:bg-red-500/20 text-red-500 bg-red-500/15 px-2 py-1.5 rounded-md cursor-pointer">Cancelar
-                            compra</button>
+                            compra</a>
                     </div>
                 </div>
             </div>
@@ -42,12 +42,12 @@
 
         <!-- Main Content -->
         <main class="flex-grow">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 ">
                 <!-- Stepper -->
-                @include('partials.checkout-stepper')
+                {{--     @include('partials.checkout-stepper') --}}
 
                 <!-- Page Content -->
-                <div class="mt-8">
+                <div class="mt-4">
 
                     @yield('content')
                 </div>
