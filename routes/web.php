@@ -45,12 +45,13 @@ Route::middleware(['auth', 'customer'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/carrito', [CartController::class, 'index'])->name('cart');
     Route::get('/productos', [CartController::class, 'getProducts'])->name('products');
+    Route::get('/favoritos', [FavoriteController::class, 'showFavorites'])->name('favorites');
     Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::post('/cart/add-quantity/{productId}/{quantity}', [CartController::class, 'addToCartWithCounter']);
-    Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-    Route::get('/favoritos', [FavoriteController::class, 'showFavorites'])->middleware('auth')->name('favorites');
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggleFavorite'])->middleware('auth');
+    Route::post('/cart/add-quantity/{productId}/{quantity}', [CartController::class, 'addToCartWithQuantity']);
+    Route::post('/cart-item/update-quantity/{cartItemId}', [CartController::class, 'cartItemUpdateQuantity'])->name('cart-item.updateQuantity');
+    Route::delete('/cart-item/delete/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart-item.delete');
     Route::post('/favorites/remove', [FavoriteController::class, 'removeFavorite']);
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggleFavorite']);
 });
 
 Route::get('/cart-count', [CartController::class, 'cartCount'])->name('cartCount');
@@ -115,24 +116,12 @@ Route::get('/continuar-compra/step2', [OrderController::class, 'createOrderPay']
 //order with cart
 Route::get('/continuar-compra/carrito/step1', [OrderController::class, 'createOrderCart'])->name('create-order-cart');
 Route::get('/continuar-compra/carrito/step2', [OrderController::class, 'createOrderCartPay'])->name('create-order-cart-pay');
-
-// Stripe checkout routes
-/* Route::get('/checkout/success', function () {
-    return view('customer.success');
-})->name('checkout.success');
-
-Route::get('/checkout/cancel', function () {
-    return view('customer.cancel');
-})->name('checkout.cancel');
- */
 Route::get('/compra-exitosa', function () {
     return view('customer.success');
 })->name('order-success');
 Route::get('/compra-cancelada', function () {
     return view('customer.cancel');
 })->name('order-cancel');
-
-
 Route::prefix('api')->group(function () {
     Route::post('/order-store', [OrderController::class, 'storeOrder'])->name('store-order');
 });

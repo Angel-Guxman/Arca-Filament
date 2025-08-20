@@ -18,7 +18,13 @@ class CartController extends Controller
         if ($user) {
             $cart = Cart::firstOrCreate(['user_id' => $user->id]);
             $cartItems = CartItem::where('cart_id', $cart->id)->with(['product.featuredImage', 'product.category'])->get();
-            return view('customer.cart', compact(['cart', 'cartItems']));
+            $shipping = 0;
+            $totalItems = $cartItems->sum(function ($item) {
+                $item['subtotal'] = $item->quantity * $item->product->price;
+                return $item->quantity * $item->product->price;
+            });
+            $total = $totalItems + $shipping;
+            return view('customer.cart', compact(['cart', 'cartItems', 'shipping', 'totalItems', 'total']));
         }
         return to_route('login');
     }
@@ -83,42 +89,54 @@ class CartController extends Controller
     }
 
 
-    public function updateQuantity(Request $request, $cartItemId)
+    public function cartItemUpdateQuantity(Request $request, $cartItemId)
     {
+        $newQuantity = $request->input('quantity');
+        $quantity = filter_var($newQuantity, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+        if (!$quantity) {
+            return response()->json(['success' => false, 'message' => 'Cantidad inválida.']);
+        }
         $cartItem = CartItem::find($cartItemId);
         if (!$cartItem) {
             return response()->json(['success' => false, 'message' => 'Artículo no encontrado en el carrito.']);
         }
 
-        $newQuantity = $request->input('quantity');
         $product = Product::find($cartItem->product_id);
+        $stock = $product->stock;
+        if ($stock <= 0) {
+            return response()->json(['success' => false, 'message' => 'No hay suficiente stock disponible.']);
+        }
 
         // Verifica si la cantidad nueva es válida
-        if ($newQuantity > $product->stock) {
+        if ($newQuantity > $stock) {
             return response()->json(['success' => false, 'message' => 'No hay suficiente stock disponible.']);
+        }
+        if ($newQuantity < 1) {
+            return response()->json(['success' => false, 'message' => 'La cantidad debe ser mayor a 1.']);
         }
 
         $cartItem->quantity = $newQuantity;
         $cartItem->save();
 
         // Calcular el subtotal del producto
-        $subtotal = $cartItem->quantity * $product->price;
+        $totalItem = $cartItem->quantity * $product->price;
 
         // Calcular el total del carrito
-        $cart = Cart::find($cartItem->cart_id);
-        $total = $cart->cartItems->sum(function ($item) {
+        $cart = Cart::with('cartItems.product')->find($cartItem->cart_id);
+        $subtotal = $cart->cartItems->sum(function ($item) {
             return $item->quantity * $item->product->price;
         });
+        $shipping = 0;
+        $total = $subtotal + $shipping;
 
         return response()->json([
             'success' => true,
             'message' => 'Cantidad actualizada.',
+            'totalItem' => number_format($totalItem, 2), // Devolver el subtotal actualizado
             'subtotal' => number_format($subtotal, 2), // Devolver el subtotal actualizado
-            'total' => number_format($total, 2)         // Devolver el total actualizado
+            'total' => number_format($total, 2),       // Devolver el total actualizado
         ]);
     }
-    public function increaseQuantity($itemId) {}
-
     public function SearchElements($itemId)
     {
         if (!$itemId) {
@@ -135,7 +153,7 @@ class CartController extends Controller
     }
 
     //añadir al carrito con cantidad
-    public function addToCartWithCounter($productId, $quantity)
+    public function addToCartWithQuantity($productId, $quantity)
     {
         $user = Auth::user();
         if (!$user) {

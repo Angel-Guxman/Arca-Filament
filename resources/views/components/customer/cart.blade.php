@@ -38,14 +38,14 @@
 
                                 <div class="flex items-center gap-x-3 mt-3 ">
                                     <div
-                                        class=" flex justify-center items-center border border-neutral-700 rounded-md  gap-x-4 hover:border-neutral-500   w-fit">
+                                        class=" flex justify-center items-center border border-neutral-700   gap-x-4 hover:border-neutral-500   w-fit">
                                         <span
                                             class="decrease-quantity text-white  cursor-pointer h-full hover:opacity-95  py-1.5 px-1"
                                             data-id="{{ $item->id }}">
                                             <x-svgs.minus class="size-5"></x-svgs.minus>
                                         </span>
                                         <span class="text-sm block text-white">{{ $item->quantity }}</span>
-                                        <span class="increase-quantity cursor-pointer text-white  h-full py-1.5 px-1   "
+                                        <span class="increase-quantity cursor-pointer text-white  h-full py-1.5 px-1"
                                             data-id="{{ $item->id }}" data-stock="{{ $item->product->stock }}">
                                             <x-svgs.plus class="size-5"></x-svgs.plus>
                                         </span>
@@ -58,8 +58,9 @@
                                     <span
                                         class=" block uppercase text-white  text-sm font-medium mt-4 tracking-wider">Subtotal</span>
 
-                                    <span class="block text-lg  font-sans  mt-2 tracking-wider text-white">$
-                                        {{ number_format($item->price) }} MXN</span>
+                                    <span id="subtotal-{{ $item->id }}"
+                                        class="block text-lg  font-sans  mt-2 tracking-wider text-white">$
+                                        {{ number_format($item->subtotal) }} MXN</span>
                                 </div>
                             </div>
 
@@ -70,27 +71,29 @@
                     </div>
                 @endforeach
 
+
             </div>
 
             <div class=" lg:basis-2/6 hidden lg:block   ">
 
 
                 <div
-                    class="flex flex-col  bg-neutral-950  border-[0.5px] border-neutral-700 mx-auto sticky top-[200px]  p-4 w-fit h-fit gap-4">
+                    class="flex flex-col  bg-neutral-900  border-[0.5px] border-neutral-700 mx-auto sticky top-[200px]  p-4 w-fit h-fit gap-4">
                     <h2 class="text-white font-mono tracking-wide uppercase  text-center">Resumen del Pedido</h2>
                     <div class="   grid grid-cols-2 p-3  gap-y-3 text-white  text-sm  gap-x-10">
                         <span class="">Productos ({{ $cartItems->count() }})</span>
-                        <span class=" text-end text-white/80">$900</span>
+                        <span id="total-items" class=" text-end text-white/80">${{ number_format($totalItems) }}</span>
                         <span class="">Envio</span>
-                        <span class=" text-end text-white/80">$100</span>
+                        <span id="total-shipping"
+                            class=" text-end text-white/80">${{ number_format($shipping) }}</span>
                     </div>
                     <div class=" flex justify-between items-center text-sm px-2 border-t border-neutral-700 ">
 
                         <span class=" pt-2 text-white">Total</span>
-                        <span class=" pt-2 text-end text-white/90">$900</span>
+                        <span id="total" class=" pt-2 text-end text-white/90">${{ number_format($total) }}</span>
                     </div>
                     <div class="flex justify-center mt-4">
-                        <a class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500 rounded-md  duration-200  "
+                        <a class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500   duration-200  "
                             href="">
                             Continuar
                         </a>
@@ -136,68 +139,70 @@
         </div>
     @endif
 
-    <script>
-        document.querySelectorAll('.increase-quantity').forEach(button => {
-            button.addEventListener('click', () => {
+    <script defer>
+        const dom = {
+            $: sel => document.querySelector(sel),
+            $$: sel => document.querySelectorAll(sel)
+        }
+        const shipping = @json($shipping);
+        console.log("el shipping")
+        console.log(shipping)
+        dom.$$('.increase-quantity').forEach(button => {
+            button.addEventListener('click', async () => {
                 const itemId = button.getAttribute('data-id');
                 let quantityElement = button.previousElementSibling;
                 let quantity = parseInt(quantityElement.innerText);
                 const productStock = parseInt(button.getAttribute('data-stock'));
-
                 if (quantity < productStock) {
-                    quantity++;
-                    quantityElement.innerText = quantity; // Actualiza la cantidad localmente
-                    updateQuantity(itemId, quantity); // Enviar al servidor para actualizar
+                    let newQuantity = quantity + 1;
+                    let response = await updateQuantity(itemId, newQuantity);
+                    if (response.success) {
+                        quantityElement.innerText = newQuantity;
+                        dom.$(`#subtotal-${itemId}`).innerText = `$${response.totalItem}`;
+                        dom.$(`#total-items`).innerText = `$${response.subtotal}`;
+                        dom.$(`#total`).innerText = `$${response.total}`;
+                    } else {
+                        notification.error(response.message);
+                    }
                 }
             });
         });
 
-        document.querySelectorAll('.decrease-quantity').forEach(button => {
-            button.addEventListener('click', () => {
+        dom.$$('.decrease-quantity').forEach(button => {
+            button.addEventListener('click', async () => {
                 const itemId = button.getAttribute('data-id');
                 let quantityElement = button.nextElementSibling;
                 let quantity = parseInt(quantityElement.innerText);
-
                 if (quantity > 1) {
-                    quantity--;
-                    quantityElement.innerText = quantity; // Actualiza la cantidad localmente
-                    updateQuantity(itemId, quantity); // Enviar al servidor para actualizar
+                    let newQuantity = quantity - 1;
+                    let response = await updateQuantity(itemId, newQuantity);
+                    if (response.success) {
+                        quantityElement.innerText = newQuantity;
+                        dom.$(`#subtotal-${itemId}`).innerText = `$${response.totalItem}`;
+                        dom.$(`#total-items`).innerText = `$${response.subtotal}`;
+                        dom.$(`#total`).innerText = `$${response.total}`;
+                    } else {
+                        notification.error(response.message);
+                    }
                 }
             });
         });
 
-        function updateQuantity(itemId, quantity) {
-            fetch(`/cart/update-quantity/${itemId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        quantity
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Actualiza el subtotal de este artículo en la interfaz
-                        const subtotalElement = document.querySelector(`.cart-item-${itemId} .subtotal`);
-                        if (subtotalElement) {
-                            subtotalElement.innerText = `$${data.subtotal}`; // Actualiza el subtotal
-                        }
+        async function updateQuantity(itemId, quantity) {
+            try {
+                const response = await axios.post(`{{ route('cart-item.updateQuantity', ':id') }}`.replace(':id',
+                    itemId), {
+                    quantity: quantity
+                }, )
+                return response.data;
+            } catch (error) {
+                console.log(error);
+                return {
+                    success: false,
+                    message: 'Ocurrio un error al actualizar la cantidad del producto.'
+                };
+            }
 
-                        // Actualiza el total del carrito en la interfaz
-                        const totalElement = document.querySelector('.cart-total');
-                        if (totalElement) {
-                            totalElement.innerText = `$${data.total}`; // Actualiza el total
-                        }
-                    } else {
-                        alert(data.message); // Muestra un mensaje de error si algo sale mal
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         }
 
 
