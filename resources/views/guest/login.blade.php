@@ -7,10 +7,7 @@
             class="   flex justify-center border-[0.5px] hover:border-neutral-500 border-neutral-600   gap-1 items-center group  p-2 w-fit">
 
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                class="size-[14px]  text-white ">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-            </svg>
+            <x-svgs.arrow-left class="size-[14px]  text-white " />
 
             <span class="  block text-white   text-sm">regresar</span>
         </a>
