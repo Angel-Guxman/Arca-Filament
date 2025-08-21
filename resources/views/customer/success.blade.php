@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+@extends('layouts.orders')
 
 @section('content')
     <div class="max-w-xl mx-auto px-4 py-12">

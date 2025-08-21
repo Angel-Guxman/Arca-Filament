@@ -32,8 +32,7 @@
                                 <span class="text-sm font-semibold tracking-wider text-white">{{ $name }}</span>
                             </div>
                         @endif --}}
-                        <a href="{{ route('order-cancel') }}"
-                            class="text-sm font-medium tracking-wider hover:bg-red-500/20 text-red-500 bg-red-500/15 px-2 py-1.5 rounded-md cursor-pointer">Cancelar
+                        <a href="{{ route('order-cancel') }}" class="button-primary flex items-center gap-2">Cancelar
                             compra</a>
                     </div>
                 </div>
