@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -55,6 +56,12 @@ class Product extends Model
     public function getFeaturedImageUrlAttribute()
     {
         return $this->featuredImage?->image ?? 'images/default.png';
+    }
+    public function getFeaturedImageUrlFilamentAttribute()
+    {
+        return $this->featuredImage
+            ? asset($this->featuredImage->image) // si usas storage/app/public
+            : asset('images/default.png'); // tu fallback
     }
 
 
