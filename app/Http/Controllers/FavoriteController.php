@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorite;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 
@@ -21,8 +22,9 @@ class FavoriteController extends Controller
 
     public function showFavorites()
     {
-        $favoriteProducts = session('favorites', []);
-        return view('customer.favorites', compact('favoriteProducts'));
+        $favoriteProducts = Favorite::where('user_id', auth()->id())->pluck('product_id')->toArray();
+        $products = Product::whereIn('id', $favoriteProducts)->with('images')->get();
+        return view('customer.favorites', compact('favoriteProducts', 'products'));
     }
     public function toggleFavorite(Request $request)
     {

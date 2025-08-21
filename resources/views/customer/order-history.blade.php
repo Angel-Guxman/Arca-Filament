@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="text-right">
                                     <span
-                                        class="px-2 py-0.5 text-xs cursor-default rounded-full {{ $order->payment_status === 'approved' ? 'bg-green-900/50 text-green-400' : 'bg-yellow-900/50 text-yellow-400' }}">
+                                        class="px-2 py-0.5 text-xs cursor-default rounded-full {{ $order->payment_status === 'paid' ? 'bg-green-900/50 text-green-400' : 'bg-yellow-900/50 text-yellow-400' }}">
                                         {{ ucfirst($order->payment_status) }}
                                     </span>
                                     <p class="mt-1 text-base font-semibold tracking-wider text-neutral-200">

@@ -372,61 +372,56 @@
 
     <h1 class="text-left text-white text-5xl ml-36 mb-12 mt-10 container-Catalog">Favoritos</h1>
 
-    @php
-    $favoriteProducts = session('favorites', []);
-    $products = \App\Models\Product::whereIn('id', $favoriteProducts)->get();
-@endphp
-
     <p class="text-right text-white -mt-6 mr-24 container-Products"> {{ count($products) }} Productos</p>
 
 
     @if ($products->isEmpty())
         <p class="text-white text-center mt-10">No tienes productos favoritos.</p>
-        @else
-    <div class="carousel-wrapper">
-        @foreach ($products as $product)
-            <div class="carousel-item">
-                <div class="zoom-container">
-                    <a href="{{ route('productInformation', ['id' => $product->id]) }}">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                    </a>
-                    <div class="zoom-icon">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
+    @else
+        <div class="carousel-wrapper">
+            @foreach ($products as $product)
+                <div class="carousel-item">
+                    <div class="zoom-container">
+                        <a href="{{ route('productInformation', ['slug' => $product->slug]) }}">
+                            <img src="{{ asset($product->images->first()->image) }}" alt="{{ $product->name }}">
+                        </a>
+                        <div class="zoom-icon">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/search.png" alt="Zoom Icon">
+                        </div>
+                    </div>
+                    <div class="product-info flex items-center justify-between">
+                        <p class="text-white">{{ $product->name }}</p>
+                        <svg data-product-id="{{ $product->id }}" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                            class="size-6 heart-icon text-white cursor-pointer {{ in_array($product->id, $favoriteProducts) ? 'favorited' : '' }}"
+                            onclick="toggleFavorite(event)" onclick="toggleFavorite(event)">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+
+                    </div>
+                    <p class="text-white mt-2">$ {{ $product->price }} MXN</p>
+                    <div class="container-add">
+                        <form action="{{ route('cart.add', ['productId' => $product->id]) }}" method="POST">
+                            @csrf
+                            <button type="button" onclick="addToCart({{ $product->id }})"
+                                class="text-black border py-2 px-3 duration-200 hover:scale-[.99]">
+                                Agregar al Carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
-                <div class="product-info flex items-center justify-between">
-                    <p class="text-white">{{ $product->name }}</p>
-                    <svg data-product-id="{{ $product->id }}" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        class="size-6 heart-icon text-white cursor-pointer {{ in_array($product->id, $favoriteProducts) ? 'favorited' : '' }}" onclick="toggleFavorite(event)"
-                        onclick="toggleFavorite(event)">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                    </svg>
+            @endforeach
+        </div>
+        </div>
+    @endif
 
-                </div>
-                <p class="text-white mt-2">$ {{ $product->price }} MXN</p>
-                <div class="container-add">
-                    <form action="{{ route('cart.add', ['productId' => $product->id]) }}" method="POST">
-                        @csrf
-                        <button type="button" onclick="addToCart({{ $product->id }})"
-                            class="text-black border py-2 px-3 duration-200 hover:scale-[.99]">
-                            Agregar al Carrito
-                        </button>
-                    </form>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div>
-@endif
-
-@if (session('status'))
-<div
-    class="p-4 notification text-emerald-300 border border-emerald-100 bg-black top-2 rounded right-2 z-10 absolute">
-    {{ session('status') }}
-</div>
-@endif
+    @if (session('status'))
+        <div
+            class="p-4 notification text-emerald-300 border border-emerald-100 bg-black top-2 rounded right-2 z-10 absolute">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <div id="zoomModal" class="zoom-modal">
         <span class="zoom-close">&times;</span>
@@ -436,87 +431,88 @@
     </div>
 
     <script>
+        function toggleFavorite(event) {
+            const productId = event.target.getAttribute('data-product-id');
+            const icon = event.target;
 
-function toggleFavorite(event) {
-    const productId = event.target.getAttribute('data-product-id');
-    const icon = event.target;
+            fetch('/favorites/toggle', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.action === 'added') {
+                            icon.classList.add('favorited'); // Activa el ícono
+                            showNotification(data.message || 'Producto agregado a favoritos.');
+                        } else {
+                            icon.classList.remove('favorited'); // Desactiva el ícono
+                            showNotification(data.message || 'Producto eliminado de favoritos.');
+                            // Aquí eliminamos el producto del DOM
+                            const productElement = icon.closest('.carousel-item'); // Busca el contenedor del producto
+                            if (productElement) {
+                                productElement.remove(); // Elimina el producto de la vista
+                            }
+                            updateProductCount(); // Llama a la función para actualizar el conteo de productos
+                        }
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    fetch('/favorites/toggle', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ product_id: productId }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            if (data.action === 'added') {
-                icon.classList.add('favorited'); // Activa el ícono
-                showNotification(data.message || 'Producto agregado a favoritos.');
-            } else {
-                icon.classList.remove('favorited'); // Desactiva el ícono
-                showNotification(data.message || 'Producto eliminado de favoritos.');
-                // Aquí eliminamos el producto del DOM
-                const productElement = icon.closest('.carousel-item'); // Busca el contenedor del producto
-                if (productElement) {
-                    productElement.remove(); // Elimina el producto de la vista
-                }
-                updateProductCount(); // Llama a la función para actualizar el conteo de productos
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
+                'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
+            notification.textContent = message;
+
+            // Agrega la notificación al cuerpo del documento
+            document.body.appendChild(notification);
+
+            // Remueve la notificación después de 3 segundos
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+
+
+        function updateCatalogFavorites(productId) {
+            const catalogIcon = document.querySelector(`.catalog-heart-icon[data-product-id='${productId}']`);
+            if (catalogIcon) {
+                catalogIcon.classList.remove('favorited'); // Desactiva el ícono en el catálogo
             }
-        } else {
-            console.error(data.message);
         }
-    })
-    .catch(error => console.error('Error:', error));
-}
 
-function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.classList.add('p-4', 'notification', 'text-emerald-300', 'border',
-            'border-emerald-100', 'bg-black', 'rounded', 'fixed', 'top-2', 'right-2', 'z-10');
-        notification.textContent = message;
+        function updateProductCount() {
+            const productCountElement = document.querySelector('.container-Products');
+            const currentCount = parseInt(productCountElement.textContent);
 
-        // Agrega la notificación al cuerpo del documento
-        document.body.appendChild(notification);
+            // Actualiza el conteo de productos
+            const newCount = currentCount - 1;
+            productCountElement.textContent = `${newCount} Productos`;
 
-        // Remueve la notificación después de 3 segundos
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
+            // Verifica si no hay más productos
+            if (newCount <= 0) {
+                // Muestra el mensaje de que no hay productos favoritos
+                const noFavoritesMessage = document.createElement('p');
+                noFavoritesMessage.classList.add('text-white', 'text-center', 'mt-10');
+                noFavoritesMessage.textContent = "No tienes productos favoritos.";
 
-
-
-    function updateCatalogFavorites(productId) {
-        const catalogIcon = document.querySelector(`.catalog-heart-icon[data-product-id='${productId}']`);
-        if (catalogIcon) {
-            catalogIcon.classList.remove('favorited'); // Desactiva el ícono en el catálogo
+                // Añade el mensaje al contenedor de productos
+                const carouselWrapper = document.querySelector('.carousel-wrapper');
+                carouselWrapper.innerHTML = ''; // Limpia el contenedor de productos
+                carouselWrapper.appendChild(noFavoritesMessage); // Añade el mensaje
+            }
         }
-    }
-
-    function updateProductCount() {
-    const productCountElement = document.querySelector('.container-Products');
-    const currentCount = parseInt(productCountElement.textContent);
-    
-    // Actualiza el conteo de productos
-    const newCount = currentCount - 1;
-    productCountElement.textContent = `${newCount} Productos`;
-    
-    // Verifica si no hay más productos
-    if (newCount <= 0) {
-        // Muestra el mensaje de que no hay productos favoritos
-        const noFavoritesMessage = document.createElement('p');
-        noFavoritesMessage.classList.add('text-white', 'text-center', 'mt-10');
-        noFavoritesMessage.textContent = "No tienes productos favoritos.";
-        
-        // Añade el mensaje al contenedor de productos
-        const carouselWrapper = document.querySelector('.carousel-wrapper');
-        carouselWrapper.innerHTML = ''; // Limpia el contenedor de productos
-        carouselWrapper.appendChild(noFavoritesMessage); // Añade el mensaje
-    }
-}
 
         document.querySelectorAll('.zoom-container').forEach(container => {
 
@@ -546,7 +542,5 @@ function showNotification(message) {
                 }
             });
         });
-
-
     </script>
 @endsection

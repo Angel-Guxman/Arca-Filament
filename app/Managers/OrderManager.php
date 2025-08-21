@@ -24,6 +24,7 @@ class OrderManager
             'user_id' => $user->id,
             "payment_status" => "pending",
             "divisa" => "MXN",
+            "type" => "product",
             "total_price" => $total_price,
             "session_id" => "id_sesion",
             "shipping_price" => $shipping_price,
@@ -226,9 +227,6 @@ class OrderManager
             ]);
 
 
-            $cart->cartItems()->delete();
-            $cart->delete();
-
             DB::commit();
 
             return [
@@ -255,6 +253,7 @@ class OrderManager
         $order = Order::create([
             'user_id' => $user->id,
             "divisa" => "MXN",
+            "type" => "cart",
             'payment_status' => "pending",
             'total_price' => $total_price,
             'shipping_price' => $shipping_price,

@@ -339,14 +339,19 @@
             const formData = new FormData(form);
             const iterable = formData.entries();
             const data = Object.fromEntries(iterable);
+            let error = false;
             required.forEach(field => {
                 if (!data[field]) {
                     notification.error(
                         `El campo ${requiredLabels[required.indexOf(field)]} es obligatorio`
                     );
-                    return;
+                    error = true;
+
                 }
             });
+            if (error) {
+                return;
+            }
             form.submit();
         });
 

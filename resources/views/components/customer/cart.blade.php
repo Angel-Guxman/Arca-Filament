@@ -7,10 +7,10 @@
                 de compras
             </span>
         </h2>
-        <section class=" flex">
-            <div class="   lg:basis-4/6">
+        <section class=" flex lg:flex-row flex-col space-y-4 relative">
+            <div class="   lg:basis-4/6 md:basis-5/6 basis-full">
                 @foreach ($cartItems as $item)
-                    <div class=" last:border-b border-t  relative border-neutral-700 flex ml-20 py-3 space-x-4"
+                    <div class=" last:border-b border-t  relative border-neutral-700 flex md:ml-20 ml-2 py-3  pr-10 sm:pr-3 space-x-4"
                         id="item-{{ $item->id }}">
                         <div class="absolute top-2 right-2 p-1 delete-item" data-id="{{ $item->id }}">
 
@@ -24,11 +24,13 @@
 
                         </div>
                         <div class="   w-full">
-                            <span
-                                class=" text-white/90 font-medium text-xl tracking-wider uppercase font-sans block">{{ $item->product->name }}</span>
+                            <p
+                                class=" text-white/90 font-medium md:text-xl text-lg tracking-wider uppercase font-sans line-clamp-2 ">
+                                {{ $item->product->name }}
+                            </p>
 
                             <div
-                                class="  text-sm w-fit px-2  text-white/80 font-light uppercase  py-1 rounded-md mt-3 font-sans flex items-center gap-x-1">
+                                class="  md:text-sm text-xs w-fit px-2  text-white/80 font-light uppercase  py-1 rounded-md mt-3 font-sans flex items-center gap-x-1">
                                 <x-svgs.tag class="size-4"></x-svgs.tag>
 
                                 <span class="  block">{{ $item->product->category->name }}</span>
@@ -36,7 +38,7 @@
                             </div>
                             {{--   <span class="block   font-sans  mt-4 tracking-wider text-white">$
                                 {{ number_format($item->price) }} MX</span> --}}
-                            <div class="flex items-center justify-between pr-5   ">
+                            <div class="flex md:items-center items-start md:flex-row flex-col justify-between pr-5   ">
 
                                 <div class="flex items-center gap-x-3 mt-3 ">
                                     <div
@@ -59,10 +61,10 @@
                                 <div class="  flex flex-col items-center">
                                     {{-- <span class="text-white">{{ json_encode($item->product) }}</span> --}}
                                     <span
-                                        class=" block uppercase text-white  text-sm font-medium mt-4 tracking-wider">Subtotal</span>
+                                        class=" block uppercase text-white  md:text-sm text-xs font-medium mt-4 tracking-wider">Subtotal</span>
 
                                     <span id="subtotal-{{ $item->id }}"
-                                        class="block text-lg  font-sans  mt-2 tracking-wider text-white">$
+                                        class="block md:text-lg text-sm  font-sans  mt-2 tracking-wider text-white">$
                                         {{ number_format($item->subtotal) }} MXN</span>
                                 </div>
                             </div>
@@ -77,37 +79,50 @@
 
             </div>
 
-            <div class=" lg:basis-2/6 hidden lg:block   ">
-
-
+            <div class=" lg:basis-2/6 basis-full lg:static  fixed  left-0 right-0  bottom-0 z-10 ">
                 <div
-                    class="flex flex-col  bg-neutral-900  border-[0.5px] border-neutral-700 mx-auto sticky top-[200px]  p-4 w-fit h-fit gap-4">
-                    <h2 class="text-white font-mono tracking-wide uppercase  text-center">Resumen del Pedido</h2>
-                    <div class="   grid grid-cols-2 p-3  gap-y-3 text-white  text-sm  gap-x-10">
-                        <span id="cart-items-count" class="">Productos ({{ $cartItems->count() }})</span>
-                        <span id="total-items" class=" text-end text-white/80">${{ number_format($totalItems) }}</span>
-                        <span class="">Envio</span>
-                        <span id="total-shipping"
-                            class=" text-end text-white/80">${{ number_format($shipping) }}</span>
-                    </div>
-                    <div class=" flex justify-between items-center text-sm px-2 border-t border-neutral-700 ">
+                    class="flex flex-col  bg-neutral-900  border-[0.5px] border-neutral-700 mx-auto sticky top-[200px]  p-4 lg:w-fit w-full h-fit md:gap-4 gap-2">
 
-                        <span class=" pt-2 text-white">Total</span>
-                        <span id="total" class=" pt-2 text-end text-white/90">${{ number_format($total) }}</span>
+                    <div class="block  max-w-[500px] mx-auto">
+
+                        <h2 class="text-white font-mono tracking-wide uppercase  text-center">Resumen del Pedido</h2>
+                        <div class="   grid grid-cols-2 p-3  md:gap-y-3 gap-y-2 text-white  text-sm  gap-x-10">
+                            <span id="cart-items-count " class="">Productos
+                                ({{ $cartItems->count() }})</span>
+                            <span id="total-items"
+                                class=" text-end text-white/80">${{ number_format($totalItems) }}</span>
+                            <span class="">Envio</span>
+                            <span id="total-shipping"
+                                class=" text-end text-white/80">${{ number_format($shipping) }}</span>
+                        </div>
+                        <div class=" flex justify-between items-center text-sm px-2 border-t border-neutral-700 ">
+
+                            <span class=" pt-2 text-white">Total</span>
+                            <span id="total"
+                                class=" pt-2 text-end text-white/90">${{ number_format($total) }}</span>
+                        </div>
+                        <div class="flex justify-center mt-4">
+                            <form action="{{ route('create-order-cart') }}">
+                                <button
+                                    class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500   duration-200  "
+                                    type="submit">
+                                    Continuar
+                                </button>
+
+                            </form>
+                        </div>
+
                     </div>
-                    <div class="flex justify-center mt-4">
-                        <form action="{{ route('create-order-cart') }}">
-                            <button
-                                class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500   duration-200  "
-                                type="submit">
-                                Continuar
-                            </button>
-                        </form>
-                    </div>
+
+
+
+
+
                 </div>
 
 
             </div>
+
         </section>
     @else
         <div class=" h-auto max-w-[500px] mx-auto">

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
             $table->string('divisa');
+            $table->string('type');
             $table->string('date_approved')->nullable();
             $table->decimal('total_price', 10, 2);
             $table->string('session_id');

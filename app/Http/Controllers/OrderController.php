@@ -11,6 +11,9 @@ use App\Managers\OrderManager;
 use App\Http\Requests\StoreUserOrderPostRequest;
 use App\Http\Requests\StoreUserOrderCartPostRequest;
 use App\Models\Cart;
+use App\Models\Order;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrderController extends Controller
 {
@@ -128,35 +131,111 @@ class OrderController extends Controller
         return redirect()->away($result['checkout_session']->url);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function success(Request $request)
     {
-        //
+        $customer = null;
+        try {
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            $session_id = $request->input('session_id');
+            $session = \Stripe\Checkout\Session::retrieve($session_id);
+            $customer = $session->customer ? \Stripe\Customer::retrieve($session->customer) : $session->customer_details;
+            if (!$session) {
+                throw new NotFoundHttpException('Session not found');
+            }
+            if ($session->payment_status === 'paid') {
+                $order = Order::where('session_id', $session->id)->first();
+                if (!$order) {
+                    throw new NotFoundHttpException('Order not found');
+                }
+                if ($order->payment_status === 'pending') {
+                    $order->update([
+                        'payment_status' => 'paid',
+                    ]);
+                }
+                return view('customer.success', [
+                    'customer' => $customer,
+                    'order' => $order
+                ]);
+            } else {
+                return view('customer.cancel', [
+                    'customer' => $customer,
+                ]);
+            }
+        } catch (Exception $e) {
+            throw new NotFoundHttpException($e->getMessage());
+        }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function cancel(Request $request)
     {
-        //
+        $session_id = $request->input('session_id');
+        $order = Order::where('session_id', $session_id)->where('payment_status', 'pending')->first();
+        if ($order) {
+            $order->delete();
+        }
+        return view('customer.cancel');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function webhook(Request $request)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        // Replace this endpoint secret with your endpoint's unique secret
+        // If you are testing with the CLI, find the secret by running 'stripe listen'
+        // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
+        // at https://dashboard.stripe.com/webhooks
+        $endpoint_secret = config('services.stripe.webhook_secret');
+
+        $payload = @file_get_contents('php://input');
+        $event = null;
+
+        try {
+            $event = \Stripe\Event::constructFrom(
+                json_decode($payload, true)
+            );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+            return response("", 400);
+        }
+        if ($endpoint_secret) {
+            // Only verify the event if there is an endpoint secret defined
+            // Otherwise use the basic decoded event
+            $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+            try {
+                $event = \Stripe\Webhook::constructEvent(
+                    $payload,
+                    $sig_header,
+                    $endpoint_secret
+                );
+            } catch (\Stripe\Exception\SignatureVerificationException $e) {
+                // Invalid signature
+                return response("", 400);
+            }
+        }
+
+        // Handle the event
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                $sessionId = $session->id;
+                $order = Order::where('session_id', $sessionId)->first();
+                if ($order && $order->payment_status === 'pending') {
+                    $order->update([
+                        'payment_status' => 'paid',
+                    ]);
+                    if ($order->type === 'cart') {
+                        $cart = Cart::where('user_id', $order->user_id)->first();
+                        $cart->cartItems()->delete();
+                        $cart->delete();
+                    }
+                }
+                break;
+            case 'payment_method.attached':
+                $paymentMethod = $event->data->object;
+                break;
+            default:
+                // Unexpected event type
+                error_log('Received unknown event type');
+        }
+
+        return response("", 200);
     }
 }

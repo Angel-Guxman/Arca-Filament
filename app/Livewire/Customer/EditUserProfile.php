@@ -20,9 +20,11 @@ class EditUserProfile extends Component
     public $first_street;
     public $second_street;
     public $interior_number;
+    public $outdoor_number;
     public $address;
     public $post_code;
     public $indications;
+    public $country;
     public $municipality;
     public function mount($user)
     {
@@ -43,9 +45,11 @@ class EditUserProfile extends Component
         $this->first_street = $user->first_street;
         $this->second_street = $user->second_street;
         $this->interior_number = $user->interior_number;
+        $this->outdoor_number = $user->outdoor_number;
         $this->address = $user->address;
         $this->post_code = $user->post_code;
         $this->indications = $user->indications;
+        $this->country = $user->country;
         if ($user->state) {
             $this->municipios = $this->data[$user->state] ?? [];
         }
@@ -69,13 +73,13 @@ class EditUserProfile extends Component
             'first_street' => 'nullable|string|max:255',
             'second_street' => 'nullable|string|max:255',
             'interior_number' => 'nullable|string|max:255',
+            'outdoor_number' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
             'municipality' => 'nullable|string|max:255',
             'post_code' => 'nullable|string|max:255',
             'indications' => 'nullable|string|max:255',
-
-
+            'country' => 'nullable|string|max:255',
         ];
 
         // Aplica reglas condicionales si el campo tiene un valor
@@ -87,6 +91,9 @@ class EditUserProfile extends Component
         }
         if (!empty($this->interior_number)) {
             $rules['interior_number'] = 'required|numeric|min:1|max:999999';
+        }
+        if (!empty($this->outdoor_number)) {
+            $rules['outdoor_number'] = 'required|numeric|min:1|max:999999';
         }
         if (!empty($this->address)) {
             $rules['address'] = 'required|string|max:255';
@@ -104,6 +111,9 @@ class EditUserProfile extends Component
 
         if (!empty($this->indications)) {
             $rules['indications'] = 'required|string|max:255';
+        }
+        if (!empty($this->country)) {
+            $rules['country'] = 'required|string|max:255';
         }
 
 
@@ -124,11 +134,13 @@ class EditUserProfile extends Component
             'first_street' => $this->first_street,
             'second_street' => $this->second_street,
             'interior_number' => $this->interior_number,
+            'outdoor_number' => $this->outdoor_number,
             'address' => $this->address,
             'state' => $this->state == '' ? null : $this->state,
             'municipality' => $this->municipality == '' ? null : $this->municipality,
             'post_code' => $this->post_code,
             'indications' => $this->indications,
+            'country' => 'México',
         ]);
         $this->dispatch('updateView');
     }

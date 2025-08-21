@@ -114,12 +114,10 @@ Route::post('/prueba-post-2', function (Illuminate\Http\Request $request) {
 Route::get('/continuar-compra', [OrderController::class, 'createOrder'])->name('create-order')->middleware('store-pending-purchase');
 Route::get('/continuar-compra/carrito', [OrderController::class, 'createOrderCart'])->name('create-order-cart')->middleware('auth');
 //Route::get('/continuar-compra/step2', [OrderController::class, 'createOrderPay'])->name('create-order-pay');
-Route::get('/compra-exitosa', function () {
-    return view('customer.success');
-})->name('order-success');
-Route::get('/compra-cancelada', function () {
-    return view('customer.cancel');
-})->name('order-cancel');
+Route::get('/compra-exitosa', [OrderController::class, 'success'])->name('order-success');
+Route::get('/compra-cancelada', [OrderController::class, 'cancel'])->name('order-cancel');
+Route::post('/webhook', [OrderController::class, 'webhook'])->name('webhook');
+
 Route::prefix('api')->group(function () {
     Route::post('/order-store', [OrderController::class, 'storeOrder'])->name('store-order');
     Route::post('/order-cart-store', [OrderController::class, 'storeCartOrder'])->name('store-cart-order')->middleware('auth');

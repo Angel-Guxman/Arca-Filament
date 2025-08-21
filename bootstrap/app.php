@@ -24,6 +24,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer-not-auth' => RoleCustomerNA::class,
             'store-pending-purchase' => StorePendingPurchase::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'stripe/*',
+            '/webhook',
+
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

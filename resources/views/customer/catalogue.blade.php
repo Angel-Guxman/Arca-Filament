@@ -405,7 +405,7 @@
             </div>
 
             <p
-                class=" text-indigo-100 text-sm flex items-center space-x-1  font-medium  before:content-[''] before:bg-emerald-500 before:mr-2 before:size-2 before:block before:rounded-full  bg-gray-950 tracking-widest px-3 cursor-default select-none border-[0.3px] border-gray-700 py-2  ">
+                class=" text-indigo-100 text-sm flex items-center space-x-1  font-medium  font-sans  bg-gray-950 tracking-widest px-3 cursor-default select-none border-[0.3px] border-gray-700 py-2  ">
                 {{ $products->total() }} Productos
             </p>
 

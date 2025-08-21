@@ -62,7 +62,7 @@
                 <div>
                     <label class="block text-sm font-medium text-neutral-300 mb-1">Número Exterior</label>
                     <div class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200">
-                        {{ $user->exterior_number ?? 'N/A' }}
+                        {{ $user->outdoor_number ?? 'N/A' }}
                     </div>
                 </div>
 
@@ -80,24 +80,32 @@
                         {{ $user->municipality ?? 'N/A' }}
                     </div>
                 </div>
-                <div>
+                <div class="">
+                    <label class="block text-sm font-medium text-neutral-300 mb-1">País</label>
+                    <div class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200">
+                        {{ $user->country ?? 'N/A' }}
+                    </div>
+                </div>
+                <div class="">
                     <label class="block text-sm font-medium text-neutral-300 mb-1">Código Postal</label>
                     <div class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200">
                         {{ $user->post_code ?? 'N/A' }}
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-1">Indicaciones</label>
-                    <div class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200">
-                        {{ $user->indications ?? 'N/A' }}
-                    </div>
-                </div>
+
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-neutral-300 mb-1">Dirección Completa</label>
                     <div
                         class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200 max-h-20 overflow-y-auto">
                         {{ $user->address ?? 'N/A' }}
+                    </div>
+                </div>
+                <div class=" col-span-2">
+                    <label class="block text-sm font-medium text-neutral-300 mb-1">Indicaciones</label>
+                    <div
+                        class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-neutral-200 max-h-20  overflow-y-auto">
+                        {{ $user->indications ?? 'N/A' }}
                     </div>
                 </div>
             </div>
@@ -114,7 +122,8 @@
 
                 <button type="submit" class="button-primary flex items-center gap-2" aria-current="page">
                     <x-svgs.reset class="size-5" />
-                    Cambiar contraseña</button>
+                    <span class="text-xs md:text-base">Cambiar contraseña</span>
+                </button>
 
             </form>
             <div class="  ">
@@ -122,7 +131,8 @@
                     @csrf
                     <button type="submit" class=" button-primary flex items-center gap-2 " aria-current="page">
                         <x-svgs.logout class="size-5" />
-                        Cerrar Sesión</button>
+                        <span class="text-xs md:text-base">Cerrar Sesión</span>
+                    </button>
                 </form>
             </div>
         </div>

@@ -93,18 +93,19 @@
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
-
                 <div>
-                    <label for="address" class="block text-sm font-medium text-neutral-300 mb-1">
-                        Dirección Completa
+                    <label for="outdoor_number" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Número Exterior
                     </label>
-                    <input type="text" id="address" wire:model="address"
+                    <input type="text" id="outdoor_number" wire:model="outdoor_number"
                         class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-                        placeholder="Colonia, Ciudad, Estado" {{ $user->address ? 'required' : '' }} />
-                    @error('address')
+                        placeholder="123" {{ $user->outdoor_number ? 'required' : '' }} />
+                    @error('outdoor_number')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
+
+
 
                 <div>
                     <label for="state" class="block text-sm font-medium text-neutral-300 mb-1">
@@ -139,6 +140,17 @@
                 </div>
 
                 <div>
+                    <label for="country" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Pais <span class="text-red-400">*</span>
+                    </label>
+                    <input type="text" id="country" wire:model="country" maxlength="5" required
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="México" />
+                    @error('country')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
                     <label for="post_code" class="block text-sm font-medium text-neutral-300 mb-1">
                         Código Postal <span class="text-red-400">*</span>
                     </label>
@@ -149,13 +161,25 @@
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="sm:col-span-2">
+                    <label for="address" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Dirección Completa
+                    </label>
+                    <textarea type="text" id="address" wire:model="address"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition max-h-20 overflow-y-auto"
+                        placeholder="Colonia, Ciudad, Estado" {{ $user->address ? 'required' : '' }}></textarea>
+                    @error('address')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
 
                 <div class="sm:col-span-2">
                     <label for="indications" class="block text-sm font-medium text-neutral-300 mb-1">
                         Indicaciones Adicionales
                     </label>
-                    <textarea id="indications" wire:model="indications" rows="3"
-                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                    <textarea id="indications" wire:model="indications"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition max-h-20 overflow-y-auto"
                         placeholder="Ej: Casa blanca de dos pisos, portón negro, etc."></textarea>
                     @error('indications')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>

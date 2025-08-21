@@ -354,26 +354,31 @@
         const municipalitySelect = dom.$('#municipality');
         const form = dom.$('#form-step1');
         const required = ["state", "municipality", "address", "indications", "phone", "email", "first_street",
-            "country", "post_code", "quantity", "product_slug"
+            "country", "post_code",
         ];
 
         const requiredLabels = ["estado", "municipio", "dirección", "indicaciones", "telefono", "email",
             "primera calle",
-            "pais", "codigo postal", "cantidad", "producto"
+            "pais", "codigo postal",
         ];
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(form);
             const iterable = formData.entries();
             const data = Object.fromEntries(iterable);
+            let error = false;
             required.forEach(field => {
                 if (!data[field]) {
                     notification.error(
                         `El campo ${requiredLabels[required.indexOf(field)]} es obligatorio`
                     );
-                    return;
+                    error = true;
+
                 }
             });
+            if (error) {
+                return;
+            }
             form.submit();
         });
 
