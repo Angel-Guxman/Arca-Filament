@@ -39,7 +39,7 @@ onclick="alertToast('favorite')" @endguest>
     <div class="">
         @auth
             <button type="button" id="add-cart-{{ $product->id }}" onclick="addToCart({{ $product->id }})"
-                class=" text-black bg-white mt-2  font-medium border hover:text-gray-800  w-full py-2 hover:bg-neutral-300  duration-200">
+                class=" text-black bg-white mt-2  disabled:cursor-not-allowed  font-medium border hover:text-gray-800  w-full py-2 hover:bg-neutral-300  duration-200">
                 Agregar al Carrito
             </button>
 

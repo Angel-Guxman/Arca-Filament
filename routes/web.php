@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/add-quantity/{productId}/{quantity}', [CartController::class, 'addToCartWithQuantity']);
     Route::post('/cart-item/update-quantity/{cartItemId}', [CartController::class, 'cartItemUpdateQuantity'])->name('cart-item.updateQuantity');
-    Route::delete('/cart-item/delete/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart-item.delete');
+    Route::delete('/cart-item/delete/{cartItemId}', [CartController::class, 'deleteCartItem'])->name('cart-item.delete');
     Route::post('/favorites/remove', [FavoriteController::class, 'removeFavorite']);
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggleFavorite']);
 });

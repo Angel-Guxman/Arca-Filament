@@ -214,21 +214,36 @@ class CartController extends Controller
 
 
     // Elimina un producto del carrito
-    public function removeFromCart($cartItemId)
+    public function deleteCartItem($cartItemId)
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Por favor, inicie sesión para eliminar productos del carrito.');
+            return response()->json(['success' => false, 'message' => 'Por favor, inicie sesión para eliminar productos del carrito.']);
         }
 
         $cartItem = CartItem::find($cartItemId);
         if (!$cartItem) {
-            return redirect()->back()->with('error', 'Artículo no encontrado en el carrito.');
+            return response()->json(['success' => false, 'message' => 'Artículo no encontrado en el carrito.']);
         }
 
         $cartItem->delete();
-
-        return redirect()->back()->with('success', 'Artículo eliminado del carrito.');
+        $cart = Cart::where('user_id', $user->id)->with('cartItems.product')->first();
+        if (!$cart) {
+            return response()->json(['success' => false, 'message' => 'Carrito no encontrado.']);
+        }
+        if ($cart->cartItems->isEmpty()) {
+            $subtotal = 0;
+            $shipping = 0;
+            $total = $subtotal + $shipping;
+            return response()->json(['success' => true, 'message' => 'Carrito vacio.', 'subtotal' => number_format($subtotal, 2), 'total' => number_format($total, 2), 'cartCount' => 0]);
+        }
+        $subtotal = $cart->cartItems->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+        $shipping = 0;
+        $total = $subtotal + $shipping;
+        $cartCount = $cart->cartItems->count();
+        return response()->json(['success' => true, 'message' => 'Artículo eliminado del carrito.', 'subtotal' => number_format($subtotal, 2), 'total' => number_format($total, 2), 'cartCount' => $cartCount]);
     }
 
     // Método para obtener los productos

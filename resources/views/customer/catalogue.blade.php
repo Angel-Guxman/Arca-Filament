@@ -363,7 +363,7 @@
                         </svg>
 
                     </div>
-                    <span class=" flex-1 text-xs font-semibold text-gray-300 ">Agregado Correctamente</span>
+                    <span class=" flex-1 text-xs font-semibold text-gray-300 ">Producto Agregado</span>
                 </div>
 
                 <div class=" text-sm font-normal flex flex-col gap-2 mt-2  pl-3">
@@ -529,84 +529,30 @@
 
             //function for add to cart
             async function addToCart(id) {
-                if (!id || process) {
-                    return
-                }
-
-
+                if (!id) return
                 const buttonAddCart = document.getElementById(`add-cart-${id}`)
-                if (buttonAddCart) {
-                    buttonAddCart.classList.add('cursor-not-allowed')
-                }
-
-                process = true
+                if (buttonAddCart) buttonAddCart.disabled = true
                 try {
                     const response = await axios.post(`/cart/add/${id}`)
                     if (response.data.success) {
-
-                        if (timeOutCart) {
-                            clearTimeout(timeOutCart)
-                        }
                         cartCount()
-                        const notificationFailed = document.getElementById('notification-failed')
-
-                        if (notificationFailed && !notificationFailed.classList.contains('hidden')) {
-                            notificationFailed.classList.add('hidden')
-                        }
-                        const notification = document.getElementById('notification-success')
                         const product = response.data.product
-                        const content = document.getElementById('notification-content')
-                        content.textContent =
-                            `${product.name}`
-                        const img = document.getElementById('notification-img')
-                        img.src = `{{ asset('${product.images[0].image}') }}`
-                        notification.classList.remove('hidden')
-                        timeOutCart = setTimeout(() => {
-                            notification.classList.add('hidden')
-                        }, 2500)
+                        notification.success(`${product.name} agregado al carrito`)
                     } else {
-                        if (timeOutCart) {
-                            clearTimeout(timeOutCart)
-                        }
-                        const notificationSuccess = document.getElementById('notification-success')
-
-                        if (notificationSuccess && !notificationSuccess.classList.contains('hidden')) {
-                            notificationSuccess.classList.add('hidden')
-                        }
-                        const notification = document.getElementById('notification-failed')
-                        const content = document.getElementById('notification-content-failed')
                         if (response.data.message) {
-                            content.textContent =
-                                `${response.data.message}`
+                            notification.error(`${response.data.message}`)
                         } else {
-                            content.textContent = 'No se pudo Agregar el Producto'
+                            notification.error('No se pudo Agregar el Producto')
                         }
-                        notification.classList.remove('hidden')
-                        timeOutCart = setTimeout(() => {
-                            notification.classList.add('hidden')
-                        }, 2500)
-
-
                     }
                 } catch (error) {
                     console.log('hubo un error al agregar el producto al carrito');
                     console.log(error);
-                    if (timeOutCart) {
-                        clearTimeout(timeOutCart)
-                    }
-                    const notification = document.getElementById('notification-failed')
-                    const content = document.getElementById('notification-content-failed')
-                    content.textContent = 'Hubo un error al agregar el producto'
-                    notification.classList.remove('hidden')
-                    timeOutCart = setTimeout(() => {
-                        notification.classList.add('hidden')
-                    }, 2500)
+                    notification.error('Hubo un error al agregar el producto')
                 } finally {
-                    if (buttonAddCart) {
-                        buttonAddCart.classList.remove('cursor-not-allowed')
-                    }
-                    process = false
-
+                    setTimeout(() => {
+                        buttonAddCart.disabled = false
+                    }, 1500)
                 }
 
 
