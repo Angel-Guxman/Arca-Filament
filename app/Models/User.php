@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Cart;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +20,19 @@ class User extends Authenticatable
 public function favorites()
 {
     return $this->belongsToMany(Product::class, 'favorites', 'user_id', 'product_id');
+}
+
+/**
+ * Get all orders for the user.
+ */
+/**
+ * Get all orders for the user.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function orders()
+{
+    return $this->hasMany(Order::class, 'user_id');
 }
 
     

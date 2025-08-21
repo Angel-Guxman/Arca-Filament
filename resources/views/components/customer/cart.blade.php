@@ -96,10 +96,13 @@
                         <span id="total" class=" pt-2 text-end text-white/90">${{ number_format($total) }}</span>
                     </div>
                     <div class="flex justify-center mt-4">
-                        <a class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500   duration-200  "
-                            href="">
-                            Continuar
-                        </a>
+                        <form action="{{ route('create-order-cart') }}">
+                            <button
+                                class="py-[6px] px-4 uppercase text-sm bg-neutral-800 hover:bg-neutral-700/70 text-white border-[0.5px] border-neutral-500   duration-200  "
+                                type="submit">
+                                Continuar
+                            </button>
+                        </form>
                     </div>
                 </div>
 

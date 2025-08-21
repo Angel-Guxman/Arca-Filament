@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Managers\OrderManager;
 use App\Http\Requests\StoreUserOrderPostRequest;
+use App\Http\Requests\StoreUserOrderCartPostRequest;
+use App\Models\Cart;
 
 class OrderController extends Controller
 {
@@ -67,6 +69,36 @@ class OrderController extends Controller
             'quantity' => $request->input('quantity')
         ]);
     }
+    public function createOrderCart()
+    {
+        $user = Auth::user();
+        $cart = Cart::with('cartItems.product')
+            ->where('user_id', $user->id)
+            ->first();
+        $shipping = 0;
+        $totalItems = $cart->cartItems->sum(function ($item) {
+            $item['subtotal'] = $item->quantity * $item->product->price;
+            return $item->quantity * $item->product->price;
+        });
+        $total = $totalItems + $shipping;
+        // Ruta del archivo en el directorio de almacenamiento
+        $filePath = 'public/states.json';
+
+        // Lee el contenido del archivo
+        $json = Storage::get($filePath);
+
+        // Decodifica el JSON en un array
+        $data  = json_decode($json, true);
+
+        return view('customer.continue-shopping-step2', [
+            'cart' => $cart,
+            'user' => $user,
+            'shipping' => $shipping,
+            'totalItems' => $totalItems,
+            'total' => $total,
+            'data' => $data
+        ]);
+    }
     /**
      * Store a newly created order.
      */
@@ -85,9 +117,15 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeCartOrder(StoreUserOrderCartPostRequest $request)
     {
-        //
+        // Create the order
+        $result = $this->orderManager->storeUserAndOrderCart($request->validated());
+
+        if (!$result['success']) {
+            return redirect()->back()->with('error', $result['message']);
+        }
+        return redirect()->away($result['checkout_session']->url);
     }
 
     /**

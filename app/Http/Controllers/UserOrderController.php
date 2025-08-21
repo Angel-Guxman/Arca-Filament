@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserOrderController extends Controller
 {
@@ -11,8 +14,15 @@ class UserOrderController extends Controller
      */
     public function index()
     {
-        //
-        return view('customer.order-history');
+        $user = Auth::user();
+        $orders = $user->orders()
+            ->with(['items' => function ($query) {
+                $query->with('product');
+            }])
+            ->latest()
+            ->paginate(5);
+
+        return view('customer.order-history', compact('orders'));
     }
 
     /**

@@ -1,203 +1,179 @@
-<div>
-    <form class="max-w-xl mx-auto mt-10 mb-2      " wire:submit.prevent="updateView">
-        <div>
+<div class="bg-neutral-900 rounded-lg border border-neutral-700/80 p-5 relative">
+    <button type="button" wire:click="updateView" class="absolute top-2 right-2 button-primary">
+        <x-svgs.user-data class=" size-5" />
+    </button>
+    <h2 class="text-xl font-semibold text-white mb-6">Editar Perfil</h2>
 
-            <div class=" grid sm:grid-cols-2 grid-cols-1 gap-2">
-
-                <div class="mb-5">
-                    <label for="name" class="block mb-2 text-sm font-medium  text-white">Nombre
-                        <span class=" text-red-400">*</span>
-                    </label>
-                    <input type="text" id="name" name="name" wire:model="name"
-                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        placeholder="Albert" required />
-                    @error('name')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="mb-5">
-                    <label for="last_name" class="block mb-2 text-sm font-medium text-white">Apellido
-                        <span class=" text-red-400">*</span>
-                    </label>
-                    <input type="text" id="last_name" wire:model="last_name" name="last_name"
-                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        placeholder="Einstein" required />
-                    @error('last_name')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="mb-5">
-                    <label for="email" class="block mb-2 text-sm font-medium  text-white">Email
-                        <span class=" text-red-400">*</span>
-                    </label>
-                    <input type="email" id="email" wire:model="email" name="email"
-                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        placeholder="name@example.com" required />
-                    @error('email')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-
-
-                <div class="mb-5">
-                    <label for="phone" class="block mb-2 text-sm font-medium  text-white">Telefono</label>
-                    <input type="tel" id="phone" name="phone" wire:model="phone"
-                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->phone ? 'required' : '' }} />
-                    @error('phone')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
+    <form wire:submit.prevent="updateView" class="space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-neutral-300 mb-1">
+                    Nombre <span class="text-red-400">*</span>
+                </label>
+                <input type="text" id="name" wire:model="name" required
+                    class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                    placeholder="Tu nombre" />
+                @error('name')
+                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="mb-5">
-                    <label for="first_street" class="block mb-2 text-sm font-medium  text-white">Primera
-                        Calle</label>
-                    <input type="text" id="first_street" wire:model="first_street" name="first_street"
-                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->first_street ? 'required' : '' }} />
+            <div>
+                <label for="last_name" class="block text-sm font-medium text-neutral-300 mb-1">
+                    Apellido <span class="text-red-400">*</span>
+                </label>
+                <input type="text" id="last_name" wire:model="last_name" required
+                    class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                    placeholder="Tu apellido" />
+                @error('last_name')
+                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-neutral-300 mb-1">
+                    Correo Electrónico <span class="text-red-400">*</span>
+                </label>
+                <input type="email" id="email" wire:model="email" required
+                    class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                    placeholder="tu@email.com" />
+                @error('email')
+                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="phone" class="block text-sm font-medium text-neutral-300 mb-1">
+                    Teléfono
+                </label>
+                <input type="tel" id="phone" wire:model="phone"
+                    class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                    placeholder="+52 123 456 7890" {{ $user->phone ? 'required' : '' }} />
+                @error('phone')
+                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-neutral-700">
+            <h3 class="text-base font-medium text-white mb-4">Dirección</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="first_street" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Calle Principal
+                    </label>
+                    <input type="text" id="first_street" wire:model="first_street"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="Av. Principal" {{ $user->first_street ? 'required' : '' }} />
                     @error('first_street')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-
-                <div class="mb-5">
-                    <label for="second_street" class="block mb-2 text-sm font-medium  text-white">Segunda
-                        Calle</label>
-                    <input type="text" id="second_street" wire:model="second_street" name="second_street"
-                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->second_street ? 'required' : '' }} />
-                    @error('first_street')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="mb-5">
-                    <label for="interior_number" class="block mb-2 text-sm font-medium  text-white">Numero
-                        Interior
+                <div>
+                    <label for="second_street" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Calle Secundaria
                     </label>
-                    <input type="text" id="interior_number" wire:model="interior_number" name="interior_number"
-                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->interior_number ? 'required' : '' }} />
+                    <input type="text" id="second_street" wire:model="second_street"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="Calle lateral" {{ $user->second_street ? 'required' : '' }} />
+                    @error('second_street')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="interior_number" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Número Interior
+                    </label>
+                    <input type="text" id="interior_number" wire:model="interior_number"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="123" {{ $user->interior_number ? 'required' : '' }} />
                     @error('interior_number')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-
-                <div class="mb-5">
-                    <label for="address" class="block mb-2 text-sm font-medium  text-white">Dirección</label>
-                    <input type="text" id="address" wire:model="address" name="address"
-                        class=" border outline-none      text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->address ? 'required' : '' }} />
+                <div>
+                    <label for="address" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Dirección Completa
+                    </label>
+                    <input type="text" id="address" wire:model="address"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="Colonia, Ciudad, Estado" {{ $user->address ? 'required' : '' }} />
                     @error('address')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
-
-                <div class="mb-5">
-                    <label for="state" class="block mb-2 text-sm font-medium  text-white">Estado</label>
-                    <select name="state" id="state" wire:model.live="state"
-                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->state ? 'required' : '' }}>
+                <div>
+                    <label for="state" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Estado <span class="text-red-400">*</span>
+                    </label>
+                    <select id="state" wire:model.live="state" required
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
                         <option value="">Selecciona un Estado</option>
                         @foreach ($data as $index => $value)
                             <option value="{{ $index }}">{{ $index }}</option>
                         @endforeach
                     </select>
-
-                    @error('city')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                    @error('state')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <div class="mb-5">
-                    <label for="municipality" class="block mb-2 text-sm font-medium text-white">Municipio</label>
-                    <select name="municipality" id="municipality" wire:model="municipality"
-                        class=" border outline-none     text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400">
-                        <option value={{ null }}>Selecciona un Municipio</option>
+                <div>
+                    <label for="municipality" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Municipio <span class="text-red-400">*</span>
+                    </label>
+                    <select id="municipality" wire:model="municipality" required
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+                        <option value="">Selecciona un Municipio</option>
                         @foreach ($municipios as $municipio)
                             <option value="{{ $municipio }}">{{ $municipio }}</option>
                         @endforeach
                     </select>
-
                     @error('municipality')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
-            <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="mb-5">
-                    <label for="post_code" class="block mb-2 text-sm font-medium text-white">Código
-                        Postal</label>
-                    <input type="text" id="post_code" maxlength="100" wire:model="post_code" name="post_code"
-                        class=" border outline-none   h-14   text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->post_code ? 'required' : '' }} />
+
+                <div>
+                    <label for="post_code" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Código Postal <span class="text-red-400">*</span>
+                    </label>
+                    <input type="text" id="post_code" wire:model="post_code" maxlength="5" required
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="00000" />
                     @error('post_code')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-
-                <div class="mb-5">
-                    <label for="indications" class="block mb-2 text-sm font-medium  text-white">Indicaciones</label>
-                    <textarea id="indications" name="indications" wire:model="indications"
-                        class=" border outline-none   max-h-14     text-gray-900 text-sm      block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 dark:text-white focus:ring-emerald-500 focus:border-gray-400"
-                        {{ $user->indications ? 'required' : '' }}>
-
-                        </textarea>
-
+                <div class="sm:col-span-2">
+                    <label for="indications" class="block text-sm font-medium text-neutral-300 mb-1">
+                        Indicaciones Adicionales
+                    </label>
+                    <textarea id="indications" wire:model="indications" rows="3"
+                        class="w-full p-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-neutral-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+                        placeholder="Ej: Casa blanca de dos pisos, portón negro, etc."></textarea>
                     @error('indications')
-                        <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
-
-            <div class=" flex justify-start gap-2 flex-wrap">
-                <button type="submit"
-                    class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Guardar</button>
-                <button type="button" wire:click='changeToView'
-                    class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100">Volver</button>
-
+            <div class="flex justify-between items-center pt-4 border-t border-neutral-700">
+                <button type="submit" class="button-primary flex items-center gap-2">
+                    Guardar Cambios
+                </button>
 
             </div>
-
-
-        </div>
     </form>
-    <div class=" max-w-xl mx-auto mt-3    mb-10 ">
-        <h3 class=" text-gray-400  font-medium text-sm mb-2 ">Otras Opciones</h3>
-        <div class=" flex gap-3  w-full  ">
-            {{--   <div class="  ">
-                <form class="    " wire:submit.prevent="changeToView">
-                    @csrf
-                    <button type="submit"
-                        class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-2.5 text-center bg-slate-950/50 border border-gray-400 hover:bg-slate-900/50  hover:scale-[1.02] duration-[150ms] focus:ring-emerald-800 hover:border-emerald-300/80 hover:text-emerald-100"
-                        aria-current="page">Volver</button>
-                </form>
-            </div> --}}
 
-            <div class="  ">
-                <form action="{{ route('logout') }}" class="    " method="POST">
-                    @csrf
-                    <button type="submit"
-                        class="inline-block py-2.5 px-5 text-sm font-medium  bg-slate-950/50 hover:bg-slate-900/50 hover:border-red-400/70  hover:scale-[1.02] duration-[150ms]  border-gray-400 text-white  border  hover:text-red-100  "
-                        aria-current="page">Cerrar
-                        Sesión</button>
-                </form>
-            </div>
-        </div>
-    </div>
+
+</div>
+</div>
 
 
 </div>

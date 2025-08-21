@@ -10,7 +10,7 @@ class EditUserProfile extends Component
 {
     public $data;
     public $state;
-    public $municipios=[];
+    public $municipios = [];
     public $municipio;
     public $user;
     public $name;
@@ -26,42 +26,40 @@ class EditUserProfile extends Component
     public $municipality;
     public function mount($user)
     {
-        
+
         // Ruta del archivo en el directorio de almacenamiento
         $filePath = 'public/states.json';
-        
+
         // Lee el contenido del archivo
         $json = Storage::get($filePath);
-        
+
         // Decodifica el JSON en un array
         $this->data  = json_decode($json, true);
-        $this->user=$user;
-        $this->name=$user->name;
-        $this->last_name=$user->last_name;
-        $this->email=$user->email;
-        $this->phone=$user->phone;
-        $this->first_street=$user->first_street;
-        $this->second_street=$user->second_street;
-        $this->interior_number=$user->interior_number;
-        $this->address=$user->address;
-        $this->post_code=$user->post_code;
-        $this->indications=$user->indications;
-        if($user->state){
-          $this->municipios=$this->data[$user->state] ?? [];
+        $this->user = $user;
+        $this->name = $user->name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
+        $this->first_street = $user->first_street;
+        $this->second_street = $user->second_street;
+        $this->interior_number = $user->interior_number;
+        $this->address = $user->address;
+        $this->post_code = $user->post_code;
+        $this->indications = $user->indications;
+        if ($user->state) {
+            $this->municipios = $this->data[$user->state] ?? [];
         }
-        $this->state=$user->state?? '' ;
-        $this->municipality=$user->municipality ?? '' ;
-    
-
+        $this->state = $user->state ?? '';
+        $this->municipality = $user->municipality ?? '';
     }
-    
+
     public function rules()
     {
         // Define reglas de validación dinámicas
         $rules = [
             'name' => 'required|string|max:30',
             'last_name' => 'required|string|max:30',
-           'email' => [
+            'email' => [
                 'required',
                 'email',
                 'max:255',
@@ -88,7 +86,7 @@ class EditUserProfile extends Component
             $rules['first_street'] = 'required|string|max:255';
         }
         if (!empty($this->interior_number)) {
-            $rules['interior_number'] = 'required|string|max:255';
+            $rules['interior_number'] = 'required|numeric|min:1|max:999999';
         }
         if (!empty($this->address)) {
             $rules['address'] = 'required|string|max:255';
@@ -101,14 +99,14 @@ class EditUserProfile extends Component
             $rules['municipality'] = 'required|string|max:255';
         }
         if (!empty($this->post_code)) {
-            $rules['post_code'] = 'required|string|max:255';
+            $rules['post_code'] = 'required|numeric|min:5|max:99999';
         }
-        
+
         if (!empty($this->indications)) {
             $rules['indications'] = 'required|string|max:255';
         }
-        
-        
+
+
 
         return $rules;
     }
@@ -117,8 +115,8 @@ class EditUserProfile extends Component
     public function updateView()
     {
         $this->validate();
-          // Actualiza la información del usuario
-          $this->user->update([
+        // Actualiza la información del usuario
+        $this->user->update([
             'name' => $this->name,
             'last_name' => $this->last_name,
             'email' => $this->email,
@@ -127,8 +125,8 @@ class EditUserProfile extends Component
             'second_street' => $this->second_street,
             'interior_number' => $this->interior_number,
             'address' => $this->address,
-            'state' => $this->state==''? null :$this->state,
-            'municipality' => $this->municipality==''? null:$this->municipality,
+            'state' => $this->state == '' ? null : $this->state,
+            'municipality' => $this->municipality == '' ? null : $this->municipality,
             'post_code' => $this->post_code,
             'indications' => $this->indications,
         ]);
@@ -136,18 +134,17 @@ class EditUserProfile extends Component
     }
     public function updatedState($state)
     {
-        $this->municipality='';
+        $this->municipality = '';
         $this->municipios = $this->data[$state] ?? [];
     }
-    public function changeToView(){
+    public function changeToView()
+    {
         $this->dispatch('changeToView');
-
     }
 
-    
+
     public function render()
     {
-        return view('livewire.customer.edit-user-profile',['data' => $this->data,'municipios'=>$this->municipios]);
+        return view('livewire.customer.edit-user-profile', ['data' => $this->data, 'municipios' => $this->municipios]);
     }
-
 }

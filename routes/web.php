@@ -111,11 +111,9 @@ Route::post('/prueba-post-2', function (Illuminate\Http\Request $request) {
 })->name('prueba-post-2');
 
 //oreder without cart
-Route::get('/continuar-compra/step1', [OrderController::class, 'createOrder'])->name('create-order')->middleware('store-pending-purchase');
-Route::get('/continuar-compra/step2', [OrderController::class, 'createOrderPay'])->name('create-order-pay');
-//order with cart
-Route::get('/continuar-compra/carrito/step1', [OrderController::class, 'createOrderCart'])->name('create-order-cart');
-Route::get('/continuar-compra/carrito/step2', [OrderController::class, 'createOrderCartPay'])->name('create-order-cart-pay');
+Route::get('/continuar-compra', [OrderController::class, 'createOrder'])->name('create-order')->middleware('store-pending-purchase');
+Route::get('/continuar-compra/carrito', [OrderController::class, 'createOrderCart'])->name('create-order-cart')->middleware('auth');
+//Route::get('/continuar-compra/step2', [OrderController::class, 'createOrderPay'])->name('create-order-pay');
 Route::get('/compra-exitosa', function () {
     return view('customer.success');
 })->name('order-success');
@@ -124,4 +122,5 @@ Route::get('/compra-cancelada', function () {
 })->name('order-cancel');
 Route::prefix('api')->group(function () {
     Route::post('/order-store', [OrderController::class, 'storeOrder'])->name('store-order');
+    Route::post('/order-cart-store', [OrderController::class, 'storeCartOrder'])->name('store-cart-order')->middleware('auth');
 });

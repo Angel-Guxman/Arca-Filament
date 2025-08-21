@@ -1,169 +1,403 @@
 @extends('layouts.shopping')
 
-@section('title', 'Checkout')
+@section('title', 'Detalles Personales')
 
+
+<title> @section('title', 'Continuar Compra') </title>
 @section('content')
-    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {{-- Left Column --}}
-        <div class="space-y-6 lg:col-span-2">
-            <h1 class="text-3xl font-bold text-gray-200">Checkout</h1>
+    <div class="flex items-start space-x-3 rounded-md border-l-4 border-neutral-500 bg-neutral-500/15 p-4 text-neutral-50">
+        <div class="pt-1">
+            <svg class="h-6 w-6 text-neutral-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-4a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div>
+            <p class="font-semibold">Revisa tus datos antes de continuar</p>
+            <p class="text-sm">
+                Antes de finalizar tu compra, asegúrate de que tu información personal y dirección de
+                entrega sean correctas.
+                Esto nos ayudará a que tu pedido llegue sin contratiempos.
+            </p>
+        </div>
 
-            {{-- Booking on Hold --}}
-            <div class="flex items-start space-x-3 rounded-md border-l-4 border-green-500 bg-green-500/15 p-4 text-green-50">
-                <div class="pt-1">
-                    <svg class="h-6 w-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-4a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <div>
-                    <p class="font-semibold">Your Booking is on Hold</p>
-                    <p class="text-sm">We hold your booking until Feb 14, 12:00 AM. If your reserve change, we will get back
-                        to you.</p>
-                </div>
-            </div>
+    </div>
+    <div class=" flex flex-col md:flex-row gap-4">
+        <section class=" flex-shrink-0 basis-1/2">
+            <form class="" method="POST" id="form-step1" action="{{ route('store-cart-order') }}">
+                @csrf
+                @method('POST')
+                <div
+                    class="max-w-xl mx-auto mt-3 border p-4 py-6 rounded-lg bg-neutral-900 space-y-2 border-neutral-700/80">
+                    <span class="text-neutral-100 font-semibold text-xl pb-3 block">Datos y Dirección de Entrega</span>
 
-            {{-- Book Information --}}
-            <div class="rounded-lg border border-gray-200 text-white bg-neutral-950 p-6 shadow-sm">
-                <h2 class="mb-4 text-xl font-semibold">Datos de dirección</h2>
-                {{--    <div class="mb-6 flex items-center space-x-3 rounded-md bg-green-100 p-3 text-green-800">
-                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Congratulations! We have sent your book details to the vehicle owner.</span>
-                </div> --}}
-                <div class="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
-                    <div>
-                        <p class="text-gray-400">Full Name</p>
-                        <p class="font-semibold">Ahmed Bin Ali</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400">Email</p>
-                        <p class="font-semibold">ahmedbinali@gmail.com</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400">Phone Number</p>
-                        <p class="font-semibold">+221402040785</p>
-                    </div>
-                </div>
-            </div>
+                    @if (isset($cart) && $cart->cartItems->count() > 0)
+                        @foreach ($cart->cartItems as $item)
+                            <input type="hidden" name="cart_items[{{ $item->id }}][product_id]"
+                                value="{{ $item->product_id }}">
+                            <input type="hidden" name="cart_items[{{ $item->id }}][quantity]"
+                                value="{{ $item->quantity }}">
+                        @endforeach
+                    @endif
 
-            {{-- Payment Detail --}}
-            <div class="rounded-lg border border-gray-200 text-white bg-neutral-950 p-6 shadow-sm">
-                <h2 class="mb-2 text-xl font-semibold">Payment Detail</h2>
-                <p class="mb-6 text-sm text-gray-200">Please fill out the form below. Enter your card account details.</p>
-                <div class="space-y-4">
-                    <div>
-                        <label for="card-number" class="block text-sm font-medium text-gray-400">Card Number</label>
-                        <div class="relative mt-1">
-                            <input type="text" id="card-number"
-                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                value="1243 - 2133 - 9832 - 3200">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <span class="text-xs font-bold text-blue-600">VISA</span>
-                            </div>
+
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="mb-5">
+                            <label for="email" class="block mb-2 text-sm font-semibold   text-neutral-200">Email
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <input type="email" id="email" name="email"
+                                class=" border outline-none text-sm cursor-not-allowed  block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
+                                placeholder="name@example.com" required readonly value="{{ $user->email }}" />
+                            @error('email')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-5">
+
+                            <label for="phone" class="block mb-2 text-sm font-semibold   text-neutral-200">Telefono
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <input type="tel" id="phone" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                placeholder="1234567890" min="0" name="phone" value="{{ $user->phone }}"
+                                class=" border outline-none     text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
+                                required />
+                            @error('phone')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 text-black">
-                        <div class="grid grid-cols-2 gap-4 md:col-span-2">
-                            <div>
-                                <label for="expire-date" class="block text-sm font-medium text-gray-400">Expire Date</label>
-                                <div class="mt-1 flex space-x-2">
-                                    <select
-                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                        <option>12</option>
-                                    </select>
-                                    <select
-                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                        <option>2030</option>
-                                    </select>
+
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="mb-5">
+                            <label for="first_street" class="block mb-2 text-sm font-semibold  text-neutral-200">Primera
+                                Calle
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <input type="text" id="first_street" placeholder="Calle" name="first_street"
+                                value="{{ $user->first_street }}"
+                                class=" border outline-none     text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
+                                required />
+                            @error('first_street')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-5">
+                            <label for="second_street" class="block mb-2 text-sm font-semibold   text-neutral-200">Segunda
+                                Calle
+                                <span class=" text-neutral-400 text-xs font-light ml-1">(opcional)</span>
+
+                            </label>
+                            <input type="text" id="second_street" placeholder="Calle" name="second_street"
+                                value="{{ $user->second_street }}"
+                                class=" border outline-none      text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400" />
+                            @error('second_street')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="mb-5">
+                            <label for="country" class="block mb-2 text-sm font-semibold  text-neutral-200">Pais
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <input type="text" id="country" placeholder="México" readonly name="country"
+                                value="{{ $user->country ?? 'México' }}"
+                                class=" border outline-none     text-sm   cursor-not-allowed    block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
+                                required />
+                            @error('country')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-5">
+                            <label for="post_code" class="block mb-2 text-sm font-semibold  text-neutral-200">Código Postal
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" id="post_code"
+                                min="0" placeholder="12345" name="post_code" value="{{ $user->post_code }}"
+                                class=" border outline-none      text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white focus:border-gray-400"
+                                required />
+                            @error('post_code')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="mb-5">
+                            <label for="interior_number" class="block mb-2 text-sm font-semibold  text-neutral-200">Numero
+                                Interior
+                                <span class=" text-neutral-400 text-xs font-light ml-1">(opcional)</span>
+                            </label>
+                            <input type="number" id="interior_number"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" min="0"
+                                placeholder="123" name="interior_number" value="{{ $user->interior_number }}"
+                                class=" border outline-none     text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400" />
+                            @error('interior_number')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-5">
+                            <label for="outdoor_number" class="block mb-2 text-sm font-semibold  text-neutral-200">Numero
+                                Exterior
+                                <span class=" text-neutral-400 text-xs font-light ml-1">(opcional)</span>
+                            </label>
+                            <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                id="outdoor_number" min="0" placeholder="12345" name="outdoor_number"
+                                value="{{ $user->outdoor_number }}"
+                                class=" border outline-none      text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white focus:border-gray-400" />
+                            @error('outdoor_number')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+                        <div class="mb-5">
+                            <label for="state" class="block mb-2 text-sm font-semibold   text-neutral-200">Estado
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <select name="state" id="state" value="{{ $user->state }}"
+                                class=" border outline-none     text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white focus:border-gray-400"
+                                required>
+                                <option value="">Selecciona un Estado</option>
+                                @foreach ($data as $index => $value)
+                                    <option value="{{ $index }}">{{ $index }}</option>
+                                @endforeach
+                            </select>
+
+                            @error('state')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="municipality" class="block mb-2 text-sm font-semibold text-neutral-200">Municipio
+                                <span class=" text-red-400">*</span>
+                            </label>
+                            <select required name="municipality" id="municipality" value="{{ $user->municipality }}"
+                                class=" border outline-none     text-sm      block w-full py-2 px-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400">
+                                <option value="">Selecciona un Municipio</option>
+                            </select>
+
+                            @error('municipality')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class=" grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="mb-5">
+                            <label for="address" class="block mb-2 text-sm font-semibold  text-neutral-200">Dirección
+                                <span class=" text-red-400">*</span></label>
+                            <textarea type="text" id="address" name="address"
+                                class=" border outline-none   h-14   text-sm   max-h-14    block w-full p-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 text-white  focus:border-gray-400"
+                                required>
+                                {{ old('address', $user->address) }}
+                            </textarea>
+                            @error('address')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-5">
+                            <label for="indications"
+                                class="block mb-2 text-sm font-semibold   text-neutral-200">Indicaciones
+                                <span class=" text-red-400">*</span></label>
+                            <textarea id="indications" name="indications" required
+                                class=" border outline-none   max-h-14     text-gray-900 text-sm      block w-full p-2.5 bg-neutral-800 rounded-md border-neutral-700 placeholder-gray-400 dark:text-white  focus:border-gray-400">
+                                {{ old('indications', $user->indications) }}
+                            </textarea>
+
+                            @error('indications')
+                                <span class=" block text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+
+
+                    <div class=" flex ">
+                        <button type="submit"
+                            class="text-black w-full   focus:ring-4 focus:outline-none  text-sm  px-5 py-3 text-center bg-white/90 rounded-md    hover:bg-white/80 font-semibold   focus:ring-neutral-800 ">Continuar
+                            compra</button>
+                        {{--          <button type="button"
+                            class="text-white   focus:ring-4 focus:outline-none  font-medium text-sm  px-5 py-1.5 text-center bg-neutral-800 border border-neutral-700 rounded-md hover:bg-neutral-700/50   focus:ring-neutral-800 ">Volver</button> --}}
+
+
+                    </div>
+                </div>
+
+            </form>
+        </section>
+        <section class="  w-full flex-shrink-0 basis-1/2 ">
+            <div class=" max-w-xl mx-auto">
+                <div class="bg-neutral-900 px-2.5 py-3 text-white mt-3 border border-neutral-700/80 rounded-lg">
+                    <span class="font-semibold text-xl">Resumen de Compra</span>
+                    <div class="mt-4 space-y-4">
+                        @if (isset($cart) && $cart->cartItems->count() > 0)
+                            @foreach ($cart->cartItems as $item)
+                                <div class="flex items-center justify-between py-2 border-b border-neutral-700">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-16 h-16 bg-neutral-700  overflow-hidden">
+                                            @if ($item->product->images->count() > 0)
+                                                <img src="{{ asset($item->product->images->first()->image) }}"
+                                                    alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full bg-neutral-600 flex items-center justify-center">
+                                                    <svg class="w-8 h-8 text-neutral-400" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-neutral-100">{{ $item->product->name }}</h4>
+                                            <p class="text-sm text-neutral-400">Cantidad: {{ $item->quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-medium">
+                                            ${{ number_format($item->product->price * $item->quantity, 2) }}</p>
+                                        <p class="text-sm text-neutral-400">${{ number_format($item->product->price, 2) }}
+                                            c/u</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="pt-4 space-y-2">
+                                <div class="flex justify-between text-neutral-300">
+                                    <span>Subtotal</span>
+                                    <span>${{ number_format($totalItems, 2) }}</span>
+                                </div>
+                                <div class="flex justify-between text-neutral-300">
+                                    <span>Envío</span>
+                                    <span>${{ number_format($shipping, 2) }}</span>
+                                </div>
+                                <div
+                                    class="flex justify-between text-lg font-semibold mt-2 pt-2 border-t border-neutral-700">
+                                    <span>Total</span>
+                                    <span>${{ number_format($total, 2) }}</span>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <label for="cvc" class="block text-sm font-medium text-gray-400">CVC/CVV</label>
-                            <input type="text" id="cvc"
-                                class="mt-1 w-full rounded-lg text-black border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                value="453">
-                        </div>
+                        @else
+                            <div class="py-4 text-center text-neutral-400">
+                                <p>No hay productos en el carrito</p>
+                            </div>
+                        @endif
                     </div>
-                </div>
-            </div>
+                    {{--    <div class="mt-4">
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                            Proceder al pago
+                        </button>
+                    </div>
+                    <span class=" block border-t-[0.6px] border-neutral-400 mt-2 "></span>
+ --}}
 
-            {{-- Cancellation Policy --}}
-            <div class="flex items-start space-x-4 rounded-lg bg-gray-300/5 text-white/90 p-6">
-                <div class="pt-1">
-                    <svg class="size-6 text-yellow-500 " fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd" clip-rule="evenodd"></path>
-                    </svg>
                 </div>
-                <div>
-                    <h3 class="font-semibold ">Cancelation Policy</h3>
-                    <p class="mt-1 text-sm  tracking-wider ">At Garazi, we understand that plans can change unexpectedly.
-                        That's why we've crafted our cancellation policy to provide you with flexibility and peace of mind.
-                        When you book a car with us, you have the freedom to modify or cancel your reservation without
-                        incurring any cancellation fees up to 12 hours/days before your scheduled pick-up time.</p>
-                    <a href="#" class="mt-2 inline-block text-sm font-semibold text-blue-600 hover:underline">See
-                        more details</a>
-                </div>
-            </div>
-        </div>
+                <div class="">
+                    {{-- Mensajes de validación --}}
+                    @if ($errors->any())
+                        <div class="bg-red-500 text-white p-3 rounded mb-4 mt-4">
+                            <strong>Por favor corrige los siguientes errores:</strong>
+                            <ul class="list-disc list-inside mt-2">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-        {{-- Right Column (Summary) --}}
-        <div class="lg:col-span-1">
-            <div class="sticky top-8 space-y-6 rounded-lg border border-gray-200 text-white bg-neutral-950 p-6 shadow-sm">
-                <div>
-                    <h2 class="text-xl font-semibold">Summary</h2>
-                    <div class="mt-4 space-y-3 text-sm">
-                        <div class="flex justify-between"><span class="text-gray-400">Total Vehicles</span><span
-                                class="font-medium">1 Vehicle</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Pickup Location</span><span
-                                class="text-right font-medium">Jl. Raya Ponorogo - Trenggalek, Bancangan</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Pickup Date</span><span
-                                class="font-medium">Mon, 4 Feb 2024 - 10:00</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Return Date</span><span
-                                class="font-medium">Thu, 8 Feb 2024 - 10:00</span></div>
-                    </div>
+                    {{-- Mensaje de error de negocio --}}
+                    @if (session('error'))
+                        <div class="bg-red-600 text-white p-3 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    {{-- Mensaje de éxito --}}
+                    @if (session('success'))
+                        <div class="bg-green-500 text-white p-3 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </div>
-                <hr>
-                <div>
-                    <h2 class="text-xl font-semibold">Price Details</h2>
-                    <div class="mt-4 space-y-3 text-sm">
-                        <div class="flex justify-between"><span class="text-gray-400">Trip Price</span><span
-                                class="font-medium">USD 230/day</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Delivery fee</span><span
-                                class="font-medium">USD 50</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Duration</span><span
-                                class="font-medium">4 days</span></div>
-                        <div class="flex justify-between"><span class="text-gray-400">Tax</span><span
-                                class="font-medium">USD 0</span></div>
-                    </div>
-                </div>
-                <hr>
-                <div class="flex items-center justify-between">
-                    <span class="text-lg font-semibold">Total</span>
-                    <span class="text-2xl font-bold text-blue-600">MXN 1,850.00</span>
-                </div>
-                <div class="text-sm">
-                    <div class="flex items-start space-x-2">
-                        <input type="checkbox" id="terms"
-                            class="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
-                        <label for="terms" class="text-gray-200">By clicking this, I agree to Garazi <a href="#"
-                                class="font-semibold text-blue-600 hover:underline">Terms & Conditions</a> and <a
-                                href="#" class="font-semibold text-blue-600 hover:underline">Privacy
-                                Policy</a></label>
-                    </div>
-                </div>
-                <button
-                    class="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition-colors hover:bg-blue-700">
-                    Pay for My Booking
-                </button>
-            </div>
-        </div>
+        </section>
     </div>
+
+    {{--  <span class="text-white"> {{ $user }}</span> --}}
 @endsection
+<script defer>
+    const state = @json($user->state);
+    const municipality = @json($user->municipality);
+    const states = @json($data);
+    const dom = {
+        $: s => document.querySelector(s),
+        $$: s => document.querySelectorAll(s),
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const stateSelect = dom.$('#state');
+        const municipalitySelect = dom.$('#municipality');
+        const form = dom.$('#form-step1');
+        const required = ["state", "municipality", "address", "indications", "phone", "email", "first_street",
+            "country", "post_code", "quantity", "product_slug"
+        ];
+
+        const requiredLabels = ["estado", "municipio", "dirección", "indicaciones", "telefono", "email",
+            "primera calle",
+            "pais", "codigo postal", "cantidad", "producto"
+        ];
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const iterable = formData.entries();
+            const data = Object.fromEntries(iterable);
+            required.forEach(field => {
+                if (!data[field]) {
+                    notification.error(
+                        `El campo ${requiredLabels[required.indexOf(field)]} es obligatorio`
+                    );
+                    return;
+                }
+            });
+            form.submit();
+        });
+
+        function fillMunicipalities(stateKey) {
+            municipalitySelect.innerHTML = '';
+            municipalitySelect.innerHTML = '<option value="">Selecciona un Municipio</option>';
+            if (!states[stateKey]) return;
+            states[stateKey].forEach(m => {
+                const option = document.createElement('option');
+                option.value = m;
+                option.textContent = m;
+                municipalitySelect.appendChild(option);
+            });
+        }
+        if (state) {
+            stateSelect.value = state;
+            fillMunicipalities(state);
+            if (municipality) {
+                municipalitySelect.value = municipality;
+            }
+        }
+        stateSelect.addEventListener('change', function() {
+            const selectedState = this.value;
+            fillMunicipalities(selectedState);
+        });
+    });
+</script>
