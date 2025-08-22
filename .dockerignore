@@ -1,0 +1,10 @@
+node_modules
+.env.*
+# Logs
+*.log
+storage/logs/
+.git
+*.zip
+*.tar.gz
+*.sock
+public/storage
