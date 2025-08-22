@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     ports:
-      - "9000"
+      - "9000:9000"
 
   web:
     build:
@@ -43,8 +43,6 @@ services:
     container_name: laravel_db
     restart: unless-stopped
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
