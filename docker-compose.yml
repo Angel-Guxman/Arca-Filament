@@ -16,6 +16,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - public_files:/var/www/html/public
+      - storage_files:/var/www/html/storage
     networks:
       - app-network
     depends_on:
@@ -33,6 +34,7 @@ services:
       - "8090:80"
     volumes:
       - public_files:/var/www/html/public
+      - storage_files:/var/www/html/storage
     networks:
       - app-network
     depends_on:
@@ -62,3 +64,4 @@ networks:
 volumes:
   db_data:
   public_files:
+  storage_files:
