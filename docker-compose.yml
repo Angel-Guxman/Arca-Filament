@@ -15,7 +15,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     working_dir: /var/www/html
     volumes:
-      - public_files:/var/www/html/public
+      - public_files:/var/www/html
     networks:
       - app-network
     depends_on:
@@ -32,7 +32,7 @@ services:
     ports:
       - "8090:80"
     volumes:
-      - public_files:/var/www/html/public
+      - public_files:/var/www/html
     networks:
       - app-network
     depends_on:
