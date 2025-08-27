@@ -51,8 +51,8 @@ WORKDIR /var/www/html
 # Copiar composer.* primero (para aprovechar caché)
 COPY composer.json composer.lock ./
 COPY . .
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/images 
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/images
 # Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 RUN php artisan storage:link
