@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /*  .custom-size {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 90%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 80%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 90%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 80%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
         .bg-coming {
             /* background: rgb(255, 255, 255,.2); */
             /* background: rgba(255, 255, 255, 0.3);  */
@@ -307,7 +307,7 @@
             </section>
             <div class=" max-h-[400px]      ">
                 <img class="  md:hover:brightness-105 brightness-50 opacity-95 md:opacity-100  md:brightness-100      max-h-full w-auto mx-auto object-contain   "
-                    src="{{ asset('images/image.png') }}" alt="" />
+                    src="{{ asset('images/image.webp') }}" alt="" />
             </div>
         </div>
     </section>
