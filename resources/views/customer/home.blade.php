@@ -2,9 +2,9 @@
 @section('content')
     <style>
         /*  .custom-size {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 90%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 80%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 90%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 80%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
         .bg-coming {
             /* background: rgb(255, 255, 255,.2); */
             /* background: rgba(255, 255, 255, 0.3);  */
@@ -296,7 +296,7 @@
                 class="    md:max-h-[500px] md:static z-10 left-0 right-0 top-7 bottom-0    md:grid absolute text-white  grid-cols-1 items-center justify-items-center ">
                 <div class=" flex flex-col gap-4 ">
 
-                    <h1 class=" text-8xl mx-auto arca-letter-animation ">Arc</h1>
+                    <h1 class=" text-8xl mx-auto arca-letter-animation ">Arca</h1>
                     <h3 class=" text-3xl mx-auto  arca-letter-animation     ">Accesorios de
                         Jade</h3>
                     <a href="{{ route('catalogue') }}"
