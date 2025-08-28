@@ -26,7 +26,7 @@
         @endif
 
         <div class="mb-5">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre
+            <label for="name" class="block mb-2 text-sm font-medium text-white">Nombre
                 <span class=" text-red-400">*</span>
             </label>
             <input type="text" id="name" name="name" value="{{ old('name') }}"
