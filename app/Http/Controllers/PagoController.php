@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Stripe\Checkout\Session;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 
@@ -12,11 +13,11 @@ class PagoController extends Controller
     //
     public function store(Request $request){
 
-        \Stripe\Stripe::setApiKey( config('services.stripe.secret'));
+        Stripe::setApiKey( config('services.stripe.secret'));
 
         
 $YOUR_DOMAIN = 'http://localhost:8000';
-        $checkout_session = \Stripe\Checkout\Session::create([
+        $checkout_session = Session::create([
           'line_items' => [[
     'price_data' => [
         'currency' => 'usd',

@@ -42,6 +42,22 @@ class Product extends Model
         static::creating(function ($model) {
             $model->slug = $model->generateUniqueSlug($model->name);
         });
+          // Actualizar slug al actualizar si el nombre cambió
+        static::updating(function ($product) {
+            if ($product->isDirty('name')) {
+                $product->slug = $product->generateUniqueSlug($product->name);
+            }
+        });
+
+        // Eliminar imágenes asociadas al eliminar el producto
+        static::deleting(function ($product) {
+            foreach ($product->images as $image) {
+                if ($image->image) {
+                    Storage::delete($image->image);
+                }
+                $image->delete();
+            }
+        });
     }
     public function images()
     {
@@ -55,13 +71,15 @@ class Product extends Model
     }
     public function getFeaturedImageUrlAttribute()
     {
-        return $this->featuredImage?->image ?? 'images/default.png';
+        return $this->featuredImage  ? asset($this->featuredImage->image)
+            : asset('images/default.png'); 
+    
     }
     public function getFeaturedImageUrlFilamentAttribute()
     {
         return $this->featuredImage
-            ? asset($this->featuredImage->image) // si usas storage/app/public
-            : asset('images/default.png'); // tu fallback
+            ? asset($this->featuredImage->image)
+            : asset('images/default.png'); 
     }
 
 

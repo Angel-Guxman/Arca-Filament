@@ -2,11 +2,24 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
+use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,7 +31,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     //icono del panel
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
     //nombre del panel
     protected static ?string $navigationLabel = 'Usuarios';
     //nombre de la lista,new,migajas
@@ -36,87 +49,87 @@ class UserResource extends Resource
 
 
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {//para crear y editar
         
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Información del Usuario')
+        return $schema
+            ->components([
+                Section::make('Información del Usuario')
                 ->description('Añade la información del Usuario.')
                 ->schema([
-                    Forms\Components\TextInput::make('name')
+                    TextInput::make('name')
                     ->required()
                     ->maxLength(255)
                     ->label('Nombre del Usuario'),
-                    Forms\Components\TextInput::make('last_name')
+                    TextInput::make('last_name')
                     ->required()
                     ->maxLength(255)
                     ->label('Apellido del Usuario'),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255)
                     ->label('Correo del Usuario'),
-                    Forms\Components\TextInput::make('password')
+                    TextInput::make('password')
                     ->label('Contraseña del Usuario')
                     ->password()
                     ->required()
                     ->visibleOn('create')
                     ->minLength(5)
                     ->maxLength(255),
-                        Forms\Components\Select::make('rol')
+                        Select::make('rol')
                         ->options([
                             'customer' => 'Cliente',
                             'administrator' => 'Administrador',
                         ])
                         ->required()
                         ->label('Elige un rol'),
-                    Forms\Components\TextInput::make('phone')
+                    TextInput::make('phone')
                     ->required()
                     ->minLength(5)
                     ->maxLength(255)
                     ->label('Telefono'),
-                    Forms\Components\TextInput::make('first_street')
+                    TextInput::make('first_street')
                     ->required()
                     ->maxLength(255)
                     ->minLength(2)
                     ->label('Primera calle'),
-                    Forms\Components\TextInput::make('outdoor_number')
+                    TextInput::make('outdoor_number')
                     ->required()
                     ->minLength(1)
                     ->maxLength(255)
                     ->label('Numero exterior'),
-                    Forms\Components\TextInput::make('interior_number')
+                    TextInput::make('interior_number')
                     ->required()
                     ->minLength(1)
                     ->maxLength(255)
                     ->label('numero interior'),
-                    Forms\Components\TextInput::make('address')
+                    TextInput::make('address')
                     ->required()
                     ->minLength(5)
                     ->maxLength(255)
                     ->label('Dirección'),
-                    Forms\Components\TextInput::make('country')
+                    TextInput::make('country')
                     ->required()
                     ->minLength(3)
                     ->maxLength(255)
                     ->label('Pais'),
-                    Forms\Components\TextInput::make('municipality')
+                    TextInput::make('municipality')
                     ->required()
                     ->minLength(3)
                     ->maxLength(255)
                     ->label('Municipio'),
-                    Forms\Components\TextInput::make('state')
+                    TextInput::make('state')
                     ->required()
                     ->minLength(3)
                     ->maxLength(255)
                     ->label('Estado'),
-                    Forms\Components\TextInput::make('post_code')
+                    TextInput::make('post_code')
                     ->required()
                     ->minLength(1)
                     ->maxLength(255)
                     ->label('Codigo Postal'),
-                    Forms\Components\Textarea::make('indications')
+                    Textarea::make('indications')
                     ->required()
                     ->rows(5)
                     ->minLength(1)
@@ -131,18 +144,18 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
+                TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -150,14 +163,14 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -172,9 +185,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => ListUsers::route('/'),
+            'create' => CreateUser::route('/create'),
+            'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 }

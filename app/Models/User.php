@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Cart;
@@ -28,7 +28,7 @@ public function favorites()
 /**
  * Get all orders for the user.
  *
- * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ * @return HasMany
  */
 public function orders()
 {

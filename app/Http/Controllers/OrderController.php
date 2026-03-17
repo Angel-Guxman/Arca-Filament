@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+use Stripe\Customer;
+use Stripe\Event;
+use UnexpectedValueException;
+use Stripe\Webhook;
+use Stripe\Exception\SignatureVerificationException;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -135,10 +142,10 @@ class OrderController extends Controller
     {
         $customer = null;
         try {
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            Stripe::setApiKey(config('services.stripe.secret'));
             $session_id = $request->input('session_id');
-            $session = \Stripe\Checkout\Session::retrieve($session_id);
-            $customer = $session->customer ? \Stripe\Customer::retrieve($session->customer) : $session->customer_details;
+            $session = Session::retrieve($session_id);
+            $customer = $session->customer ? Customer::retrieve($session->customer) : $session->customer_details;
             if (!$session) {
                 throw new NotFoundHttpException('Session not found');
             }
@@ -177,7 +184,7 @@ class OrderController extends Controller
     public function webhook(Request $request)
     {
 
-        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        Stripe::setApiKey(config('services.stripe.secret'));
         // Replace this endpoint secret with your endpoint's unique secret
         // If you are testing with the CLI, find the secret by running 'stripe listen'
         // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
@@ -188,10 +195,10 @@ class OrderController extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Event::constructFrom(
+            $event = Event::constructFrom(
                 json_decode($payload, true)
             );
-        } catch (\UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             // Invalid payload
             return response("", 400);
         }
@@ -200,12 +207,12 @@ class OrderController extends Controller
             // Otherwise use the basic decoded event
             $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
             try {
-                $event = \Stripe\Webhook::constructEvent(
+                $event = Webhook::constructEvent(
                     $payload,
                     $sig_header,
                     $endpoint_secret
                 );
-            } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            } catch (SignatureVerificationException $e) {
                 // Invalid signature
                 return response("", 400);
             }

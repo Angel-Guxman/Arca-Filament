@@ -6,7 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,14 +18,13 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
     protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Productos';
     //nombre de la lista,new,migajas
     protected static ?string $modelLabel = 'Producto';
 
-
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         return $form
             ->schema([
@@ -41,16 +40,19 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('stock')
                     ->required()
                     ->numeric(),
-                Forms\Components\FileUpload::make('featuredImage.image')
+                Forms\Components\FileUpload::make('featured_image')
                     ->image()
                     ->directory('products')
-                    ->label('Imagen destacada'),
+                    ->label('Imagen destacada')
+                    ->live()
+                    ->afterStateUpdated(function ($state, $set) {
+                        // Aquí puedes agregar lógica adicional si necesitas
+                    }),
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required(),
                 Forms\Components\Checkbox::make('featured')
                     ->default(false),
-
             ]);
     }
 
@@ -60,7 +62,8 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('featuredImageUrlFilament')->label('Imagen destacada'),
+                Tables\Columns\ImageColumn::make('FeaturedImageUrl')
+                    ->label('Imagen destacada'),
                 Tables\Columns\TextColumn::make('stock')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
@@ -107,42 +110,5 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
-    }
-
-    protected function handleRecordCreation(array $data): Model
-    {
-        $imagePath = $data['featuredImage']['image'] ?? null;
-        unset($data['featuredImage']);
-        
-        $record = parent::handleRecordCreation($data);
-        
-        if ($imagePath) {
-            $record->featuredImage()->create([
-                'image' => $imagePath,
-                'featured' => true,
-            ]);
-        }
-        
-        return $record;
-    }
-
-    protected function handleRecordUpdate(Model $record, array $data): Model
-    {
-        $imagePath = $data['featuredImage']['image'] ?? null;
-        unset($data['featuredImage']);
-        
-        $record = parent::handleRecordUpdate($record, $data);
-        
-        if ($imagePath) {
-            $record->featuredImage()->updateOrCreate(
-                ['product_id' => $record->id],
-                [
-                    'image' => $imagePath,
-                    'featured' => true,
-                ]
-            );
-        }
-        
-        return $record;
     }
 }

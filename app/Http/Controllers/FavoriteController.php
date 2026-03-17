@@ -14,7 +14,7 @@ class FavoriteController extends Controller
     public function index()
     {
         $favoriteProducts = session('favorites', []);
-        $products = \App\Models\Product::all(); // O la lógica que uses para obtener los productos
+        $products = Product::all(); // O la lógica que uses para obtener los productos
 
 
         return view('customer.catalogue', compact('products', 'favoriteProducts', ''));

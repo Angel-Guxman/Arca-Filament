@@ -15,7 +15,7 @@ class RedirectIfNotFilamentAdmin extends Middleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Closure(Request):Response $next
      */
     protected function authenticate($request, array $guards)
     {
@@ -32,7 +32,7 @@ class RedirectIfNotFilamentAdmin extends Middleware
         /** @var Model $user */
         $user = $auth->user();
 
-        $panel = Filament::getCurrentPanel();
+        $panel = Filament::getCurrentOrDefaultPanel();
 
         if ($user instanceof FilamentUser) {
             if (!$user->canAccessPanel($panel) && config('app.env') !== 'local') {

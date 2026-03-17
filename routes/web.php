@@ -57,7 +57,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/cart-count', [CartController::class, 'cartCount'])->name('cartCount');
 Route::get('/si', [CartController::class, 'test'])->name('si');
 
-
 Route::middleware(['guest'])->group(function () {
     Route::name("auth.")->group(function () {
         Route::post('/auth/registro', [RegisterController::class, 'store'])->name('register');

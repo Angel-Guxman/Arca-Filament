@@ -2,6 +2,8 @@
 
 namespace App\Managers;
 
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order; // Asegúrate de tener tu modelo de Order
@@ -109,8 +111,8 @@ class OrderManager
             // Creamos la orden
             $order = $this->createOrder($user, $data, $product);
             // Creamos la sesión de Stripe
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-            $checkout_session = \Stripe\Checkout\Session::create([
+            Stripe::setApiKey(config('services.stripe.secret'));
+            $checkout_session = Session::create([
                 'line_items' => [[
                     'price_data' => [
                         'currency' => 'mxn',
@@ -138,7 +140,7 @@ class OrderManager
                 'order' => $order,
                 'checkout_session' => $checkout_session,
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return [
                 'success' => false,
@@ -185,7 +187,7 @@ class OrderManager
 
             $order = $this->createOrderCart($user, $cart);
             // Creamos la sesión de Stripe
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            Stripe::setApiKey(config('services.stripe.secret'));
 
             $lineItems = $order->items->map(function ($item) {
                 return [
@@ -215,7 +217,7 @@ class OrderManager
                 ];
             }
             // Creamos la sesión de Stripe
-            $checkout_session = \Stripe\Checkout\Session::create([
+            $checkout_session = Session::create([
                 'line_items' => $lineItems,
                 'mode' => 'payment',
                 'success_url' => route('order-success') . '?session_id={CHECKOUT_SESSION_ID}',
@@ -235,7 +237,7 @@ class OrderManager
                 'order' => $order,
                 'checkout_session' => $checkout_session,
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return [
                 'success' => false,

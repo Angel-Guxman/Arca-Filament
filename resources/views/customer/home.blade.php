@@ -1,10 +1,6 @@
 @extends('layouts.customer')
 @section('content')
     <style>
-        /*  .custom-size {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 90%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 80%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
         .bg-coming {
             /* background: rgb(255, 255, 255,.2); */
             /* background: rgba(255, 255, 255, 0.3);  */
